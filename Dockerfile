@@ -30,15 +30,6 @@ RUN \
     && apk add sqlite-libs \
     && apk add sqlite-dev
     
-# RUN \
-#     wget https://sqlite.org/2020/sqlite-autoconf-3330000.tar.gz \
-#     && tar -xvzf sqlite-autoconf-3330000.tar.gz \
-#     && cd sqlite-autoconf-3330000 \
-#     && CFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1" \
-#     && ./configure \
-#     && make \
-#     && make install \
-#     && cd ..
 
 
 RUN \
@@ -58,21 +49,9 @@ RUN \
     && make install \
     && cd ..
 
-# RUN \
-#     wget https://download.osgeo.org/gdal/3.1.4/gdal-3.1.4.tar.gz \
-#     && tar xzf gdal-3.1.4.tar.gz \
-#     && cd gdal-3.1.4 \
-#     && ./configure \
-#     && make \
-#     && make install \
-#     && cd ..
-
-
 RUN \
     apk add gdal \
     && apk add gdal-dev
-
-
 
 # install dependencies
 RUN pip install --upgrade pip
