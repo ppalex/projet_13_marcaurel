@@ -60,3 +60,7 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
+
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
