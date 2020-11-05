@@ -1,4 +1,6 @@
-from django.db import models
+from django.contrib.gis.db import models
+
+from core.models.location import Location 
 
 class Player(models.Model):
 
@@ -12,6 +14,7 @@ class Player(models.Model):
     sex = models.CharField(max_length=10, choices=SEX_CHOICES)
     level = models.CharField(max_length=50, choices=LEVEL_CHOICES)
 
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
-        return f"{self.firstname} + {self.name}"
+        return f"{self.firstname} {self.name}"
