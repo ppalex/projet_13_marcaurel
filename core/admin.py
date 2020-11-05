@@ -5,8 +5,7 @@ from django.contrib.gis.admin import OSMGeoAdmin
 
 from .models.player import Player
 from .models.location import Location
-
-# admin.site.register(Player)
+from .models.address import Address
 
 @admin.register(Player)
 class PlayerAdmin(OSMGeoAdmin):
@@ -15,3 +14,5 @@ class PlayerAdmin(OSMGeoAdmin):
 @admin.register(Location)
 class LocationAdmin(OSMGeoAdmin):
     pass
+
+admin.site.register(Address)

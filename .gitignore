@@ -16,4 +16,4 @@ build/
 
 .env.dev
 
-**/migrations/*
+*/migrations/*
