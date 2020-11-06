@@ -15,8 +15,8 @@ class Player(models.Model):
     sex = models.CharField(max_length=10, choices=SEX_CHOICES)
     level = models.CharField(max_length=50, choices=LEVEL_CHOICES)
 
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, default=None)
+    location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None)
+    address = models.ForeignKey(Address, on_delete=models.RESTRICT, default=None)
 
     def __str__(self):
         return f"{self.firstname} {self.name}"
