@@ -9,6 +9,7 @@ from .models.address import Address
 from .models.match import Match
 from .models.invitation import Invitation
 from .models.registration import Registration
+from .models.position import Position
 
 @admin.register(Player)
 class PlayerAdmin(OSMGeoAdmin):
@@ -36,3 +37,7 @@ class InvitationAdmin(admin.ModelAdmin):
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('id', 'join_date', 'invitation')
+
+@admin.register(Position)
+class PositionAdmin(admin.ModelAdmin):
+    list_display = ('position_name',)

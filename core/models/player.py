@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 
 from core.models.location import Location
 from core.models.address import Address
+from core.models.position import Position
 
 class Player(models.Model):
 
@@ -16,6 +17,8 @@ class Player(models.Model):
 
     location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None, null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.RESTRICT, default=None)
+
+    position = models.ManyToManyField(Position)
 
     def __str__(self):
         return f"{self.firstname} {self.name}"
