@@ -1,6 +1,7 @@
 from django.db import models
 
 from core.models.player import Player
+from core.models.match import Match
 
 class Invitation(models.Model):
 
@@ -13,5 +14,6 @@ class Invitation(models.Model):
 
     by_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='+')
     for_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='+')
+    for_match = models.ForeignKey(Match, on_delete=models.CASCADE)
     
     

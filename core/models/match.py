@@ -2,6 +2,7 @@ from django.contrib.gis.db import models
 
 from core.models.location import Location
 from core.models.address import Address
+from core.models.player import Player
 
 class Match(models.Model):
 
@@ -18,3 +19,6 @@ class Match(models.Model):
 
     location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None, null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.RESTRICT, default=None)
+
+    administrator = models.ForeignKey(Player, on_delete=models.CASCADE, default=None, related_name='administrator')
+    player = models.ManyToManyField(Player, through='Registration')
