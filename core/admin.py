@@ -7,10 +7,11 @@ from .models.player import Player
 from .models.location import Location
 from .models.address import Address
 from .models.match import Match
+from .models.invitation import Invitation
 
 @admin.register(Player)
 class PlayerAdmin(OSMGeoAdmin):
-    list_display = ('name', 'firstname', 'sex', 'level', 'location')
+    list_display = ('id' , 'name', 'firstname', 'sex', 'level', 'location')
 
 
 @admin.register(Match)
@@ -22,5 +23,10 @@ class LocationAdmin(OSMGeoAdmin):
     list_display = ('coordinate',)
 
 @admin.register(Address)
-class AddressAdmin(OSMGeoAdmin):
+class AddressAdmin(admin.ModelAdmin):
     list_display = ('city', 'street', 'number')
+
+
+@admin.register(Invitation)
+class InvitationAdmin(admin.ModelAdmin):
+    list_display = ('id', 'status', 'invitation_date', 'response_date', 'for_player', 'by_player')

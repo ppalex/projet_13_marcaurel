@@ -5,7 +5,7 @@ from core.models.address import Address
 
 class Match(models.Model):
 
-    CLASSIFICATION_CHOICES =  (("Pub", "Public"), ("Priv", "Privé"))
+    CLASSIFICATION_CHOICES =  (("public", "Public"), ("private", "Privé"))
 
     classification = models.CharField(max_length=255, choices=CLASSIFICATION_CHOICES)
     fixture = models.DateTimeField(auto_now=False, auto_now_add=False)
@@ -16,5 +16,5 @@ class Match(models.Model):
     cancelled = models.BooleanField()
     over = models.BooleanField()
 
-    location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None)
+    location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None, null=True, blank=True)
     address = models.ForeignKey(Address, on_delete=models.RESTRICT, default=None)
