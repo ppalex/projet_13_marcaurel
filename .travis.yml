@@ -5,11 +5,10 @@ python:
 addons:
   chrome: stable
 
-before_script:
-  - pip install -r requirements.txt
+
 
 services:
-  - docker
+  - docker 3.8
   - postgresql
 
 install:
@@ -20,8 +19,10 @@ install:
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
-env: ./.env.testing
+env: "./.env.testing"
 
+before_script:  
+  - pip install -r requirements.txt
 script:
   - docker-compose run web python manage.py test
 
