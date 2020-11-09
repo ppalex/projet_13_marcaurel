@@ -28,5 +28,4 @@ script:
 
 branches:
 only:
-  - dev
-  - master
+  - staging
