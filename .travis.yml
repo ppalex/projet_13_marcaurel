@@ -1,4 +1,3 @@
-sudo: required
 language: python
 python:
   - '3.8'
@@ -11,6 +10,7 @@ before_script:
 
 services:
   - docker
+  - postgresql
 
 install:
   - wget -N https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip -P ~/
@@ -20,11 +20,10 @@ install:
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
-env: DJANGO_SETTINGS_MODULE=config.settings.testing
+env: ./.env.testing
 
 script:
-  - python manage.py collectstatic 
-  - python manage.py test --verbosity 2
+  - docker-compose run web python manage.py test
 
 branches:
 only:
