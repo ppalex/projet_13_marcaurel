@@ -8,7 +8,7 @@ addons:
 
 
 services:
-  - docker 3.8
+  - docker
   - postgresql
 
 install:
@@ -22,9 +22,15 @@ install:
 env: "./.env.testing"
 
 before_script:  
-  - pip install -r requirements.txt
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
 script:
-  - docker-compose run web python manage.py test
+  - docker-compose build
+  - docker-compose --env-file ..env.testing up 
+  - docker-compose run web python manage.py test tests.unit --verbosity 2
 
 branches:
 only:
