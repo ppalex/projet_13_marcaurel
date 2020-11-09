@@ -26,7 +26,8 @@ class Player(models.Model):
         Address, on_delete=models.RESTRICT, default=None)
 
     position = models.ManyToManyField(Position)
-    player_subscription = models.ManyToManyField("self", blank=True)
+    player_subscription = models.ManyToManyField("self", blank=True,
+                                                 symmetrical=False)
 
     def __str__(self):
         return f"{self.firstname} {self.name}"
