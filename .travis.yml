@@ -19,7 +19,8 @@ install:
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
-env: "./.env.testing"
+env: 
+  - DOCKER_COMPOSE_VERSION=1.4.2
 
 before_script:  
   - sudo rm /usr/local/bin/docker-compose
