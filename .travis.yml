@@ -29,7 +29,7 @@ before_script:
   - sudo mv docker-compose /usr/local/bin
 
 script:
-  - docker-compose build
+  - docker-compose up
   - docker-compose --env-file ./.env.testing run web python manage.py test tests.unit --verbosity 2
 
 branches:
