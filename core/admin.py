@@ -25,7 +25,7 @@ class MatchAdmin(OSMGeoAdmin):
 
 @admin.register(Location)
 class LocationAdmin(OSMGeoAdmin):
-    list_display = ('coordinate',)
+    list_display = ('coordinates',)
 
 
 @admin.register(Address)
