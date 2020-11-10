@@ -25,6 +25,10 @@ class MatchAdmin(OSMGeoAdmin):
 
 @admin.register(Location)
 class LocationAdmin(OSMGeoAdmin):
+
+    default_lon = 04.40
+    default_lat = 50.38
+
     list_display = ('coordinates',)
 
 
