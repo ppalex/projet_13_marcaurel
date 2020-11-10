@@ -9,6 +9,9 @@ from core.models.location import Location
 from core.models.position import Position
 from core.models.player import Player
 from core.models.match import Match
+from core.models.invitation import Invitation
+from core.models.registration import Registration
+from core.models.match_request import MatchRequest
 
 
 class AddressTestCase(TestCase):
@@ -194,3 +197,85 @@ class MatchTestCase(TestCase):
         players = match.player.all()
         player = players[0]
         self.assertEqual(player.firstname, 'user2_firstname')
+
+
+class InvitationTest(TestCase):
+
+    def setUp(self):
+
+        address = Address.objects.create(
+            city="Bruxelles",
+            street="rue des bouchers",
+            number=1,
+            region="Bruxelles"
+        )
+
+        location = Location.objects.create(
+            coordinates=Point(50, 50, srid=4326)
+        )
+
+        player_1 = Player.objects.create(
+            firstname="user1_firstname",
+            name='user1_name',
+            birthdate=date(2020, 1, 1),
+            sex='masculine',
+            level='novice',
+            address=address,
+            location=location
+        )
+
+        player_2 = Player.objects.create(
+            firstname="user2_firstname",
+            name='user2_name',
+            birthdate=date(2020, 1, 1),
+            sex='masculine',
+            level='novice',
+            address=address,
+            location=location
+        )
+
+        match = Match.objects.create(
+            classification='private',
+            fixture=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
+            num_player=2,
+            capacity=10,
+            full=False,
+            started=False,
+            cancelled=False,
+            over=False,
+            location=location,
+            address=address,
+            administrator=player_1
+        )
+
+        match.player.add(player_2)
+
+        Invitation.objects.create(
+            status='pending',
+            invitation_date=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
+            response_date=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
+            by_player=player_1,
+            for_player=player_2,
+            for_match=match,
+        )
+
+    def test_invitation_instance(self):
+        pass
+
+
+class RegistrationTest(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_registration_instance(self):
+        pass
+
+
+class MatchResquestTest(TestCase):
+
+    def setUp(self):
+        pass
+
+    def test_match_request_instance(self):
+        pass
