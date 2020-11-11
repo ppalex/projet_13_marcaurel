@@ -15,13 +15,7 @@ from core.models.match_request import MatchRequest
 
 
 class AddressTestCase(TestCase):
-    def setUp(self):
-        Address.objects.create(
-            city="Bruxelles",
-            street="rue des bouchers",
-            number=1,
-            region="Bruxelles"
-        )
+    fixtures = ["data.json"]
 
     def test_address_instance(self):
 
@@ -53,22 +47,7 @@ class LocationTestCase(TestCase):
 
 class PositionTestCase(TestCase):
 
-    def setUp(self):
-        Position.objects.create(
-            position_name='keeper'
-        )
-
-        Position.objects.create(
-            position_name='defensive'
-        )
-
-        Position.objects.create(
-            position_name='forward'
-        )
-
-        Position.objects.create(
-            position_name='center'
-        )
+    fixtures = ["data.json"]
 
     def test_position_instance(self):
 
@@ -85,95 +64,19 @@ class PositionTestCase(TestCase):
 
 class PlayerTestCase(TestCase):
 
-    def setUp(self):
-
-        address = Address.objects.create(
-            city="Bruxelles",
-            street="rue des bouchers",
-            number=1,
-            region="Bruxelles"
-        )
-
-        location = Location.objects.create(
-            coordinates=Point(50, 50, srid=4326)
-        )
-
-        position = Position.objects.create(
-            position_name='keeper'
-        )
-
-        player = Player.objects.create(
-            firstname="user1_firstname",
-            name='user1_name',
-            birthdate=date(2020, 1, 1),
-            sex='masculine',
-            level='novice',
-            address=address,
-            location=location
-        )
-
-        player.position.add(position)
+    fixtures = ["data.json"]
 
     def test_player_instance(self):
         player = Player.objects.get(firstname='user1_firstname')
 
         self.assertEqual(player.firstname, "user1_firstname")
         self.assertIsInstance(player.address, Address)
-        self.assertIsInstance(player.location, Location)
         self.assertIsInstance(player.position.first(), Position)
-        self.assertEqual(player.location.coordinates.x, 50)
-        self.assertEqual(player.location.coordinates.y, 50)
 
 
 class MatchTestCase(TestCase):
-    def setUp(self):
 
-        address = Address.objects.create(
-            city="Bruxelles",
-            street="rue des bouchers",
-            number=1,
-            region="Bruxelles"
-        )
-
-        location = Location.objects.create(
-            coordinates=Point(50, 50, srid=4326)
-        )
-
-        player_1 = Player.objects.create(
-            firstname="user1_firstname",
-            name='user1_name',
-            birthdate=date(2020, 1, 1),
-            sex='masculine',
-            level='novice',
-            address=address,
-            location=location
-        )
-
-        player_2 = Player.objects.create(
-            firstname="user2_firstname",
-            name='user2_name',
-            birthdate=date(2020, 1, 1),
-            sex='masculine',
-            level='novice',
-            address=address,
-            location=location
-        )
-
-        match = Match.objects.create(
-            classification='private',
-            fixture=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
-            num_player=2,
-            capacity=10,
-            full=False,
-            started=False,
-            cancelled=False,
-            over=False,
-            location=location,
-            address=address,
-            administrator=player_1
-        )
-
-        match.player.add(player_2)
+    fixtures = ["data.json"]
 
     def test_match_instance(self):
 
@@ -195,87 +98,52 @@ class MatchTestCase(TestCase):
         match = match_queryset[0]
 
         players = match.player.all()
-        player = players[0]
+        player = players[1]
+
         self.assertEqual(player.firstname, 'user2_firstname')
 
 
 class InvitationTest(TestCase):
 
-    def setUp(self):
-
-        address = Address.objects.create(
-            city="Bruxelles",
-            street="rue des bouchers",
-            number=1,
-            region="Bruxelles"
-        )
-
-        location = Location.objects.create(
-            coordinates=Point(50, 50, srid=4326)
-        )
-
-        player_1 = Player.objects.create(
-            firstname="user1_firstname",
-            name='user1_name',
-            birthdate=date(2020, 1, 1),
-            sex='masculine',
-            level='novice',
-            address=address,
-            location=location
-        )
-
-        player_2 = Player.objects.create(
-            firstname="user2_firstname",
-            name='user2_name',
-            birthdate=date(2020, 1, 1),
-            sex='masculine',
-            level='novice',
-            address=address,
-            location=location
-        )
-
-        match = Match.objects.create(
-            classification='private',
-            fixture=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
-            num_player=2,
-            capacity=10,
-            full=False,
-            started=False,
-            cancelled=False,
-            over=False,
-            location=location,
-            address=address,
-            administrator=player_1
-        )
-
-        match.player.add(player_2)
-
-        Invitation.objects.create(
-            status='pending',
-            invitation_date=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
-            response_date=make_aware(datetime(2020, 1, 1, 1, 0, 0)),
-            by_player=player_1,
-            for_player=player_2,
-            for_match=match,
-        )
+    fixtures = ["data.json"]
 
     def test_invitation_instance(self):
-        pass
+
+        invitation = Invitation.objects.get(id=1)
+        self.assertEqual(invitation.status, 'pending')
+
+    def test_invitation_relationship(self):
+
+        invitation = Invitation.objects.get(id=1)
+
+        self.assertEqual(invitation.invitation_date,
+                         make_aware(datetime(2020, 1, 1, 1, 0, 0)))
+        self.assertEqual(invitation.by_player.firstname, 'user1_firstname')
+        self.assertEqual(invitation.for_player.firstname, 'user2_firstname')
+        self.assertEqual(invitation.for_match.id, 1)
 
 
 class RegistrationTest(TestCase):
-
-    def setUp(self):
-        pass
+    fixtures = ["data.json"]
 
     def test_registration_instance(self):
-        pass
+
+        registration = Registration.objects.get(id=1)
+        self.assertEqual(registration.join_date, make_aware(
+            datetime(2020, 1, 1, 1, 0, 0)))
+
+    def test_registration_relationship(self):
+        registration = Registration.objects.get(id=1)
+
+        self.assertEqual(registration.player.firstname, 'user2_firstname')
+        self.assertEqual(registration.match.id, 1)
 
 
 class MatchResquestTest(TestCase):
 
-    def setUp(self):
-        pass
+    fixtures = ["data.json"]
 
     def test_match_request_instance(self):
-        pass
+        match_request = MatchRequest.objects.get(id=1)
+        self.assertEqual(match_request.request_date, make_aware(
+            datetime(2020, 1, 1, 1, 0, 0)))
