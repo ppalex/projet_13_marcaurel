@@ -31,4 +31,4 @@ class Match(models.Model):
         Player, on_delete=models.CASCADE, default=None,
         related_name='administrator')
 
-    player = models.ManyToManyField(Player, through='Registration')
+    players = models.ManyToManyField(Player, through='Registration')

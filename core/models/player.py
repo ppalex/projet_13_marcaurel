@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+
 from django.contrib.gis.db import models
 
 from core.models.location import Location
@@ -25,9 +27,11 @@ class Player(models.Model):
     address = models.ForeignKey(
         Address, on_delete=models.RESTRICT, default=None)
 
-    position = models.ManyToManyField(Position)
-    player_subscription = models.ManyToManyField("self", blank=True,
-                                                 symmetrical=False)
+    positions = models.ManyToManyField(Position)
+    player_subscriptions = models.ManyToManyField("self", blank=True,
+                                                  symmetrical=False)
+
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.firstname} {self.name}"
