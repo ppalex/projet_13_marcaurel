@@ -13,19 +13,18 @@ from .models.match_request import MatchRequest
 
 @admin.register(Player)
 class PlayerAdmin(OSMGeoAdmin):
+
     list_display = ('id', 'name', 'firstname', 'sex', 'level', 'location')
 
 
 @admin.register(Match)
 class MatchAdmin(OSMGeoAdmin):
+
     list_display = ('classification', 'fixture', 'location', 'administrator')
 
 
 @admin.register(Location)
 class LocationAdmin(OSMGeoAdmin):
-
-    default_lon = 04.40
-    default_lat = 50.38
 
     list_display = ('coordinates',)
 

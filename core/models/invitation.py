@@ -14,9 +14,9 @@ class Invitation(models.Model):
     response_date = models.DateTimeField(null=True, blank=True)
 
     by_player = models.ForeignKey(
-        Player, on_delete=models.CASCADE, related_name='+')
+        Player, on_delete=models.CASCADE, related_name='by_player')
 
     for_player = models.ForeignKey(
-        Player, on_delete=models.CASCADE, related_name='+')
+        Player, on_delete=models.CASCADE, related_name='for_player')
 
     for_match = models.ForeignKey(Match, on_delete=models.CASCADE)
