@@ -1,0 +1,105 @@
+{% extends "users/users_base.html" %}
+
+
+{% load static %}
+
+{% block body %}
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Créer un compte!</h1>
+                            </div>
+
+                            <form class="user" method="POST" action="{% url 'register' %}">
+
+                                {% csrf_token %}
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{ form.username }}
+                                    </div>
+                                    {% for error in form.username.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{ form.email }}
+                                    </div>
+                                    {% for error in form.email.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{ form.password1 }}
+                                    </div>
+                                    {% for error in form.password1.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{ form.password2 }}
+                                    </div>
+                                    {% for error in form.password2.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                             
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Enregistrer un compte
+                                </button>
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> S'enregister avec Google
+                                </a>
+
+                            </form>
+
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Mot de passe oublié?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="login.html">Vous avez déjà un compte? Connectez-vous!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'core/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'core/js/sb-admin-2.min.js' %}"></script>
+
+</body>
+
+{% endblock %}
