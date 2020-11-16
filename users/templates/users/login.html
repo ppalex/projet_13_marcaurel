@@ -19,42 +19,56 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Connectez-vous!</h1>
                                     </div>
-                                    <form class="user">
+
+                                    <form class="user" method="POST" action="{% url 'login' %}">
+                                        {% csrf_token %}
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+
+                                            {{ form.username }}
                                         </div>
+                                        {% for error in form.username.errors %}
+                                        <small class="alert alert-danger">
+                                            <strong>{{ error }}</strong>
+                                        </small> {% endfor %}
+
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            {{ form.password }}
                                         </div>
+
+                                        {% for error in form.password.errors %}
+                                        <small class="alert alert-danger">
+                                            <strong>{{ error }}</strong>
+                                        </small> {% endfor %}
+
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
+                                                <label class="custom-control-label" for="customCheck">Se souvenir de
+                                                    moi</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
+
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-user btn-block" type="submit"
+                                                id="id_button_login">Connexion</button>
+                                            <input type="hidden" name="next" value="{{ next }}">
+                                        </div>
+
                                         <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                            <i class="fab fa-google fa-fw"></i> Se connectez avec Google
                                         </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+
                                     </form>
+
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.html">Mot de passe oublié?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="{% url 'register' %}">Créer un compte!</a>
                                     </div>
                                 </div>
                             </div>
@@ -67,16 +81,6 @@
         </div>
 
     </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

@@ -6,7 +6,7 @@ from django.shortcuts import redirect, render
 
 from django.views.generic.edit import FormView
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserLoginForm
 
 
 class RegisterView(FormView):
@@ -28,13 +28,14 @@ class RegisterView(FormView):
 class CustomLoginView(SuccessMessageMixin, LoginView):
     """This class displays the login view.
     """
-    success_url = '/index/'
+    success_url = 'index'
     template_name = 'users/login.html'
+    form_class = CustomUserLoginForm
     success_message = "Vous êtes connectés %(username)s"
 
 
 class CustomLogoutView(SuccessMessageMixin, LogoutView):
     """This class is used to logout the user.
     """
-    success_url = '/'
+    success_url = 'login/'
     success_message = "Vous êtes déconnectés"

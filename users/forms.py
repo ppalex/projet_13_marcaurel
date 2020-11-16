@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from users.models.user import User
 
 from django import forms
@@ -34,3 +35,14 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password2'].widget = forms.PasswordInput(attrs={
             'class': 'form-control form-control-user',
             'placeholder': "Confirmer le mot de passe"})
+
+
+class CustomUserLoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control form-control-user',
+        'type': 'text',
+                'placeholder': "Nom d'utilisateur"}))
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control form-control-user',
+        'placeholder': "Mot de passe"}))

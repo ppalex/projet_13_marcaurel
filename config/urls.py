@@ -19,11 +19,12 @@ from django.urls import path
 from core.views import index
 
 from users.views import RegisterView
-from users.views import CustomLoginView
+from users.views import CustomLoginView, CustomLogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name='index'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
 ]
