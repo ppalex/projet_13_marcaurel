@@ -19,7 +19,7 @@ from django.urls import path
 from core.views import index, profile
 
 from users.views import RegisterView
-from users.views import CustomLoginView, CustomLogoutView, FormWizardView
+from users.views import CustomLoginView, CustomLogoutView, FormWizardView, TestFormView
 
 from users.forms import CustomUserCreationForm, CustomUserLoginForm, ContactForm1, ContactForm2
 
@@ -29,5 +29,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('test/',  FormWizardView.as_view([ContactForm1, ContactForm2]), name='test')
+    path('test/',  FormWizardView.as_view([ContactForm1, ContactForm2]), name='test'),
+    path('test2/',  TestFormView.as_view(), name='test2')
 ]
