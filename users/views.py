@@ -8,6 +8,9 @@ from django.views.generic.edit import FormView
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 
+from django.shortcuts import render
+from formtools.wizard.views import SessionWizardView
+
 
 class RegisterView(FormView):
     template_name = 'users/register.html'
@@ -39,3 +42,13 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
     """
     success_url = 'login/'
     success_message = "Vous êtes déconnectés"
+
+
+class FormWizardView(SessionWizardView):
+
+    template_name = 'users/test.html'
+
+    def done(self, form_list, **kwargs):
+        return render(self.request, 'done.html', {
+            'form_data': [form.cleaned_data for form in form_list],
+        })

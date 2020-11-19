@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import index
+from core.views import index, profile
 
 from users.views import RegisterView
-from users.views import CustomLoginView, CustomLogoutView
+from users.views import CustomLoginView, CustomLogoutView, FormWizardView
+
+from users.forms import CustomUserCreationForm, CustomUserLoginForm, ContactForm1, ContactForm2
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +29,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('test/',  FormWizardView.as_view([ContactForm1, ContactForm2]), name='test')
 ]

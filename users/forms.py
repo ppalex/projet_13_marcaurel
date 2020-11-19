@@ -46,3 +46,11 @@ class CustomUserLoginForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control form-control-user',
         'placeholder': "Mot de passe"}))
+
+
+class ContactForm1(forms.Form):
+    subject = forms.CharField(max_length=100)
+
+
+class ContactForm2(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)

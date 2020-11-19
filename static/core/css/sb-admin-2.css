@@ -5128,6 +5128,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   color: #18181c;
 }
 
+
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 1rem 0;
@@ -10938,6 +10939,7 @@ form.user .btn-user {
   line-height: 1;
   width: 12.5rem;
 }
+
 
 @-webkit-keyframes noise-anim {
   0% {
