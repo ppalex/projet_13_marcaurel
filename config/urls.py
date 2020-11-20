@@ -21,10 +21,13 @@ from core.views import index
 from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 
+from player.views import CreatePlayerView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name='index'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('profile/', CreatePlayerView.as_view(), name='profile')
 ]

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'player.apps.PlayerConfig',
 ]
 
 MIDDLEWARE = [

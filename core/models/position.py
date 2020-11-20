@@ -8,3 +8,6 @@ class Position(models.Model):
                         ("center", "Milieu"))
 
     position_name = models.CharField(max_length=255, choices=POSITION_CHOICES)
+
+    def __str__(self):
+        return f"{self.position_name}"
