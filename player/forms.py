@@ -1,5 +1,4 @@
 from core.models.player import Player
-from core.models.
 
 from django import forms
 
@@ -9,7 +8,7 @@ class PlayerCreateForm(forms.ModelForm):
     class Meta:
         model = Player
         fields = ('firstname', 'name', 'birthdate',
-                  'sex', 'level', 'address', 'positions')
+                  'sex', 'level', 'positions')
 
         LEVEL_CHOICES = (('novice', 'Débutant'),
                          ('intermediate', 'Intermédiaire'),
