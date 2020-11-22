@@ -23,6 +23,8 @@ from users.views import CustomLoginView, CustomLogoutView, FormWizardView, TestF
 
 from users.forms import CustomUserCreationForm, CustomUserLoginForm, ContactForm1, ContactForm2
 
+from player.views import CreatePlayerView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name='index'),

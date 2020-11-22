@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'formtools',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'player.apps.PlayerConfig',
 ]
 
 MIDDLEWARE = [
