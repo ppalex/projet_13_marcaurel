@@ -26,8 +26,8 @@ class PlayerCreateForm(forms.ModelForm):
                 'placeholder': "Nom"}),
 
             'birthdate': forms.SelectDateWidget(attrs={
-                'class': 'form-control'}),
-
+                'class': 'form-control',
+                'style': 'width: 40%; display: inline-flex;'}),
 
             'level': forms.Select(attrs={
                 'class': 'form-control'}),

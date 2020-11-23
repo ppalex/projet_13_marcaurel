@@ -16,12 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import index, profile
+from core.views import index
 
 from users.views import RegisterView
-from users.views import CustomLoginView, CustomLogoutView, FormWizardView, TestFormView
-
-from users.forms import CustomUserCreationForm, CustomUserLoginForm, ContactForm1, ContactForm2
+from users.views import CustomLoginView, CustomLogoutView
 
 from player.views import CreatePlayerView
 
@@ -31,6 +29,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('test/',  FormWizardView.as_view([ContactForm1, ContactForm2]), name='test'),
-    path('test2/',  TestFormView.as_view(), name='test2')
+    path('profile/', CreatePlayerView.as_view(), name='profile')
 ]
