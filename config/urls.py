@@ -21,7 +21,7 @@ from core.views import index
 from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 
-from player.views import CreatePlayerView
+from users.views import CreatePlayerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

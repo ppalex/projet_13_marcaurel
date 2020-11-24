@@ -36,13 +36,14 @@ class CustomUserCreationForm(UserCreationForm):
             'class': 'form-control form-control-user',
             'placeholder': "Confirmer le mot de passe"})
 
+    def clean_username(self):
+        username = self.cleaned_data.get("username")
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Le nom d'utilisateur existe déjà")
+        return username
 
-class CustomUserLoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control form-control-user',
-        'type': 'text',
-                'placeholder': "Nom d'utilisateur"}))
-
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control form-control-user',
-        'placeholder': "Mot de passe"}))
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("L'emai existe déjà")
+        return email
