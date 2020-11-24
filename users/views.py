@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import FormView
 
 from .forms.registration_form import CustomUserCreationForm
@@ -87,6 +87,40 @@ class CreatePlayerView(View):
 
         else:
             print('nok')
+            context['player_form'] = player_form
+            context['address_form'] = address_form
+
+            return render(request, self.template_name, context)
+
+
+class UserSettings(View, LoginRequiredMixin):
+    template_name = 'users/settings.html'
+
+    def get_context_data(self,  **kwargs):
+        if 'player_form' not in kwargs:
+            kwargs['player_form'] = PlayerCreateForm(
+                instance=self.request.user.profile)
+
+        if 'address_form' not in kwargs:
+            kwargs['address_form'] = AddressCreateForm(
+                instance=self.request.user.profile)
+
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+
+        return render(request, self.template_name, self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+
+        context = {}
+
+        player_form = PlayerCreateForm(request.POST)
+        address_form = AddressCreateForm(request.POST)
+        if player_form.is_valid() and address_form.is_valid():
+            pass
+
+        else:
             context['player_form'] = player_form
             context['address_form'] = address_form
 

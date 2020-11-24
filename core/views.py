@@ -6,7 +6,6 @@ from django.contrib.gis.geos import fromstr, Point
 from django.contrib.gis.db.models.functions import Distance
 
 
-
 @login_required
 def index(request):
     """This function displays the home page views.
@@ -19,5 +18,3 @@ def index(request):
     """
 
     return render(request, 'core/base.html')
-
-

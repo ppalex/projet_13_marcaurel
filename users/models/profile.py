@@ -27,10 +27,10 @@ class Profile(models.Model):
                              blank=True)
 
     address = models.ForeignKey(
-        Address, on_delete=models.RESTRICT, default=None, null=True,
-        blank=True)
+        Address, on_delete=models.RESTRICT, blank=True)
 
-    positions = models.ManyToManyField(Position)
+    positions = models.ManyToManyField(Position, default=None, null=True,
+                                       blank=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 

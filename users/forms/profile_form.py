@@ -38,8 +38,7 @@ class PlayerCreateForm(forms.ModelForm):
             'sex': forms.Select(attrs={
                 'class': 'form-control'}),
 
-            'positions': forms.CheckboxSelectMultiple(attrs={
-            })
+            'positions': forms.CheckboxSelectMultiple()
 
         }
 

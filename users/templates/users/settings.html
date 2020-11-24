@@ -1,0 +1,145 @@
+{% extends "core/base.html" %}
+
+
+{% load static %}
+
+
+
+{% block content %}
+<nav class="nav nav-borders">
+    <a class="nav-link active ml-0" href="{% url  'settings_profile' %}">Profile</a>
+    <a class="nav-link" href="account-security.html">Security</a>
+    <a class="nav-link" href="account-notifications.html">Notifications</a>
+</nav>
+
+<div class="card o-hidden border-0 shadow-lg my-5">
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Modifier vos informations personnelles</h1>
+                    </div>
+                    <form class="user" method="POST" action="{% url 'settings_profile' %}">
+
+                        {% csrf_token %}
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Prénom: {{ player_form.firstname }}
+                            </div>
+                            {% for error in player_form.firstname.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Nom: {{ player_form.name }}
+                            </div>
+                            {% for error in player_form.name.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Date de naissance : {{ player_form.birthdate }}
+                            </div>
+                            {% for error in player_form.birthdate.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Sexe : {{ player_form.sex }}
+                            </div>
+                            {% for error in player_form.sex.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Niveau : {{ player_form.level }}
+                            </div>
+                            {% for error in player_form.level.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Position : {{ player_form.positions }}
+                            </div>
+                            {% for error in player_form.positions.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Ville : {{ address_form.city }}
+                            </div>
+                            {% for error in address_form.city.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Rue : {{ address_form.street }}
+                            </div>
+                            {% for error in address_form.street.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Numéro : {{ address_form.number }}
+                            </div>
+                            {% for error in address_form.number.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                Région : {{ address_form.region }}
+                            </div>
+                            {% for error in address_form.region.errors %}
+                            <small class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </small> {% endfor %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Envoyer
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
