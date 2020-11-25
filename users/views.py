@@ -1,23 +1,23 @@
 
 from django.contrib.auth import authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import redirect, render
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import FormView
-
-from .forms.registration_form import CustomUserCreationForm
-from .forms.login_form import CustomUserLoginForm
-
-
-from django.views.generic.edit import CreateView
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import View
+from django.views.generic.edit import CreateView, FormView
 
 from core.models.player import Player
 
-from .forms.profile_form import PlayerCreateForm, AddressCreateForm
+from .forms.login_form import CustomUserLoginForm
+from .forms.profile_form import AddressCreateForm, PlayerCreateForm
+from .forms.registration_form import CustomUserCreationForm
+from .models.user import User
+from core.models.address import Address
+from .models.profile import Profile
+
+import pdb
 
 
 class RegisterView(FormView):
@@ -59,40 +59,6 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
 #     template_name = 'player/player_creation.html'
 
 
-class CreatePlayerView(View):
-    template_name = 'users/profile.html'
-
-    def get_context_data(self,  **kwargs):
-        if 'player_form' not in kwargs:
-            kwargs['player_form'] = PlayerCreateForm()
-        if 'address_form' not in kwargs:
-            kwargs['address_form'] = AddressCreateForm()
-
-        return kwargs
-
-    def get(self, request, *args, **kwargs):
-        return render(request, self.template_name, self.get_context_data())
-
-    def post(self, request, *args, **kwargs):
-
-        context = {}
-
-        player_form = PlayerCreateForm(request.POST)
-        address_form = AddressCreateForm(request.POST)
-        print(player_form.errors)
-        print(address_form.is_valid())
-        if player_form.is_valid() and address_form.is_valid():
-
-            pass
-
-        else:
-            print('nok')
-            context['player_form'] = player_form
-            context['address_form'] = address_form
-
-            return render(request, self.template_name, context)
-
-
 class UserSettings(View, LoginRequiredMixin):
     template_name = 'users/settings.html'
 
@@ -103,7 +69,7 @@ class UserSettings(View, LoginRequiredMixin):
 
         if 'address_form' not in kwargs:
             kwargs['address_form'] = AddressCreateForm(
-                instance=self.request.user.profile)
+                instance=self.request.user.profile.address)
 
         return kwargs
 
@@ -113,15 +79,39 @@ class UserSettings(View, LoginRequiredMixin):
 
     def post(self, request, *args, **kwargs):
 
-        context = {}
-
         player_form = PlayerCreateForm(request.POST)
         address_form = AddressCreateForm(request.POST)
+
         if player_form.is_valid() and address_form.is_valid():
-            pass
+            profile = request.user.profile
+
+            city = address_form.cleaned_data['city']
+            street = address_form.cleaned_data['street']
+            number = address_form.cleaned_data['number']
+            region = address_form.cleaned_data['region']
+
+            address = Address.objects.create(
+                city=city,
+                street=street,
+                number=number,
+                region=region
+            )
+
+            address.save()
+
+            profile.firstname = player_form.cleaned_data['firstname']
+            profile.name = player_form.cleaned_data['name']
+            profile.birthdate = player_form.cleaned_data['birthdate']
+            profile.sex = player_form.cleaned_data['sex']
+            profile.level = player_form.cleaned_data['level']
+            positions = player_form.cleaned_data['positions']
+            profile.address = address
+
+            profile.positions.add(*positions)
+            profile.save()
+
+            return render(request, self.template_name, self.get_context_data())
 
         else:
-            context['player_form'] = player_form
-            context['address_form'] = address_form
 
-            return render(request, self.template_name, context)
+            return render(request, self.template_name, self.get_context_data())

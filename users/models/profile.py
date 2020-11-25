@@ -27,7 +27,7 @@ class Profile(models.Model):
                              blank=True)
 
     address = models.ForeignKey(
-        Address, on_delete=models.RESTRICT, blank=True)
+        Address, on_delete=models.RESTRICT, null=True, blank=True)
 
     positions = models.ManyToManyField(Position, default=None, null=True,
                                        blank=True)

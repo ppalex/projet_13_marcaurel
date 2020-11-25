@@ -21,7 +21,7 @@ from core.views import index
 from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 
-from users.views import CreatePlayerView, UserSettings
+from users.views import UserSettings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +29,5 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('profile/', CreatePlayerView.as_view(), name='profile'),
     path('settings/profile/', UserSettings.as_view(), name='settings_profile')
 ]

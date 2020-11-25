@@ -17,6 +17,8 @@ services:
       - .:/marcaurel
     ports:
       - 8000:8000
+    stdin_open: true
+    tty: true
     env_file:
       - ./.env.dev
 
