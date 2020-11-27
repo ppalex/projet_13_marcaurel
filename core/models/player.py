@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.gis.db import models
 
 from core.models.location import Location
-from core.models.address import Address
 
 
 class Player(models.Model):

@@ -1,5 +1,5 @@
 from django import forms
-
+from django.utils import timezone
 from core.models.match import Match
 
 
@@ -25,3 +25,11 @@ class CreateMatchForm(forms.ModelForm):
                 'type': 'text'}),
 
         }
+
+    def clean_fixture(self):
+        fixture = self.cleaned_data['fixture']
+
+        if fixture < timezone.now():
+            raise forms.ValidationError(
+                "La date ne peut pas être dans le passé!")
+        return fixture

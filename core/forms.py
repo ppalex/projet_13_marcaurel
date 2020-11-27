@@ -1,4 +1,4 @@
-import datetime
+
 
 from .models.address import Address
 
@@ -32,10 +32,3 @@ class AddressCreateForm(forms.ModelForm):
                 'placeholder': "Région"}),
 
         }
-
-    def clean_fixture(self):
-        fixture = self.cleaned_data['fixture']
-        if fixture < datetime.date.today():
-            raise forms.ValidationError(
-                "La date ne peut pas être dans le passé!")
-        return fixture

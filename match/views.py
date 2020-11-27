@@ -50,6 +50,7 @@ class CreateMatchView(View, LoginRequiredMixin):
             match = Match.objects.create(
 
                 num_player=1,
+                classification=match_form.cleaned_data['classification'],
                 fixture=match_form.cleaned_data['fixture'],
                 capacity=match_form.cleaned_data['capacity'],
                 full=False,
