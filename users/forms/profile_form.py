@@ -2,21 +2,15 @@ from django import forms
 
 from core.models.address import Address
 
-from core.models.player import Player
-
-from django import forms
+from users.models.profile import Profile
 
 
-class PlayerCreateForm(forms.ModelForm):
+class ProfileCreateForm(forms.ModelForm):
 
     class Meta:
-        model = Player
+        model = Profile
         fields = ('firstname', 'name', 'birthdate',
                   'sex', 'level', 'positions')
-
-        LEVEL_CHOICES = (('novice', 'Débutant'),
-                         ('intermediate', 'Intermédiaire'),
-                         ('advanced', 'Avancé'))
 
         widgets = {
             'firstname': forms.TextInput(attrs={

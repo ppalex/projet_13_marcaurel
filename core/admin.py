@@ -14,7 +14,7 @@ from .models.match_request import MatchRequest
 @admin.register(Player)
 class PlayerAdmin(OSMGeoAdmin):
 
-    list_display = ('id', 'name', 'firstname', 'sex', 'level', 'location')
+    list_display = ('id', 'location', 'user')
 
 
 @admin.register(Match)

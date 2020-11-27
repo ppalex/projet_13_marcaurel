@@ -3,21 +3,17 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404
 from django.shortcuts import redirect, render
 from django.views.generic import View
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import FormView
 
-from core.models.player import Player
+from core.models.address import Address
+
 
 from .forms.login_form import CustomUserLoginForm
-from .forms.profile_form import AddressCreateForm, PlayerCreateForm
+from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
-from .models.user import User
-from core.models.address import Address
 from .models.profile import Profile
-
-import pdb
 
 
 class RegisterView(FormView):
@@ -52,19 +48,12 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
     success_message = "Vous êtes déconnectés"
 
 
-# class CreatePlayerView(CreateView):
-#     form_class = PlayerCreateForm
-#     model = Player
-
-#     template_name = 'player/player_creation.html'
-
-
-class UserSettings(View, LoginRequiredMixin):
+class UserSettingsView(View, LoginRequiredMixin):
     template_name = 'users/settings.html'
 
     def get_context_data(self,  **kwargs):
         if 'player_form' not in kwargs:
-            kwargs['player_form'] = PlayerCreateForm(
+            kwargs['player_form'] = ProfileCreateForm(
                 instance=self.request.user.profile)
 
         if 'address_form' not in kwargs:
@@ -79,7 +68,7 @@ class UserSettings(View, LoginRequiredMixin):
 
     def post(self, request, *args, **kwargs):
 
-        player_form = PlayerCreateForm(request.POST)
+        player_form = ProfileCreateForm(request.POST)
         address_form = AddressCreateForm(request.POST)
 
         if player_form.is_valid() and address_form.is_valid():

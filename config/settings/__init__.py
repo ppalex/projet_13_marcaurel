@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
     'player.apps.PlayerConfig',
+    'match.apps.MatchConfig',
 ]
 
 MIDDLEWARE = [

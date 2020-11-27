@@ -45,6 +45,84 @@
 
                 <div class="container-fluid">
                     {% block content %}
+                    <div class="row justify-content-center">
+                        <!-- Create Organization-->
+                        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11 mt-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body px-5 pt-5 d-flex flex-column">
+                                    <div>
+                                        <div class="h3 text-primary font-weight-300">Match</div>
+                                        <p class="text-muted mb-4">Créer un match et inviter des joueurs</p>
+                                    </div>
+                                    <div class="icons-org-create align-items-center mx-auto mt-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-users icon-users">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                        <svg class="svg-inline--fa fa-plus fa-w-14 icon-plus" aria-hidden="true"
+                                            focusable="false" data-prefix="fas" data-icon="plus" role="img"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                                            <path fill="currentColor"
+                                                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
+                                            </path>
+                                        </svg>
+                                        <!-- <i class="icon-plus fas fa-plus"></i> Font Awesome fontawesome.com -->
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent px-5 py-4">
+                                    <div class="small text-center"><a class="btn btn-block btn-primary"
+                                            href="{% url 'match_creation' %}">Créer un match</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Join Organization-->
+                        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11 mt-4">
+                            <div class="card text-center h-100">
+                                <div class="card-body px-5 pt-5 d-flex flex-column align-items-between">
+                                    <div>
+                                        <div class="h3 text-secondary font-weight-300">Recherche</div>
+                                        <p class="text-muted mb-4">Rechercher des joueurs ou des matchs</p>
+                                    </div>
+                                    <div class="icons-org-join align-items-center mx-auto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-user icon-user">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <svg class="svg-inline--fa fa-long-arrow-alt-right fa-w-14 icon-arrow"
+                                            aria-hidden="true" focusable="false" data-prefix="fas"
+                                            data-icon="long-arrow-alt-right" role="img"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                                            <path fill="currentColor"
+                                                d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z">
+                                            </path>
+                                        </svg>
+                                        <!-- <i class="icon-arrow fas fa-long-arrow-alt-right"></i> Font Awesome fontawesome.com -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-users icon-users">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent px-5 py-4">
+                                    <div class="small text-center"><a class="btn btn-block btn-secondary"
+                                            href="multi-tenant-join.html">Lancer la recherche</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% endblock %}
                 </div>
             </div>
@@ -74,15 +152,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Prêt à partir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Sélectionner le bouton de déconnexion si vous souhaitez mettre fin à votre sesssion.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">Déconnexion</a>
                 </div>
             </div>
         </div>
