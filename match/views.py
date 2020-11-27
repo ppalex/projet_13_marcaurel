@@ -2,10 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import View
 
-from core.forms import AddressCreateForm
+# from core.forms import AddressCreateForm
 from core.models.match import Match
 from core.models.address import Address
 from .forms.match_creation_form import CreateMatchForm
+from .forms.address_creation_form import CustomCreateAddressForm
 
 
 class CreateMatchView(View, LoginRequiredMixin):
@@ -16,7 +17,7 @@ class CreateMatchView(View, LoginRequiredMixin):
             kwargs['match_form'] = CreateMatchForm()
 
         if 'address_form' not in kwargs:
-            kwargs['address_form'] = AddressCreateForm()
+            kwargs['address_form'] = CustomCreateAddressForm()
 
         return kwargs
 
@@ -27,10 +28,8 @@ class CreateMatchView(View, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
 
         match_form = CreateMatchForm(request.POST)
-        address_form = AddressCreateForm(request.POST)
+        address_form = CustomCreateAddressForm(request.POST)
 
-        print(match_form.errors)
-        print(match_form.errors)
         if match_form.is_valid() and address_form.is_valid():
 
             user = request.user
@@ -65,5 +64,9 @@ class CreateMatchView(View, LoginRequiredMixin):
             return render(request, self.template_name, self.get_context_data())
 
         else:
+            context = {
+                'match_form': match_form,
+                'address_form': address_form
+            }
 
-            return render(request, self.template_name, self.get_context_data())
+            return render(request, self.template_name, context)

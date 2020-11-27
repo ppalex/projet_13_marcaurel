@@ -23,12 +23,14 @@ class ProfileCreateForm(forms.ModelForm):
                 'type': 'text',
                 'placeholder': "Nom"}),
 
-            'birthdate': forms.SelectDateWidget(attrs={
-                'class': 'form-control'}),
-
+            'birthdate': forms.DateInput(format=('%d-%m-%Y'), attrs={
+                'class': 'form-control',
+                'placeholder': 'Choisissez une date',
+                'type': 'date'}),
 
             'level': forms.Select(attrs={
                 'class': 'form-control'}),
+
             'sex': forms.Select(attrs={
                 'class': 'form-control'}),
 

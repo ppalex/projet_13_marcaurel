@@ -14,7 +14,7 @@ class CreateMatchForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'text'}),
 
-            'fixture': forms.DateTimeInput(format=('%m/%d/%Y %H:%M'), attrs={
+            'fixture': forms.DateTimeInput(format=('%d-%m-%Y %H:%M'), attrs={
                 'class': 'form-control',
                 'placeholder': 'Choisissez une date',
                 'type': 'datetime-local'}),
