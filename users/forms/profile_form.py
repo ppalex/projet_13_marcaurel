@@ -23,7 +23,7 @@ class ProfileCreateForm(forms.ModelForm):
                 'type': 'text',
                 'placeholder': "Nom"}),
 
-            'birthdate': forms.DateInput(format=('%d-%m-%Y'), attrs={
+            'birthdate': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'class': 'form-control',
                 'placeholder': 'Choisissez une date',
                 'type': 'date'}),
