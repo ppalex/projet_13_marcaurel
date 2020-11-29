@@ -11,7 +11,7 @@ from .forms.address_creation_form import CustomCreateAddressForm
 from django.contrib.gis.geos import Point
 
 from apiManager.utils.mapquest_utils import get_address_coordinates
-
+from django.contrib import messages
 
 class CreateMatchView(View, LoginRequiredMixin):
     template_name = 'match/match_creation.html'
@@ -51,9 +51,8 @@ class CreateMatchView(View, LoginRequiredMixin):
             )
 
             latitude, longitude = get_address_coordinates(
-                street, city, number, region)
-            print(latitude)
-            print(longitude)
+                street, number, city, region)
+
             match_location = Location.objects.get_or_create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
@@ -73,6 +72,8 @@ class CreateMatchView(View, LoginRequiredMixin):
                 location=match_location[0]
             )
             match.save()
+
+            messages.success(request, "Votre match a été créé!")
 
             return render(request, self.template_name, self.get_context_data())
 
