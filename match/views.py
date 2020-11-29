@@ -2,11 +2,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import View
 
-# from core.forms import AddressCreateForm
+from core.models.location import Location
 from core.models.match import Match
 from core.models.address import Address
 from .forms.match_creation_form import CreateMatchForm
 from .forms.address_creation_form import CustomCreateAddressForm
+
+from django.contrib.gis.geos import Point
+
+from apiManager.utils.mapquest_utils import get_address_coordinates
 
 
 class CreateMatchView(View, LoginRequiredMixin):
@@ -46,6 +50,14 @@ class CreateMatchView(View, LoginRequiredMixin):
                 region=region
             )
 
+            latitude, longitude = get_address_coordinates(
+                street, city, number, region)
+            print(latitude)
+            print(longitude)
+            match_location = Location.objects.get_or_create(
+                coordinates=Point(longitude, latitude, srid=4326)
+            )
+
             match = Match.objects.create(
 
                 num_player=1,
@@ -57,7 +69,8 @@ class CreateMatchView(View, LoginRequiredMixin):
                 cancelled=False,
                 over=False,
                 address=address[0],
-                administrator=user.player
+                administrator=user.player,
+                location=match_location[0]
             )
             match.save()
 

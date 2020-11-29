@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'player.apps.PlayerConfig',
     'match.apps.MatchConfig',
+    'apiManager.apps.ApimanagerConfig',
 ]
 
 MIDDLEWARE = [
