@@ -22,7 +22,7 @@ from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 from users.views import UserSettingsView
 
-from match.views import CreateMatchView, MatchListView
+from match.views import CreateMatchView, MatchListView, MatchDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +33,7 @@ urlpatterns = [
     path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
     path('match/list/', MatchListView.as_view(), name='match-list'),
+    path('match/detail/<int:id>', MatchDetailView.as_view(), name='match-detail'),
 ]
+
+handler404 = 'core.views.custom_page_not_found_view'

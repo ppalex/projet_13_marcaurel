@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 
 from core.models.location import Location
@@ -13,7 +13,7 @@ from django.contrib.gis.geos import Point
 from apiManager.utils.mapquest_utils import get_address_coordinates
 from django.contrib import messages
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 
 class CreateMatchView(View, LoginRequiredMixin):
@@ -97,3 +97,13 @@ class MatchListView(ListView):
 
     def get_queryset(self):
         return Match.objects.filter(administrator=self.request.user.player)
+
+
+class MatchDetailView(DetailView):
+    model = Match
+    template_name = "match/match_detail.html"
+
+    def get_object(self):
+        id = self.kwargs.get("id") 
+
+        return get_object_or_404(Match, id=id)

@@ -14,10 +14,10 @@
                     <h5 class="card-title">Ce match aura lieu le: {{ match.fixture|date:'d-m-Y' }} à {{ match.fixture|date:'H:m' }}  </h5>
                     <p class="card-text">Créé par: {{ match.administrator.user }}</p>
                     
-                    <a href="#" class="btn btn-primary">Consulter le match</a>
+                    <a href="{% url 'match-detail' match.id %}" class="btn btn-primary">Consulter le match</a>
                 </div>
                 <div class="col-md-3">
-                    <p class="card-text"> {{ match.available_place }} places disponibles</p>
+                    <p class="card-text">{{ match.available_place }} places disponibles</p>
                     <p class="card-text">{{ match.num_player}}/{{ match.capacity }}</p>
                     <p class="card-text">Où: {{ match.address.city }}</p>
                 </div>
