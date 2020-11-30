@@ -13,6 +13,9 @@ from django.contrib.gis.geos import Point
 from apiManager.utils.mapquest_utils import get_address_coordinates
 from django.contrib import messages
 
+from django.views.generic import ListView
+
+
 class CreateMatchView(View, LoginRequiredMixin):
     template_name = 'match/match_creation.html'
 
@@ -63,6 +66,7 @@ class CreateMatchView(View, LoginRequiredMixin):
                 classification=match_form.cleaned_data['classification'],
                 fixture=match_form.cleaned_data['fixture'],
                 capacity=match_form.cleaned_data['capacity'],
+                available_place=match_form.cleaned_data['capacity']-1,
                 full=False,
                 started=False,
                 cancelled=False,
@@ -84,3 +88,12 @@ class CreateMatchView(View, LoginRequiredMixin):
             }
 
             return render(request, self.template_name, context)
+
+
+class MatchListView(ListView):
+    model = Match
+    template_name = 'match/match_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Match.objects.filter(administrator=self.request.user.player)

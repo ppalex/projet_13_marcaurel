@@ -14,6 +14,7 @@ class Match(models.Model):
 
     fixture = models.DateTimeField(auto_now=False, auto_now_add=False)
     num_player = models.IntegerField()
+    available_place = models.IntegerField()
     capacity = models.IntegerField()
     full = models.BooleanField()
     started = models.BooleanField()

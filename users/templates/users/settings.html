@@ -11,7 +11,7 @@
     <div class="card-header border-bottom">
         <!-- Wizard navigation-->
         <nav class="nav nav-borders">
-            <a class="nav-link active ml-0" href="{% url  'settings_profile' %}">Profil</a>
+            <a class="nav-link active ml-0" href="{% url  'settings-profile' %}">Profil</a>
             <a class="nav-link" href="account-security.html">Sécurité</a>
             <a class="nav-link" href="account-notifications.html">Notifications</a>
         </nav>
@@ -27,7 +27,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Modifier vos informations personnelles</h1>
                         </div>
-                        <form method="POST" action="{% url 'settings_profile' %}">
+                        <form method="POST" action="{% url 'settings-profile' %}">
                             {% csrf_token %}
 
                             <div class="form-row">

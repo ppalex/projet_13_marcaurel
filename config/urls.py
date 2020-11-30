@@ -22,7 +22,7 @@ from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 from users.views import UserSettingsView
 
-from match.views import CreateMatchView
+from match.views import CreateMatchView, MatchListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
-    path('settings/profile/', UserSettingsView.as_view(), name='settings_profile'),
-    path('match/create/', CreateMatchView.as_view(), name='match_creation'),
+    path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
+    path('match/create/', CreateMatchView.as_view(), name='match-creation'),
+    path('match/list/', MatchListView.as_view(), name='match-list'),
 ]
