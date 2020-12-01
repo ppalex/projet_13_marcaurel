@@ -6,18 +6,29 @@
 
 <div class="card">
     <div class="card-header border-bottom">
-       <h1 class="h4 text-gray-900 mb-4"> Détail du match</h5>
+        <h1 class="h4 text-gray-900 mb-4"> Détail du match</h5>
     </div>
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
-          
-                <div class="row justify-content-center">
-                    <div class="col-xxl-6 col-xl-8">
-                     
+            
+            <div class="rowr">
+                <div class="col-xxl-6 col-xl-6">
+                    <div class="container">
+                        <h3>Joueurs</h3>
+                        <ul class="list-group">
+
+                            {% for player in players %}
+                            <li class="list-group-item">{{ player.user.username }}</li>
+                            
+                            {% endfor %}
+                            
+                        </ul>
+
                     </div>
                 </div>
             </div>
         </div>
-    
+    </div>
+
 </div>
 {% endblock %}

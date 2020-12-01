@@ -15,6 +15,8 @@ from django.contrib import messages
 
 from django.views.generic import ListView, DetailView
 
+from core.models.registration import Registration
+
 
 class CreateMatchView(View, LoginRequiredMixin):
     template_name = 'match/match_creation.html'
@@ -77,6 +79,9 @@ class CreateMatchView(View, LoginRequiredMixin):
             )
             match.save()
 
+            Registration.create_registration(match=match, player=user.player,
+                                             invitation=None, match_request=None)
+
             messages.success(request, "Votre match a été créé!")
 
             return render(request, self.template_name, self.get_context_data())
@@ -104,6 +109,13 @@ class MatchDetailView(DetailView):
     template_name = "match/match_detail.html"
 
     def get_object(self):
-        id = self.kwargs.get("id") 
+        id = self.kwargs.get("id")
 
         return get_object_or_404(Match, id=id)
+
+    def get_context_data(self, **kwargs):
+
+        context = super(MatchDetailView, self).get_context_data(**kwargs)
+
+        context['players'] = self.object.players.all()
+        return context
