@@ -10,7 +10,7 @@ from .forms.address_creation_form import CustomCreateAddressForm
 
 from django.contrib.gis.geos import Point
 
-from apiManager.utils.mapquest_utils import get_address_coordinates
+from api_manager.utils.mapquest_utils import get_address_coordinates
 from django.contrib import messages
 
 from django.views.generic import ListView, DetailView

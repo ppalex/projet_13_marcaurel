@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class ApimanagerConfig(AppConfig):
-    name = 'apiManager'
+    name = 'api_manager'

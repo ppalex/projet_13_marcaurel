@@ -1,4 +1,4 @@
-from apiManager.models.mapquest_api import MapquestApi
+from api_manager.models.mapquest_api import MapquestApi
 
 
 def get_address_coordinates(street, number, city, region):
