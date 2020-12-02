@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+{% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
+
+<h1>Django-Leaflet</h1>
+{% include "search_manager/includes/_filter_bar.html" %}
+{% leaflet_map "main" callback="main_map_init" %}
+
+<script type="text/javascript">
+    function main_map_init(map, options) {
+    {% for match in object_list %}
+
+        // L.marker({{ match.location.coordinates }}).addTo(map).bindPopup('{{match}}');
+        L.marker({{ match.location.lat_lng }}).addTo(map).bindPopup('{{match.classification}}');
+
+    {% endfor %}
+    }
+</script>
+
+{% endblock %}

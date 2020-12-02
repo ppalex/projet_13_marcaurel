@@ -24,6 +24,8 @@ from users.views import UserSettingsView
 
 from match.views import CreateMatchView, MatchListView, MatchDetailView
 
+from search_manager.views import MapView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index, name='index'),
@@ -34,6 +36,8 @@ urlpatterns = [
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
     path('match/list/', MatchListView.as_view(), name='match-list'),
     path('match/detail/<int:id>', MatchDetailView.as_view(), name='match-detail'),
+    path('search/', MapView.as_view(), name='search'),
 ]
+
 
 handler404 = 'core.views.custom_page_not_found_view'

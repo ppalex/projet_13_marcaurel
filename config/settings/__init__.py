@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'player.apps.PlayerConfig',
     'match.apps.MatchConfig',
     'api_manager.apps.ApimanagerConfig',
+    'leaflet',
+    'search_manager'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,13 @@ LOGOUT_REDIRECT_URL = 'login'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (51, 7.0),
+    'DEFAULT_ZOOM': 7,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'DEFAULT_PRECISION': 6,
+    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+}
