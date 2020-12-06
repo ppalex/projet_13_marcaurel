@@ -1,0 +1,99 @@
+<!-- {% load leaflet_tags %}
+{% leaflet_js %}
+{% leaflet_css %}
+
+
+
+{% leaflet_map "main" callback="main_map_init" %}
+
+<script type="text/javascript">
+    function main_map_init(map, options) {
+        {% for match in object_list %}
+
+        L.marker({{ match.location.lat_lng }}).addTo(map).bindPopup('{{match.classification}}');
+
+    {% endfor %}
+    }
+</script> -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+<div id="mapid">
+    <style>
+        #mapid {
+            height: 500px;
+        }
+    </style>
+    <script>
+        var markersLayer = new L.LayerGroup();
+        var map = L.map('mapid').setView([50.50, 4.80], 8);
+
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiYXBwMTMwOCIsImEiOiJja2liejVhOTAwZjZxMnlwZXhmbnJtc2hzIn0.Lr-IKjKKwlrfzBWVelCu7Q'
+        }).addTo(map);
+
+        {% for match in object_list %}
+
+        marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
+        
+        markersLayer.addLayer(marker)
+        {% endfor %}
+
+        markersLayer.addTo(map);
+
+    </script>
+
+
+
+</div>
+
+<script>
+
+    function send_data_to_backend(url, data) {
+
+        return fetch(url, {
+            method: "POST",
+            body: data
+        })
+            .then(response => response.json())
+            .catch(error => console.log(error));
+    }
+
+    let form = document.querySelector("#filter-match")
+    form.addEventListener('submit', function (event) {
+
+        event.preventDefault();
+
+        send_data_to_backend("{% url 'filter-match' %}", new FormData(form))
+            .then(response => {
+                console.log(response);
+
+                var objCount = response.length;
+
+                markersLayer.clearLayers();
+
+                for (var x = 0; x < objCount; x++) {
+                    var curitem = response[x];
+
+                    marker =  L.marker(curitem.lat_lng).addTo(map).bindPopup(curitem.classification);
+                    markersLayer.addLayer(marker)
+                }
+
+                markersLayer.addTo(map);
+
+            })
+    })
+
+</script>

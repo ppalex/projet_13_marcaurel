@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'match.apps.MatchConfig',
     'api_manager.apps.ApimanagerConfig',
     'leaflet',
-    'search_manager'
+    'search_manager',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

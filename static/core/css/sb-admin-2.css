@@ -11242,3 +11242,12 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+
+.ui-autocomplete {
+  max-height: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: auto;
+}

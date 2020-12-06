@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<h1>Rechercher des matchs</h1>
+{% include "search_manager/includes/_match_filter_bar.html" %}
+
+{% include "search_manager/includes/_map.html" %}
+
+{% endblock %}
