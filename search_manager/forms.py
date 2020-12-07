@@ -43,6 +43,7 @@ class AddressFormFilter(forms.ModelForm):
         widgets = {
             'city': forms.TextInput(attrs={
                 'class': 'form-control',
+                'id': 'city-search',
                 'type': 'text'}),
 
         }

@@ -56,15 +56,14 @@ def autocomplete_city(request):
     """
 
     if 'term' in request.GET:
-
         query = Address.objects.filter(
             city__istartswith=request.GET.get('term'))
-
+        print(request.GET.get('term'))
         addresses = list()
 
         for address in query:
             addresses.append(address.city)
-
+        
         return JsonResponse(addresses, safe=False)
 
     return None
