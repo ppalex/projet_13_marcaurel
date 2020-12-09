@@ -1,31 +1,19 @@
-<!-- {% load leaflet_tags %}
-{% leaflet_js %}
-{% leaflet_css %}
-
-
-
-{% leaflet_map "main" callback="main_map_init" %}
-
-<script type="text/javascript">
-    function main_map_init(map, options) {
-        {% for match in object_list %}
-
-        L.marker({{ match.location.lat_lng }}).addTo(map).bindPopup('{{match.classification}}');
-
-    {% endfor %}
-    }
-</script> -->
 {% load static %}
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
+    crossorigin="" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 <script type="text/javascript" src="{% static 'core/js/geolocation.js' %}"></script>
+<!-- Custom styles for this template-->
+
+<link href="{% static 'core/vendor/leaflet/MarkerCluster.Default.css' %}" rel="stylesheet">
+
+<script type="text/javascript" src="{% static 'core/vendor/leaflet/leaflet.markercluster.js' %}"></script>
 
 <div id="mapid">
     <style>
@@ -36,6 +24,8 @@
     <script>
         var markersLayer = new L.LayerGroup();
         var map = L.map('mapid').setView([50.50, 4.80], 8);
+
+        var markers = L.markerClusterGroup();
 
         geoFindMe(L, map, '{{ csrf_token }}');
 
@@ -52,10 +42,12 @@
 
         marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
 
-        markersLayer.addLayer(marker)
+        // markersLayer.addLayer(marker)
+        markers.addLayer(marker);
         {% endfor %}
 
-        markersLayer.addTo(map);
+        // markersLayer.addTo(map);
+        map.addLayer(markers);
 
 
     </script>
@@ -87,17 +79,18 @@
 
                 var objCount = response.length;
 
-                markersLayer.clearLayers();
+                markers.clearLayers();
 
                 for (var x = 0; x < objCount; x++) {
                     var curitem = response[x];
 
                     marker = L.marker(curitem.lat_lng).addTo(map).bindPopup(curitem.classification);
-                    markersLayer.addLayer(marker)
+                    // markersLayer.addLayer(marker)
+                    markers.addLayer(marker);
                 }
 
-                markersLayer.addTo(map);
-
+                // markersLayer.addTo(map);
+                map.addLayer(markers);
             })
     })
 

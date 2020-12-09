@@ -1,7 +1,9 @@
 from django.http import JsonResponse, HttpResponse
 from core.models.match import Match
 from core.models.address import Address
-import pdb
+
+from .utils import km_to_degrees
+
 
 def filter_match_view(request, *args, **kwargs):
 
@@ -27,6 +29,16 @@ def filter_match_view(request, *args, **kwargs):
     if (request.POST.get('fixture')) != '':
         key = '{0}__{1}'.format('fixture', 'contains')
         value = request.POST.get('fixture')
+        kwargs[key] = value
+
+    if (request.POST.get('location') is not None):
+
+        player_location = request.user.player.location
+        distance_km = request.POST.get('location')
+        distance_degrees = km_to_degrees(int(distance_km))
+
+        key = '{0}__{1}__{2}'.format('location', 'coordinates', 'dwithin')
+        value = (player_location.coordinates, distance_degrees)
         kwargs[key] = value
 
     qs = Match.objects.filter(**kwargs)
@@ -74,5 +86,5 @@ def get_user_current_coordinates(request):
     longitude = request.POST.get('longitude')
     player = request.user.player
     player.update_location(latitude, longitude)
-    
+
     return JsonResponse({'status': 200})

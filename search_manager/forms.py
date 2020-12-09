@@ -9,10 +9,11 @@ class MatchFormFilter(forms.ModelForm):
         self.fields['classification'].required = False
         self.fields['fixture'].required = False
         self.fields['available_place'].required = False
+        self.fields['location'].required = False
 
     class Meta:
         model = Match
-        fields = ('classification', 'fixture', 'available_place',)
+        fields = ('classification', 'fixture', 'available_place', 'location')
 
         widgets = {
             'classification': forms.Select(attrs={
@@ -27,6 +28,11 @@ class MatchFormFilter(forms.ModelForm):
             'available_place': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'type': 'text'}),
+
+            'location': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': "Entrez le nombre de km"}),
 
         }
 

@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="container-fluid">
- 
+
     <form method="POST" action="" id="filter-match">
         {% csrf_token %}
 
@@ -23,8 +23,15 @@
                 <label class="small mb-1">Places disponibles</label>
                 {{ match_filter.available_place }}
             </div>
-        </div>
 
+        </div>
+        <div class="form-row">
+
+            <div class="form-group col-md-3">
+                <label class="small mb-1">Par rapport à ma position</label>
+                {{ match_filter.location }}
+            </div>
+        </div>
         <div class="d-flex justify-content-between">
             <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search fa-sm"></i>
@@ -32,7 +39,7 @@
             </button>
         </div>
         <hr class="my-4">
-    </form>  
+    </form>
 
 
 </div>
