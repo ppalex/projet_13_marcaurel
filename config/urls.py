@@ -25,7 +25,7 @@ from users.views import UserSettingsView
 from match.views import CreateMatchView, MatchListView, MatchDetailView
 
 from search_manager.views import SearchMatchView
-from search_manager.ajax_view import filter_match_view, autocomplete_city
+from search_manager.ajax_view import filter_match_view, autocomplete_city, get_user_current_coordinates
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,7 +39,8 @@ urlpatterns = [
     path('match/detail/<int:id>', MatchDetailView.as_view(), name='match-detail'),
     path('search/match/', SearchMatchView.as_view(), name='search-match'),
     path('search/match/filter', filter_match_view, name='filter-match'),
-    path('autocomplete', autocomplete_city, name='city-autocomplete')
+    path('autocomplete', autocomplete_city, name='city-autocomplete'),
+    path('current_coordinates', get_user_current_coordinates, name='current-coordinates')
 ]
 
 

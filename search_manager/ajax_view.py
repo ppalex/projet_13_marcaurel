@@ -1,7 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from core.models.match import Match
 from core.models.address import Address
-
+import pdb
 
 def filter_match_view(request, *args, **kwargs):
 
@@ -58,12 +58,21 @@ def autocomplete_city(request):
     if 'term' in request.GET:
         query = Address.objects.filter(
             city__istartswith=request.GET.get('term'))
-        print(request.GET.get('term'))
         addresses = list()
 
         for address in query:
             addresses.append(address.city)
-        
+
         return JsonResponse(addresses, safe=False)
 
     return None
+
+
+def get_user_current_coordinates(request):
+
+    latitude = request.POST.get('latitude')
+    longitude = request.POST.get('longitude')
+    player = request.user.player
+    player.update_location(latitude, longitude)
+    
+    return JsonResponse({'status': 200})

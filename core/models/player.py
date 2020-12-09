@@ -4,6 +4,8 @@ from django.contrib.gis.db import models
 
 from core.models.location import Location
 
+from django.contrib.gis.geos import Point
+
 
 class Player(models.Model):
 
@@ -15,3 +17,11 @@ class Player(models.Model):
                                                   symmetrical=False)
 
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+
+    def update_location(self, latitude, longitude):
+
+        location = Location.objects.get_or_create(coordinates=Point(
+            float(longitude), float(latitude),  srid=4326))
+
+        self.location = location[0]
+        self.save()
