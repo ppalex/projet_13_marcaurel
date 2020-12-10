@@ -15,18 +15,16 @@
 
 <script type="text/javascript" src="{% static 'core/vendor/leaflet/leaflet.markercluster.js' %}"></script>
 
+
+<link href="{% static 'core/css/map.css' %}" rel="stylesheet">
+
+
 <div id="mapid">
-    <style>
-        #mapid {
-            height: 500px;
-        }
-    </style>
+
     <script>
-        var markersLayer = new L.LayerGroup();
+
         var map = L.map('mapid').setView([50.50, 4.80], 8);
-
-        var markers = L.markerClusterGroup();
-
+        var markers_cluster = L.markerClusterGroup();
         geoFindMe(L, map, '{{ csrf_token }}');
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -41,19 +39,11 @@
         {% for match in object_list %}
 
         marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
-
-        // markersLayer.addLayer(marker)
-        markers.addLayer(marker);
+        markers_cluster.addLayer(marker);
         {% endfor %}
 
-        // markersLayer.addTo(map);
-        map.addLayer(markers);
-
-
+        map.addLayer(markers_cluster);
     </script>
-
-
-
 </div>
 
 <script>
@@ -79,18 +69,18 @@
 
                 var objCount = response.length;
 
-                markers.clearLayers();
+                markers_cluster.clearLayers();
+
+                console.log(markers_cluster);
 
                 for (var x = 0; x < objCount; x++) {
                     var curitem = response[x];
 
-                    marker = L.marker(curitem.lat_lng).addTo(map).bindPopup(curitem.classification);
-                    // markersLayer.addLayer(marker)
-                    markers.addLayer(marker);
+                    marker = L.marker(curitem.lat_lng).bindPopup(curitem.classification);
+                    markers_cluster.addLayer(marker);
                 }
 
-                // markersLayer.addTo(map);
-                map.addLayer(markers);
+                map.addLayer(markers_cluster);
             })
     })
 

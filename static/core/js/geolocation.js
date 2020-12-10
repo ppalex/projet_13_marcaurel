@@ -1,11 +1,19 @@
 function geoFindMe(L, map, csrf_token) {
-    
+
     function success(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        console.log(latitude, longitude);
-        L.marker([latitude, longitude]).bindPopup('Votre position').addTo(map);
+        var icon = L.divIcon({
+            className: 'custom-div-icon',
+            html: "<div style='background-color:#c30b82;' class='marker-pin'></div><i class='fas fa-user'></i>",
+            iconSize: [30, 42],
+            iconAnchor: [15, 42]
+        });
+
+        L.marker([latitude, longitude], {
+            icon: icon
+        }).bindPopup('Votre position').addTo(map);
 
         data = {
             "latitude": latitude,
@@ -17,7 +25,7 @@ function geoFindMe(L, map, csrf_token) {
             type: "POST",
             url: "/current_coordinates",
             data: data,
-        
+
             success: function (msg) {
                 console.log('Succeeded!');
             }

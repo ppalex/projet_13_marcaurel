@@ -3,6 +3,7 @@ from core.models.match import Match
 from core.models.address import Address
 
 from .utils import km_to_degrees
+import pdb
 
 
 def filter_match_view(request, *args, **kwargs):
@@ -10,8 +11,8 @@ def filter_match_view(request, *args, **kwargs):
     context = {
         'object_list': []
     }
-
-    if (request.POST.get('classification')) != '':
+    
+    if (request.POST.get('classification') != ''):
         key = '{0}__{1}'.format('classification', 'exact')
         value = request.POST.get('classification')
         kwargs[key] = value
@@ -21,17 +22,17 @@ def filter_match_view(request, *args, **kwargs):
         value = request.POST.get('city')
         kwargs[key] = value
 
-    if (request.POST.get('available_place')) != '':
+    if (request.POST.get('available_place') != ''):
         key = '{0}__{1}'.format('available_place', 'exact')
         value = request.POST.get('available_place')
         kwargs[key] = value
 
-    if (request.POST.get('fixture')) != '':
+    if (request.POST.get('fixture') != ''):
         key = '{0}__{1}'.format('fixture', 'contains')
         value = request.POST.get('fixture')
         kwargs[key] = value
 
-    if (request.POST.get('location') is not None):
+    if (request.POST.get('location') != ''):
 
         player_location = request.user.player.location
         distance_km = request.POST.get('location')
@@ -52,7 +53,7 @@ def filter_match_view(request, *args, **kwargs):
         }
 
         context['object_list'].append(match_dict)
-
+    # pdb.set_trace()
     return JsonResponse(context['object_list'], safe=False)
 
 
