@@ -1,9 +1,9 @@
-from django.http import JsonResponse, HttpResponse
-from core.models.match import Match
+from django.http import JsonResponse
+
 from core.models.address import Address
+from core.models.match import Match
 
 from .utils import km_to_degrees
-import pdb
 
 
 def filter_match_view(request, *args, **kwargs):
@@ -11,7 +11,7 @@ def filter_match_view(request, *args, **kwargs):
     context = {
         'object_list': []
     }
-    
+
     if (request.POST.get('classification') != ''):
         key = '{0}__{1}'.format('classification', 'exact')
         value = request.POST.get('classification')
@@ -53,7 +53,7 @@ def filter_match_view(request, *args, **kwargs):
         }
 
         context['object_list'].append(match_dict)
-    # pdb.set_trace()
+
     return JsonResponse(context['object_list'], safe=False)
 
 
