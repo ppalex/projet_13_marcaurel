@@ -7,10 +7,14 @@ from core.models.match import Match
 
 from .forms import MatchFormFilter, AddressFormFilter
 
+import django_tables2 as tables
 
-class SearchMatchView(View):
+from .tables import MatchTable
 
-    template_name = "search_manager/search_match.html"
+
+class SearchMapMatchView(View):
+
+    template_name = "search_manager/search_map_match.html"
 
     def get(self, request, *args, **kwargs):
 
@@ -20,3 +24,10 @@ class SearchMatchView(View):
         context['object_list'] = Match.objects.all()
 
         return render(request, self.template_name, context)
+
+
+class SearchTableMatchView(tables.SingleTableView):
+    table_class = MatchTable
+    queryset = Match.objects.all()
+
+    template_name = "search_manager/search_table_match.html"

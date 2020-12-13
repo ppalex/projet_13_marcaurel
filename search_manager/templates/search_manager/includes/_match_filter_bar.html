@@ -2,45 +2,53 @@
 
 <div class="container-fluid">
 
-    <form method="POST" action="" id="filter-match">
-        {% csrf_token %}
+    <div class="card-body">
+        <div class="tab-content">
+            <form method="POST" action="" id="filter-match">
+                {% csrf_token %}
 
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                <label class="small mb-1">Type de match</label>
-                {{ match_filter.classification }}
-            </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label class="small mb-1">Type de match</label>
+                        {{ match_filter.classification }}
+                    </div>
 
-            <div class="form-group col-md-2">
-                <label class="small mb-1">Date</label>
-                {{ match_filter.fixture }}
-            </div>
-            <div class="form-group col-md-2">
-                <label class="small mb-1">Ville</label>
-                {{ address_filter.city }}
-            </div>
-            <div class="form-group col-md2">
-                <label class="small mb-1">Places disponibles</label>
-                {{ match_filter.available_place }}
-            </div>
+                    <div class="form-group col-md-2">
+                        <label class="small mb-1">Date</label>
+                        {{ match_filter.fixture }}
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="small mb-1">Ville</label>
+                        {{ address_filter.city }}
+                    </div>
+                    <div class="form-group col-md2">
+                        <label class="small mb-1">Places disponibles</label>
+                        {{ match_filter.available_place }}
+                    </div>
 
-            <div class="form-group col-md-3">
-                <label class="small mb-1"></label>Par rapport à ma position</label>
-                {{ match_filter.location }}
-            </div>
+                    <div class="form-group col-md-3">
+                        <label class="small mb-1"></label>Par rapport à ma position</label>
+                        {{ match_filter.location }}
+                    </div>
 
+                </div>
+                <div class="form-row">
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-info" type="submit">
+                        <i class="fas fa-search fa-sm"></i>
+                        Rechercher
+                    </button>
+                </div>
+                <hr class="my-4">
+            </form>
         </div>
-        <div class="form-row">
 
-        </div>
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-                Rechercher
-            </button>
-        </div>
-        <hr class="my-4">
-    </form>
+    </div>
+
+
+
 
 
 </div>

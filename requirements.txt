@@ -8,6 +8,7 @@ django-environ==0.4.5
 django-filter==2.4.0
 django-formtools==2.2
 django-leaflet==0.27.1
+django-tables2==2.3.3
 flake8==3.8.4
 idna==2.10
 mccabe==0.6.1

@@ -559,6 +559,22 @@ pre code {
   margin-left: auto;
 }
 
+.ui-autocomplete {
+  max-height: 300px;
+  max-width: 300px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: auto;
+}
+
+
+#map-list-button {
+
+  
+
+}
+
+
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px;
@@ -11244,10 +11260,3 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 
-.ui-autocomplete {
-  max-height: 300px;
-  max-width: 300px;
-  overflow-y: auto;
-  /* prevent horizontal scrollbar */
-  overflow-x: auto;
-}
