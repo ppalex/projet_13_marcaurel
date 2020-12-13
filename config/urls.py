@@ -39,11 +39,12 @@ urlpatterns = [
     path('match/list/', MatchListView.as_view(), name='match-list'),
     path('match/detail/<int:id>', MatchDetailView.as_view(), name='match-detail'),
     path('search/match/', SearchMapMatchView.as_view(), name='search-map-match'),
-    path('search/table/match/', SearchTableMatchView.as_view(), name='search-table-match'),
+    path('search/table/match/', SearchTableMatchView.as_view(),
+         name='search-table-match'),
     path('search/match/filter', filter_match_view, name='filter-match'),
     path('autocomplete', autocomplete_city, name='city-autocomplete'),
     path('current_coordinates', get_user_current_coordinates,
-         name='current-coordinates')
+         name='current-coordinates'),
 ]
 
 

@@ -16,9 +16,12 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView
 
 from core.models.registration import Registration
+from core.models.match import Match
+
+from django.shortcuts import redirect
 
 
-class CreateMatchView(View, LoginRequiredMixin):
+class CreateMatchView(LoginRequiredMixin, View):
     template_name = 'match/match_creation.html'
 
     def get_context_data(self,  **kwargs):
@@ -95,7 +98,7 @@ class CreateMatchView(View, LoginRequiredMixin):
             return render(request, self.template_name, context)
 
 
-class MatchListView(ListView):
+class MatchListView(LoginRequiredMixin, ListView):
     model = Match
     template_name = 'match/match_list.html'
     paginate_by = 4
@@ -104,7 +107,7 @@ class MatchListView(ListView):
         return Match.objects.filter(administrator=self.request.user.player)
 
 
-class MatchDetailView(DetailView):
+class MatchDetailView(LoginRequiredMixin, DetailView):
     model = Match
     template_name = "match/match_detail.html"
 
@@ -118,4 +121,23 @@ class MatchDetailView(DetailView):
         context = super(MatchDetailView, self).get_context_data(**kwargs)
 
         context['players'] = self.object.players.all()
+        context['player_in_match'] = self.get_object().match_has_player(self.request.user.player)
+
         return context
+
+    def post(self, request, *args, **kwargs):
+
+        player = request.user.player
+
+        if request.POST['action'] == "S'inscrire":
+
+            match_id = request.POST.get('match_id')
+
+            match = Match.objects.get(id=match_id)
+
+            Registration.create_registration(match=match, player=player,
+                                             invitation=None, match_request=None)
+
+            messages.info(request, "Vous vous êtes inscrit dans ce match!")
+
+        return redirect(f"/match/detail/{match_id}")

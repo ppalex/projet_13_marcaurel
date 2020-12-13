@@ -10,11 +10,85 @@
     </div>
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
+            <div class="row">
+                <div class="col">
+                
+                    {% if match.classification == 'public' and user != match.administrator.user %}    
+                        
+                        {% if  player_in_match %}
+                        <form action="" method="POST" name="">                        
+                            {% csrf_token %}
+                            <input type="submit" name="action" value="Se désinscrire"
+                            class="btn btn-danger"
+                                id="save_substitute_{{ match.id }}" />
+                            <input type="hidden" name="match_id" value="{{ match.id }}">
+                    
+                        </form>
+                        
+                        {% else %}
+
+                        <form action="" method="POST" name="">                        
+                            {% csrf_token %}
+                            <input type="submit" name="action" value="S'inscrire"
+                            class="btn btn-success"
+                                id="save_substitute_{{ match.id }}" />
+                            <input type="hidden" name="match_id" value="{{ match.id }}">
+                    
+                        </form>
+                        {% endif %}
+
+                   
+                    
+                    {% else %}
+
+                    <form action="" method="POST" name="">                        
+                        {% csrf_token %}
+                        <input type="submit" name="action" value="Annuler le match"
+                        class="btn btn-danger"
+                            id="save_substitute_{{ match.id }}" />
+                        <input type="hidden" name="match_id" value="{{ match.id }}">
+                
+                    </form>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col">
+                    {% if match.classification == 'public' and user != match.administrator.user %}    
+                        
+                    {% if  player_in_match %}
+                 
+                    
+                    {% else %}
+
+                 
+                    {% endif %}
+
+               
+                
+                {% else %}
+
+                <form action="" method="POST" name="">                        
+                    {% csrf_token %}
+                    <input type="submit" name="action" value="Modifier le match"
+                    class="btn btn-success"
+                        id="save_substitute_{{ match.id }}" />
+                    <input type="hidden" name="match_id" value="{{ match.id }}">
             
-            <div class="rowr">
+                </form>
+
+                {% endif %}
+                    
+                </div>
+
+
+            </div>
+            <hr>
+            <div class="row">
                 <div class="col-xxl-6 col-xl-6">
                     <div class="container">
-                        <h3>Joueurs</h3>
+                        <h3>Joueurs inscrits</h3>
                         <ul class="list-group">
 
                             {% for player in players %}

@@ -11,8 +11,10 @@ import django_tables2 as tables
 
 from .tables import MatchTable
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class SearchMapMatchView(View):
+
+class SearchMapMatchView(LoginRequiredMixin, View):
 
     template_name = "search_manager/search_map_match.html"
 
@@ -26,7 +28,7 @@ class SearchMapMatchView(View):
         return render(request, self.template_name, context)
 
 
-class SearchTableMatchView(tables.SingleTableView):
+class SearchTableMatchView(LoginRequiredMixin, tables.SingleTableView):
     table_class = MatchTable
     queryset = Match.objects.all()
 

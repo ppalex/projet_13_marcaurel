@@ -20,6 +20,12 @@ class Registration(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, default=None)
     match = models.ForeignKey(Match, on_delete=models.CASCADE, default=None)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['player', 'match'], name='unique_player_for_match')
+        ]
+
     @classmethod
     def create_registration(cls, match, player, invitation, match_request):
 

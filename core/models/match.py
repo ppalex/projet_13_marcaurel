@@ -33,3 +33,10 @@ class Match(models.Model):
         related_name='administrator')
 
     players = models.ManyToManyField(Player, through='Registration')
+
+    def match_has_player(self, player):
+        if self.players.filter(id=player.id).exists():
+            return True
+
+        else:
+            return False
