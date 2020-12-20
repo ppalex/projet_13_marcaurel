@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% for match in match_list %}
+
+
+<div class="card-deck">
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <h5 class="card-title">Ce match aura lieu le: {{ match.fixture|date:'d-m-Y' }} à {{ match.fixture|date:'H:m' }}  </h5>
+                    <p class="card-text">Créé par: {{ match.administrator.user }}</p>
+                    <p class="card-text">Type: {{ match.classification }}</p>
+                    <a href="{% url 'match-detail' match.id %}" class="btn btn-primary">Consulter le match</a>
+                </div>
+                <div class="col-md-3">
+                    <p class="card-text">{{ match.available_place }} places disponibles</p>
+                    <p class="card-text">{{ match.num_player}}/{{ match.capacity }}</p>
+                    <p class="card-text">Où: {{ match.address.city }}</p>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endfor %}
+{% endblock %}

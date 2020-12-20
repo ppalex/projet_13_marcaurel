@@ -2,9 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 
+from core.models.player import Player
 from core.models.location import Location
 from core.models.match import Match
 from core.models.address import Address
+from core.models.match_request import MatchRequest
 from .forms.match_creation_form import CreateMatchForm
 from .forms.address_creation_form import CustomCreateAddressForm
 
@@ -19,6 +21,10 @@ from core.models.registration import Registration
 from core.models.match import Match
 
 from django.shortcuts import redirect
+
+from django.utils import timezone
+
+import pdb
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -111,33 +117,79 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
     model = Match
     template_name = "match/match_detail.html"
 
-    def get_object(self):
-        id = self.kwargs.get("id")
-
-        return get_object_or_404(Match, id=id)
-
     def get_context_data(self, **kwargs):
 
         context = super(MatchDetailView, self).get_context_data(**kwargs)
 
+        match_id = self.kwargs.get("pk")
         context['players'] = self.object.players.all()
-        context['player_in_match'] = self.get_object().match_has_player(self.request.user.player)
+        context['player_in_match'] = self.get_object(
+        ).match_has_player(self.request.user.player)
+
+        context['requests_count'] = MatchRequest.objects.count_pending_requests(
+            match_id)
+
+        context['requests'] = MatchRequest.objects.get_pending_requests(
+            match_id)
 
         return context
 
     def post(self, request, *args, **kwargs):
 
         player = request.user.player
+        match_id = request.POST.get('match_id')
+        match = Match.objects.get(id=match_id)
 
         if request.POST['action'] == "S'inscrire":
 
-            match_id = request.POST.get('match_id')
-
-            match = Match.objects.get(id=match_id)
-
             Registration.create_registration(match=match, player=player,
-                                             invitation=None, match_request=None)
+                                             invitation=None,
+                                             match_request=None)
 
             messages.info(request, "Vous vous êtes inscrit dans ce match!")
 
+        if request.POST['action'] == "Se désinscrire":
+
+            registration = Registration.objects.filter(
+                match=match, player=player)
+
+            registration.delete()
+
+            messages.info(request, "Vous vous êtes désinscrit de ce match!")
+
+        if request.POST["action"] == "Demande d'inscription":
+
+            MatchRequest.objects.create(
+                status="pending",
+                request_date=timezone.now(),
+                by_player=player,
+                for_match=match
+            )
+            messages.info(request, "Votre demande a été envoyée")
+
+        if request.POST['action'] == "Accepter":
+            request_id = request.POST.get('request_id')
+            match_request = MatchRequest.objects.get_request(
+                request_id)
+            match_request.update(status="accepted")
+
+            Registration.create_registration(
+                match_request=match_request.first(),
+                invitation=None,
+                player=match_request.first().by_player,
+                match=match,
+            )
+
         return redirect(f"/match/detail/{match_id}")
+
+
+class MatchSubscriptionListView(LoginRequiredMixin, ListView):
+    model = Match
+    template_name = 'match/match_subscription_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+
+        player = self.request.user.player
+
+        return player.match_set.all()

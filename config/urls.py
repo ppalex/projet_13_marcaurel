@@ -22,7 +22,7 @@ from users.views import RegisterView
 from users.views import CustomLoginView, CustomLogoutView
 from users.views import UserSettingsView
 
-from match.views import CreateMatchView, MatchListView, MatchDetailView
+from match.views import CreateMatchView, MatchListView, MatchDetailView, MatchSubscriptionListView
 
 from search_manager.views import SearchMapMatchView, SearchTableMatchView
 from search_manager.ajax_view import (filter_match_view, autocomplete_city,
@@ -37,8 +37,10 @@ urlpatterns = [
     path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
     path('match/list/', MatchListView.as_view(), name='match-list'),
-    path('match/detail/<int:id>', MatchDetailView.as_view(), name='match-detail'),
-    path('search/match/', SearchMapMatchView.as_view(), name='search-map-match'),
+    path('match/subscription/', MatchSubscriptionListView.as_view(),
+         name='match-subscription'),
+    path('match/detail/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),
+    path('search/map/match/', SearchMapMatchView.as_view(), name='search-map-match'),
     path('search/table/match/', SearchTableMatchView.as_view(),
          name='search-table-match'),
     path('search/match/filter', filter_match_view, name='filter-match'),

@@ -5,10 +5,17 @@ from core.models.player import Player
 from core.models.match import Match
 from core.models.match_request import MatchRequest
 
+from core.managers.registration_manager import RegistrationManager
+
 from django.utils import timezone
 
 
 class Registration(models.Model):
+
+    STATUS_CHOICES = (('opened', 'Ouvert'),
+                      ('closed', 'Clôturé'))
+
+    status = models.TextField(max_length=15, choices=STATUS_CHOICES)
     join_date = models.DateTimeField(null=True, blank=True)
 
     invitation = models.OneToOneField(
@@ -19,6 +26,8 @@ class Registration(models.Model):
 
     player = models.ForeignKey(Player, on_delete=models.CASCADE, default=None)
     match = models.ForeignKey(Match, on_delete=models.CASCADE, default=None)
+
+    objects = RegistrationManager()
 
     class Meta:
         constraints = [
@@ -31,10 +40,12 @@ class Registration(models.Model):
 
         now = timezone.now()
 
-        registration = cls(join_date=now,
-                           invitation=invitation,
-                           match_request=match_request,
-                           player=player,
-                           match=match)
+        registration = cls(
+            status="opened",
+            join_date=now,
+            invitation=invitation,
+            match_request=match_request,
+            player=player,
+            match=match)
 
         registration.save()

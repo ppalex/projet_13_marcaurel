@@ -4,6 +4,9 @@ from core.models.location import Location
 from core.models.address import Address
 from core.models.player import Player
 
+from core.managers.match_manager import MatchManager
+from core.managers.match_request_manager import MatchRequestManager
+
 
 class Match(models.Model):
 
@@ -33,6 +36,8 @@ class Match(models.Model):
         related_name='administrator')
 
     players = models.ManyToManyField(Player, through='Registration')
+
+    objects = MatchManager()
 
     def match_has_player(self, player):
         if self.players.filter(id=player.id).exists():
