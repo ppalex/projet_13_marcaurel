@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% for invitation in objects_list %}
+<div class="card text-center">
+    <div class="card-header">
+        Invitation pour un match
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Invité par {{ invitation.by_player}}</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Consulter le match</a>
+    </div>
+    <div class="card-footer text-muted">
+        {{invitation.invitation_date}}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

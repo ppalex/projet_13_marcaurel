@@ -3,6 +3,8 @@ from django.db import models
 from core.models.player import Player
 from core.models.match import Match
 
+from core.managers.invitation_manager import InvitationManager
+
 
 class Invitation(models.Model):
 
@@ -20,3 +22,5 @@ class Invitation(models.Model):
         Player, on_delete=models.CASCADE, related_name='for_player')
 
     for_match = models.ForeignKey(Match, on_delete=models.CASCADE)
+
+    objects = InvitationManager()

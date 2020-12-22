@@ -6,6 +6,8 @@ from core.models.location import Location
 
 from django.contrib.gis.geos import Point
 
+from core.managers.player_manager import PlayerManager
+
 
 class Player(models.Model):
 
@@ -17,6 +19,8 @@ class Player(models.Model):
                                                   symmetrical=False)
 
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+
+    objects = PlayerManager()
 
     def update_location(self, latitude, longitude):
 

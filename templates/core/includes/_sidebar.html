@@ -29,7 +29,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Mes matchs</span>
+            <span>Organisateur</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -57,14 +57,14 @@
     <li class="nav-item">
         <a class="nav-link" href="">
             <i class="fas fa-fw fa-table"></i>
-            <span>Mes demandes en cours</span></a>
+            <span>Demandes envoyées</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{% url 'player-invitations' %}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Mes invitations</span></a>
+            <span>Invitation reçues</span></a>
     </li>
    
     <!-- Divider -->

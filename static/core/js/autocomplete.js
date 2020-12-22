@@ -4,3 +4,11 @@ $(function () {
     });
     
 });
+
+$(function () {
+    $("#player-search").autocomplete({
+        source: '/player-autocomplete',
+        
+    });
+    
+});

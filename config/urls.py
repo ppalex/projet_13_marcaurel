@@ -18,15 +18,17 @@ from django.urls import path
 
 from core.views import index
 
-from users.views import RegisterView
-from users.views import CustomLoginView, CustomLogoutView
-from users.views import UserSettingsView
+from users.views import (RegisterView, CustomLoginView,
+                         CustomLogoutView, UserSettingsView)
 
-from match.views import CreateMatchView, MatchListView, MatchDetailView, MatchSubscriptionListView
+from match.views import (CreateMatchView, MatchListView,
+                         MatchDetailView, MatchSubscriptionListView)
 
 from search_manager.views import SearchMapMatchView, SearchTableMatchView
 from search_manager.ajax_view import (filter_match_view, autocomplete_city,
-                                      get_user_current_coordinates)
+                                      get_user_current_coordinates, autocomplete_player)
+
+from player.views import PlayerInvitationListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,8 +47,11 @@ urlpatterns = [
          name='search-table-match'),
     path('search/match/filter', filter_match_view, name='filter-match'),
     path('autocomplete', autocomplete_city, name='city-autocomplete'),
+    path('player-autocomplete', autocomplete_player, name='player-autocomplete'),
     path('current_coordinates', get_user_current_coordinates,
          name='current-coordinates'),
+    path('player/invitations/', PlayerInvitationListView.as_view(),
+         name='player-invitations')
 ]
 
 

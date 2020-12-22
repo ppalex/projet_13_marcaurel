@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from core.models.address import Address
 from core.models.match import Match
 
+from core.models.player import Player
+
 from .utils import km_to_degrees
 
 
@@ -77,6 +79,32 @@ def autocomplete_city(request):
             addresses.append(address.city)
 
         return JsonResponse(addresses, safe=False)
+
+    return None
+
+
+def autocomplete_player(request):
+    """This function is used to autocomplete search bar with products
+    from database.
+
+    Args:
+        request ([HttpRequest]): Contains the metadata about the request.
+
+    Returns:
+        [ HttpResponse]: Contains the response for the home page view.
+    """
+
+    if 'term' in request.GET:
+
+        query = Player.objects.get_player_name_start_with(
+            request.GET.get('term'))
+
+        players = list()
+
+        for player in query:
+            players.append(player.user.username)
+
+        return JsonResponse(players, safe=False)
 
     return None
 
