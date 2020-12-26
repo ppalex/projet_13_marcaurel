@@ -128,6 +128,7 @@
                             </div>
                         </div>
                     </div>
+
                     {% endblock %}
                 </div>
             </div>
@@ -172,13 +173,12 @@
         </div>
     </div>
 
-
-
 </body>
 
 <!-- Bootstrap core JavaScript-->
 <script src="{% static 'core/vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{% static 'core/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
@@ -193,11 +193,16 @@
 <!-- <script src="{% static 'core/js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'core/js/demo/chart-pie-demo.js' %}"></script> -->
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="{% static 'core/js/autocomplete.js' %}"></script>
 
+<script type="module" src="{% static 'core/js/autocomplete.js' %}"></script>
 <script src="{% static 'core/js/messages.js' %}"></script>
+<script type="module" src="{% static 'core/js/add_player_invitation.js' %}"></script>
 
+
+<script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{% block javascript %}
+
+{% endblock %}
 
 </html>

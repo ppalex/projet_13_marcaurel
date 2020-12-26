@@ -563,9 +563,13 @@ pre code {
   max-height: 300px;
   max-width: 300px;
   overflow-y: auto;
-  /* prevent horizontal scrollbar */
   overflow-x: auto;
 }
+
+
+ .row.form-row.spacer {
+   margin-bottom: 10px;
+ }
 
 
 @media (min-width: 576px) {

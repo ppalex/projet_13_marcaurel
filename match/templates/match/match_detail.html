@@ -58,13 +58,9 @@
                                                         class="btn btn-success btn-sm" />
                                                     <input type="hidden" name="request_id" value="{{ request.id }}">
                                                     <input type="hidden" name="match_id" value="{{ match.id }}">
-
-
                                                 </form>
-
                                             </td>
                                         </tr>
-
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -78,7 +74,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="card">
@@ -86,14 +81,10 @@
     <div class="card-header border-bottom">
         <div class="row">
             <div class="col">
-
                 <h1 class="h4 text-gray-900 mb-4"> Détail du match</h5>
-
             </div>
-
             <div class="col">
-
-                <a data-target="#invitation-modal" data-toggle="modal" href="#invitation-modal"
+                <a data-target="#invitation-modal" id="invitation_modal" data-toggle="modal" href="#invitation-modal"
                     class="btn btn-primary btn-icon-split">
                     <span class="icon text-white-50">
                         <i class="fas fa-users"></i>
@@ -104,36 +95,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="invitation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Inviter des joueurs</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body ui-front">
-                    <div class="container">
-                        <div class="form-group">
-
-                            <label for>Nom du joueur</label>
-
-                            <input class="form-control" id="player-search" type="text" name="player"
-                                placeholder="Entrer le nom d'un joueur">
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Envoyer</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include 'player/includes/_invitation_form.html' %}
 
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
@@ -142,20 +104,15 @@
                     <div class="container">
                         <h3>Joueurs inscrits</h3>
                         <ul class="list-group">
-
                             {% for player in players %}
                             <li class="list-group-item">{{ player.user.username }}</li>
-
                             {% endfor %}
-
                         </ul>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <br>
@@ -211,7 +168,6 @@
                 <input type="submit" name="action" value="S'inscrire" class="btn btn-success"
                     id="subscribe_{{ match.id }}" />
                 <input type="hidden" name="match_id" value="{{ match.id }}">
-
             </form>
 
         </div>
@@ -249,8 +205,22 @@
         {% endif %}
 
     </div>
-
-
-
 </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script>
+
+    document.formHasErrors = {% if player_form.errors %} true {% else %} false {% endif %};
+    $(document).ready(function () {
+        if (document.formHasErrors) {
+            console.log('true');
+            $('#invitation-modal').modal('toggle');
+        }
+    });
+</script>
+
 {% endblock %}

@@ -7,6 +7,8 @@ from core.models.location import Location
 from core.models.match import Match
 from core.models.address import Address
 from core.models.match_request import MatchRequest
+from core.models.invitation import Invitation
+
 from .forms.match_creation_form import CreateMatchForm
 from .forms.address_creation_form import CustomCreateAddressForm
 
@@ -23,6 +25,8 @@ from core.models.match import Match
 from django.shortcuts import redirect
 
 from django.utils import timezone
+
+from player.forms.invitation_form import InvitationForm, InvitationFormset
 
 import pdb
 
@@ -132,6 +136,8 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
         context['requests'] = MatchRequest.objects.get_pending_requests(
             match_id)
 
+        context['player_form'] = InvitationFormset()
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -179,6 +185,31 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                 player=match_request.first().by_player,
                 match=match,
             )
+
+        if request.POST['action'] == "Inviter":
+            player_formset = InvitationFormset(request.POST)
+
+            if player_formset.is_valid():
+                for form in player_formset:
+
+                    if form.cleaned_data.get('player_name'):
+                        Invitation.objects.create(
+                            status="pending",
+                            invitation_date=timezone.now(),
+                            by_player=player,
+                            for_player=Player.objects.get_player(
+                                form.cleaned_data.get('player_name')).first(),
+                            for_match=match
+                        )
+
+                return redirect(f"/match/detail/{match_id}")
+
+            else:
+                self.object = self.get_object()
+                context = self.get_context_data()
+                context['player_form'] = player_formset
+
+                return render(request, self.template_name, context)
 
         return redirect(f"/match/detail/{match_id}")
 

@@ -8,3 +8,6 @@ class PlayerManager(models.Manager):
 
     def get_player_name_start_with(self, term):
         return self.get_queryset().get_player_name_start_with(term)
+
+    def get_player(self, player_name):
+        return self.get_queryset().get_player(player_name)
