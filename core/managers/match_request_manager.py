@@ -19,3 +19,9 @@ class MatchRequestManager(models.Manager):
 
     def count_pending_requests(self, match_id):
         return self.get_queryset().count_pending_requests(match_id)
+
+    def count_player_pending_requests(self, player):
+        return self.get_queryset().count_player_pending_requests(player)
+
+    def get_player_pending_requests(self, player):
+        return self.get_queryset().get_player_pending_requests(player)

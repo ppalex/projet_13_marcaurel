@@ -50,6 +50,13 @@
                 {% include "core/includes/_messages.html" %}
                 <div class="container-fluid">
                     {% block content %}
+
+                    <div class="row">
+                        {% include "player/includes/_invitation_modal.html" %}
+                        {% include "player/includes/_request_modal.html" %}
+                    </div>
+
+
                     <div class="row justify-content-center">
                         <!-- Create Organization-->
                         <div class="col-xl-5 col-lg-6 col-md-8 col-sm-11 mt-4">

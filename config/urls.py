@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import index
+from core.views import Index
 
 from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView)
@@ -32,7 +32,7 @@ from player.views import PlayerInvitationListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', index, name='index'),
+    path('index/', Index.as_view(), name='index'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),

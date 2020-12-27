@@ -209,6 +209,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                 context = self.get_context_data()
                 context['player_form'] = player_formset
 
+
                 return render(request, self.template_name, context)
 
         return redirect(f"/match/detail/{match_id}")
