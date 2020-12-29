@@ -24,4 +24,21 @@ services:
 
     depends_on:
       - db
+      - redis
+
+  celery:
+    build: .
+    command: celery -A tasks_manager worker -l INFO
+    volumes: 
+      - .:/marcaurel
+    env_file:
+      - ./.env.dev
+    depends_on:
+        - web
+        - redis
+
+  redis:
+    image: "redis:alpine"
+
+    
 

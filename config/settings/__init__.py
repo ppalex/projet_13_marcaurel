@@ -27,11 +27,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")\
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 # ALLOWED_HOSTS = ['*']
 
-INTERNAL_IPS = os.environ.get("INTERNAL_IPS").split()
+# INTERNAL_IPS = os.environ.get("INTERNAL_IPS").split()
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'player.apps.PlayerConfig',
     'match.apps.MatchConfig',
     'api_manager.apps.ApimanagerConfig',
+    'tasks_manager.apps.TasksManagerConfig',
     'leaflet',
     'search_manager',
     'django_filters',
@@ -154,3 +155,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
