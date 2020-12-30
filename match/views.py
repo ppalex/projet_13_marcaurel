@@ -79,7 +79,8 @@ class CreateMatchView(LoginRequiredMixin, View):
 
                 num_player=1,
                 classification=match_form.cleaned_data['classification'],
-                fixture=match_form.cleaned_data['fixture'],
+                start_fixture=match_form.cleaned_data['start_fixture'],
+                end_fixture=match_form.cleaned_data['end_fixture'],
                 capacity=match_form.cleaned_data['capacity'],
                 available_place=match_form.cleaned_data['capacity']-1,
                 full=False,

@@ -29,9 +29,9 @@ def filter_match_view(request, *args, **kwargs):
         value = request.POST.get('available_place')
         kwargs[key] = value
 
-    if (request.POST.get('fixture') != ''):
-        key = '{0}__{1}'.format('fixture', 'contains')
-        value = request.POST.get('fixture')
+    if (request.POST.get('start_fixture') != ''):
+        key = '{0}__{1}'.format('start_fixture', 'contains')
+        value = request.POST.get('start_fixture')
         kwargs[key] = value
 
     if (request.POST.get('location') != ''):

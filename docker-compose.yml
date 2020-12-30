@@ -28,7 +28,7 @@ services:
 
   celery:
     build: .
-    command: celery -A tasks_manager worker -l INFO
+    command: celery -A tasks_manager worker -l INFO -B
     volumes: 
       - .:/marcaurel
     env_file:

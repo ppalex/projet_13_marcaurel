@@ -7,20 +7,20 @@ class MatchFormFilter(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MatchFormFilter, self).__init__(*args, **kwargs)
         self.fields['classification'].required = False
-        self.fields['fixture'].required = False
+        self.fields['start_fixture'].required = False
         self.fields['available_place'].required = False
         self.fields['location'].required = False
 
     class Meta:
         model = Match
-        fields = ('classification', 'fixture', 'available_place', 'location')
+        fields = ('classification', 'start_fixture', 'available_place', 'location')
 
         widgets = {
             'classification': forms.Select(attrs={
                 'class': 'form-control',
                 'type': 'text'}),
 
-            'fixture': forms.DateInput(format=('%Y-%m-%d'), attrs={
+            'start_fixture': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'class': 'form-control',
                 'placeholder': 'Choisissez une date',
                 'type': 'date'}),

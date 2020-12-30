@@ -25,8 +25,19 @@
                                     {{ match_form.classification }}
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="small mb-1">Date</label>
-                                    {{ match_form.fixture }}
+                                 
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Coup d'envoi à</label>
+                                    {{ match_form.start_fixture }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Fin du match à</label>
+                                    {{ match_form.end_fixture }}
 
                                 </div>
 
@@ -34,11 +45,15 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
+                                    {% for error in match_form.start_fixture.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
 
                                 </div>
                                 <div class="form-group col-md-6">
 
-                                    {% for error in match_form.fixture.errors %}
+                                    {% for error in match_form.end_fixture.errors %}
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}

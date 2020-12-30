@@ -20,7 +20,8 @@ class PlayerAdmin(OSMGeoAdmin):
 @admin.register(Match)
 class MatchAdmin(OSMGeoAdmin):
 
-    list_display = ('classification', 'fixture', 'location', 'administrator')
+    list_display = ('classification', 'start_fixture',
+                    'end_fixture', 'location', 'administrator')
 
 
 @admin.register(Location)

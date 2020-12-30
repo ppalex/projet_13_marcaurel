@@ -7,3 +7,6 @@ class MatchQueryset(models.QuerySet):
 
     def count_pending_requests(self, match_id):
         return self.filter(id=match_id, status="pending").count()
+
+    def get_active_match(self):
+        return self.filter(cancelled=False, over=False)

@@ -15,7 +15,8 @@ class Match(models.Model):
     classification = models.CharField(
         max_length=255, choices=CLASSIFICATION_CHOICES)
 
-    fixture = models.DateTimeField(auto_now=False, auto_now_add=False)
+    start_fixture = models.DateTimeField(auto_now=False, auto_now_add=False)
+    end_fixture = models.DateTimeField(auto_now=False, auto_now_add=False)
     num_player = models.IntegerField()
     available_place = models.IntegerField()
     capacity = models.IntegerField()

@@ -23,7 +23,7 @@ class MatchTable(tables.Table):
     class Meta:
         model = Match
 
-        fields = ('classification', 'fixture', 'administrator',
+        fields = ('classification', 'start_fixture', 'administrator',
                   'available_place', 'city')
 
     def render_detail(self):
