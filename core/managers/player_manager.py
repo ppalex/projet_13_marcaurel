@@ -11,3 +11,7 @@ class PlayerManager(models.Manager):
 
     def get_player(self, player_name):
         return self.get_queryset().get_player(player_name)
+
+    def get_player_dwithin(self, geom_object, distance):
+        return self.get_queryset().get_player_dwithin(
+            geom_object.location.coordinates, distance)

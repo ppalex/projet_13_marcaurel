@@ -52,7 +52,7 @@
                                                 <form action="" method="POST" name="">
                                                     {% csrf_token %}
                                                     <input type="submit" name="action" value="Accepter"
-                                                        class="btn btn-success btn-sm" />
+                                                        class="btn btn-success btn-sm"/>
                                                     <input type="hidden" name="request_id" value="{{ request.id }}">
                                                     <input type="hidden" name="match_id" value="{{ match.id }}">
                                                 </form>

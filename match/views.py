@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views.generic import View
 
 from core.models.player import Player
@@ -20,13 +20,13 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView
 
 from core.models.registration import Registration
-from core.models.match import Match
-
 from django.shortcuts import redirect
 
 from django.utils import timezone
 
-from player.forms.invitation_form import InvitationForm, InvitationFormset
+from player.forms.invitation_form import InvitationFormset
+
+from tasks_manager.tasks import send_alert_email_for_match_task
 
 import pdb
 
@@ -211,6 +211,11 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                 context['player_form'] = player_formset
 
                 return render(request, self.template_name, context)
+
+        if request.POST['action'] == "Envoyer l'email":
+            distance = request.POST.get('select_distance')
+            match_id = request.POST.get('match_id')
+            send_alert_email_for_match_task.delay(match_id, int(distance))
 
         return redirect(f"/match/detail/{match_id}")
 

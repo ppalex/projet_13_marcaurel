@@ -92,10 +92,20 @@
                     <span class="text">Inviter des joueurs</span>
                 </a>
             </div>
+            <div class="col">
+                <a data-target="#email-modal" id="invitation_modal" data-toggle="modal" href="#email-modal"
+                    class="btn btn-primary btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="far fa-bell"></i>
+                    </span>
+                    <span class="text">Alerter des joueurs</span>
+                </a>
+            </div>
         </div>
     </div>
 
     {% include 'player/includes/_invitation_form.html' %}
+    {% include 'match/includes/_email_alert_modal.html' %}
 
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
