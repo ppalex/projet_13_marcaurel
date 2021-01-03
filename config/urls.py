@@ -22,11 +22,13 @@ from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView)
 
 from match.views import (CreateMatchView, MatchListView,
-                         MatchDetailView, MatchSubscriptionListView)
+                         MatchDetailView, MatchSubscriptionListView,
+                         cancel_match_request)
 
 from search_manager.views import SearchMapMatchView, SearchTableMatchView
 from search_manager.ajax_view import (filter_match_view, autocomplete_city,
-                                      get_user_current_coordinates, autocomplete_player)
+                                      get_user_current_coordinates,
+                                      autocomplete_player)
 
 from player.views import PlayerInvitationListView
 
@@ -51,7 +53,9 @@ urlpatterns = [
     path('current_coordinates', get_user_current_coordinates,
          name='current-coordinates'),
     path('player/invitations/', PlayerInvitationListView.as_view(),
-         name='player-invitations')
+         name='player-invitations'),
+    path('cancel_match_request/<int:pk>/',
+         cancel_match_request, name='cancel-match-request')
 ]
 
 

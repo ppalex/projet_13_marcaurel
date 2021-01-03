@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.gis.geos import fromstr, Point
 from django.contrib.gis.db.models.functions import Distance
@@ -10,6 +9,7 @@ from django.views.generic import TemplateView
 
 from core.models.invitation import Invitation
 from core.models.match_request import MatchRequest
+import pdb
 
 
 class Index(LoginRequiredMixin, TemplateView):

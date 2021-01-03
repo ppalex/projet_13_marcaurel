@@ -20,9 +20,5 @@ class MatchRequest(models.Model):
 
     objects = MatchRequestManager()
 
-    # class Meta:
-    #     constraints = [
-    #         models.UniqueConstraint(
-    #             fields=['by_player', 'for_match'],
-    #             name='unique_match_request_for_match')
-    #     ]
+    def cancel(self):
+        self.delete()

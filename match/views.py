@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 
 from core.models.player import Player
 from core.models.location import Location
@@ -228,5 +229,13 @@ class MatchSubscriptionListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
 
         player = self.request.user.player
-
         return player.match_set.all()
+
+
+@login_required
+def cancel_match_request(request, pk):
+    if request.method == "POST":
+        match_request = MatchRequest.objects.get_match_request_by_id(pk)
+        match_request.cancel()
+
+    return redirect("index")

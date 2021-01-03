@@ -8,6 +8,9 @@ class MatchRequestManager(models.Manager):
     def get_queryset(self):
         return MatchRequestQueryset(self.model, using=self._db)
 
+    def get_match_request_by_id(self, request_id):
+        return self.get_queryset().get_match_request_by_id(request_id)
+
     def get_match_request(self, match_id):
         return self.get_queryset().get_match_requests(match_id)
 
