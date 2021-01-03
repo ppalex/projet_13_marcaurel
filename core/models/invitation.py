@@ -24,3 +24,7 @@ class Invitation(models.Model):
     for_match = models.ForeignKey(Match, on_delete=models.CASCADE)
 
     objects = InvitationManager()
+
+    def decline(self):
+        self.status = 'refused'
+        self.save()

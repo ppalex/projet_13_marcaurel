@@ -1,73 +1,83 @@
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
 
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-
-                        <a data-target="#pending-modal" data-toggle="modal"
-                            class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
-                            href="#pending-modal">Invitations en attente</a>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ invitations_count }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
+                    <a data-target="#pending-modal" data-toggle="modal"
+                        class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
+                        href="#pending-modal">Invitations en attente</a>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ invitations_count }}</div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-comments fa-2x text-gray-300"></i>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="pending-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Liste des demandes</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Joueur</th>
-                                            <th scope="col">Date de la demande</th>
-                                            <th scope="col">Match</th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for invitation in invitations %}
-                                        <tr>
-                                            <td scope="row">{{invitation.by_player.user}}</td>                                            
-                                            <td scope="row">{{invitation.invitation_date}}</td>
-                                            <td scope="row"><a target="_blank" href="{% url 'match-detail' invitation.for_match.id %}">Détail du match</a></td>
-                                            <td>
-                                                <form action="" method="POST" name="">
-                                                    {% csrf_token %}
-                                                    <input type="submit" name="action" value="Accepter"
-                                                        class="btn btn-success btn-sm"/>
-                                                    <input type="hidden" name="request_id" value="{{ request.id }}">
-                                                    <input type="hidden" name="match_id" value="{{ match.id }}">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+<div class="modal fade" id="pending-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Invitations</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Joueur</th>
+                                        <th scope="col">Date de la demande</th>
+                                        <th scope="col">Match</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for invitation in invitations %}
+                                    <tr>
+                                        <td scope="row">{{invitation.by_player.user}}</td>
+                                        <td scope="row">{{invitation.invitation_date}}</td>
+                                        <td scope="row">
+                                                <a href="{% url 'match-detail' invitation.for_match.id %}"
+                                                class="btn btn-primary btn-sm">Consulter</a></td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <form action="" method="POST" name="">
+                                                        {% csrf_token %}
+                                                        <input type="submit" name="action" value="Accepter"
+                                                            class="btn btn-success btn-sm" />
+                                                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                                                        <input type="hidden" name="match_id" value="{{ match.id }}">
+                                                    </form>
+                                                </div>
+                                                <div class="col">
+                                                    <form action="{% url 'decline-match-invitation' invitation.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-danger btn-sm" type="submit">Refuser</button>
+                                                    </form>
+                                                </div>
+                                            </div>                                         
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
+</div>

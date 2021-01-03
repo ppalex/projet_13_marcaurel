@@ -9,7 +9,6 @@ from django.views.generic import TemplateView
 
 from core.models.invitation import Invitation
 from core.models.match_request import MatchRequest
-import pdb
 
 
 class Index(LoginRequiredMixin, TemplateView):

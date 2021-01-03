@@ -22,15 +22,15 @@ from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView)
 
 from match.views import (CreateMatchView, MatchListView,
-                         MatchDetailView, MatchSubscriptionListView,
-                         cancel_match_request)
+                         MatchDetailView, MatchSubscriptionListView)
 
 from search_manager.views import SearchMapMatchView, SearchTableMatchView
 from search_manager.ajax_view import (filter_match_view, autocomplete_city,
                                       get_user_current_coordinates,
                                       autocomplete_player)
 
-from player.views import PlayerInvitationListView
+from player.views import (PlayerInvitationListView, cancel_match_request,
+                          decline_match_invitation)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -55,7 +55,9 @@ urlpatterns = [
     path('player/invitations/', PlayerInvitationListView.as_view(),
          name='player-invitations'),
     path('cancel_match_request/<int:pk>/',
-         cancel_match_request, name='cancel-match-request')
+         cancel_match_request, name='cancel-match-request'),
+    path('decline_match_invitation/<int:pk>/', decline_match_invitation,
+         name='decline-match-invitation')
 ]
 
 
