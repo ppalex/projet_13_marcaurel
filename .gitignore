@@ -16,6 +16,7 @@ build/
 *.egg-info/
 
 .env.dev
+.env.testing
 
 */migrations/*.py
 celerybeat-schedule
