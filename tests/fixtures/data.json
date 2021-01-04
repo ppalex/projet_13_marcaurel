@@ -46,9 +46,27 @@
         "fields": {
             "position_name": "center"
         }
+    },    
+    {
+        "model": "users.user",
+        "pk":1,
+        "fields": {
+            "username": "user1",
+            "password": "user1",
+            "email": "user1@gmail.com"
+        }
     },
     {
-        "model": "core.player",
+        "model": "users.user",
+        "pk":2,
+        "fields": {
+            "username": "user2",
+            "password": "user2",
+            "email": "user2@gmail.com"
+        }
+    },
+    {
+        "model": "users.profile",
         "pk": 1,
         "fields": {
             "firstname": "user1_firstname",
@@ -57,12 +75,15 @@
             "sex": "masculine",
             "level": "novice",
             "address": 1,
-            "positions": [1 , 3]
+            "positions": [
+                1,
+                2
+            ],
+            "user": 1
         }
     },
-
     {
-        "model": "core.player",
+        "model": "users.profile",
         "pk": 2,
         "fields": {
             "firstname": "user2_firstname",
@@ -71,41 +92,78 @@
             "sex": "masculine",
             "level": "novice",
             "address": 2,
-            "positions": [1 , 2]
+            "positions": [
+                1,
+                2
+            ],
+            "user": 2
         }
     },
-
+    {
+        "model": "core.player",
+        "pk": 1,
+        "fields": {
+            "location": 1,
+            "player_subscriptions": [],
+            "user": 1
+        }
+    },
+    {
+        "model": "core.player",
+        "pk": 2,
+        "fields": {
+            "location": 2,
+            "player_subscriptions": [],
+            "user": 2
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 1,
+        "fields": {
+            "coordinates": "POINT (30 10)"
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 2,
+        "fields": {
+            "coordinates": "POINT (35 10)"
+        }
+    },
     {
         "model": "core.match",
         "pk": 1,
         "fields": {
-            "classification":"private",
-            "fixture":"2020-01-01 01:00:00+00:00",
-            "num_player":2,
-            "capacity":10,
-            "full":"False",
-            "started":"False",
-            "cancelled":"False",
-            "over":"False",
-            "address":1,
-            "administrator":1,
-            "players":[1,2]
+            "classification": "private",
+            "start_fixture": "2020-01-01 01:00:00+00:00",
+            "end_fixture": "2020-01-01 02:00:00+00:00",
+            "num_player": 2,
+            "capacity": 10,
+            "available_place": 8,
+            "full": "False",
+            "started": "True",
+            "cancelled": "False",
+            "over": "True",
+            "address": 1,
+            "administrator": 1,
+            "players": [
+                1
+            ]
         }
     },
-
     {
         "model": "core.invitation",
         "pk": 1,
         "fields": {
-            "status":"pending",
-            "invitation_date":"2020-01-01 01:00:00+00:00",
-            "response_date":"2020-01-01 01:00:00+00:00",
-            "by_player":1,
-            "for_player":2,
-            "for_match":1             
+            "status": "pending",
+            "invitation_date": "2020-01-01 01:00:00+00:00",
+            "response_date": "2020-01-01 01:00:00+00:00",
+            "by_player": 1,
+            "for_player": 2,
+            "for_match": 1
         }
     },
-
     {
         "model": "core.registration",
         "pk": 1,
@@ -116,7 +174,6 @@
             "match": 1
         }
     },
-
     {
         "model": "core.matchrequest",
         "pk": 1,
@@ -128,5 +185,4 @@
             "for_match": 1
         }
     }
-
 ]
