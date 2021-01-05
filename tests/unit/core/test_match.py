@@ -18,14 +18,14 @@ class MatchTestCase(TestCase):
         match_queryset = Match.objects.all()
         match = match_queryset[0]
 
-        self.assertEqual(match.administrator.firstname, 'user1_firstname')
+        self.assertEqual(match.administrator.user.profile.firstname, 'user1_firstname')
 
     def test_match_player_relationship(self):
 
         match_queryset = Match.objects.all()
         match = match_queryset[0]
 
-        players = match.player.all()
+        players = match.players.all()
         player = players[1]
 
-        self.assertEqual(player.firstname, 'user2_firstname')
+        self.assertEqual(player.user.profile.firstname, 'user2_firstname')

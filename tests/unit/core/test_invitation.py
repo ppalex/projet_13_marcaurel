@@ -20,6 +20,8 @@ class InvitationTest(TestCase):
 
         self.assertEqual(invitation.invitation_date,
                          make_aware(datetime(2020, 1, 1, 1, 0, 0)))
-        self.assertEqual(invitation.by_player.firstname, 'user1_firstname')
-        self.assertEqual(invitation.for_player.firstname, 'user2_firstname')
+        self.assertEqual(invitation.by_player.user.profile.firstname,
+                         'user1_firstname')
+        self.assertEqual(invitation.for_player.user.profile.firstname,
+                         'user2_firstname')
         self.assertEqual(invitation.for_match.id, 1)

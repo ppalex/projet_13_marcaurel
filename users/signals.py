@@ -5,9 +5,10 @@ from .models.profile import Profile
 
 from core.models.player import Player
 
+
 @receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwnargs):
-    if created:
+def create_profile(sender, instance, created, **kwargs):
+    if created and not kwargs.get('raw', False):
         Profile.objects.create(user=instance)
 
 
@@ -17,6 +18,6 @@ def save_profile(sender, instance, **kwnargs):
 
 
 @receiver(post_save, sender=User)
-def create_player(sender, instance, created, **kwnargs):
-    if created:
+def create_player(sender, instance, created, **kwargs):
+    if created and not kwargs.get('raw', False):
         Player.objects.create(user=instance)

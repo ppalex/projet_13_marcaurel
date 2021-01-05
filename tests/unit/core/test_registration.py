@@ -17,5 +17,5 @@ class RegistrationTest(TestCase):
     def test_registration_relationship(self):
         registration = Registration.objects.get(id=1)
 
-        self.assertEqual(registration.player.firstname, 'user2_firstname')
+        self.assertEqual(registration.player.user.profile.firstname, 'user2_firstname')
         self.assertEqual(registration.match.id, 1)
