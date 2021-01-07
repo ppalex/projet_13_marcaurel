@@ -23,9 +23,9 @@ class IndexViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    # def test_view_url_accessible_by_name(self):
-    #     self.client.login(
-    #         username='user1', password='user1')
-    #     response = self.client.get(reverse('index'))
+    def test_view_url_accessible_by_name(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get(reverse('index'))
 
-    #     self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)

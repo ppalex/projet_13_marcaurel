@@ -17,8 +17,7 @@ class MapquestApi:
         endpoint = self.url + query
 
         try:
-            response = requests.request(
-                "GET", endpoint)
+            response = requests.get(url=endpoint)
         except requests.exceptions.Timeout:
             logging.error("Timeout error", exc_info=True)
         except requests.exceptions.TooManyRedirects:
