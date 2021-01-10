@@ -3,17 +3,15 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
 from core.models.address import Address
 
-
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
-from .models.profile import Profile
 
 
 class RegisterView(FormView):
