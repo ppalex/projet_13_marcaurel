@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-from api_manager.models.mapquest_api import MapquestApi
 from api_manager.utils.mapquest_utils import get_address_coordinates
 from unittest import mock
 
