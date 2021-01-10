@@ -13,7 +13,6 @@ class MapquestApi:
     def send_request(self, street, number, city, region):
 
         query = f"key={self.key}&location={street}+{number}+{city}+{region}"
-
         endpoint = self.url + query
 
         try:

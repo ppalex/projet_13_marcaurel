@@ -28,19 +28,21 @@
 
                                             {{ form.username }}
                                         </div>
-                                        {% for error in form.username.errors %}
-                                        <small class="alert alert-danger">
-                                            <strong>{{ error }}</strong>
-                                        </small> {% endfor %}
 
                                         <div class="form-group">
                                             {{ form.password }}
                                         </div>
 
-                                        {% for error in form.password.errors %}
-                                        <small class="alert alert-danger">
-                                            <strong>{{ error }}</strong>
-                                        </small> {% endfor %}
+                                        {% if form.errors %}
+                                        {% for k, v in form.errors.items %}                        
+                                      
+                                            <div class="alert alert-danger"> {{ v }}</div>                                          
+                                      
+                                        {% endfor %}
+
+                                        {% endif %}
+
+                                        <br>
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">

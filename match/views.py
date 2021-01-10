@@ -1,35 +1,23 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.views.generic import View
-
-
-from core.models.player import Player
-from core.models.location import Location
-from core.models.match import Match
-from core.models.address import Address
-from core.models.match_request import MatchRequest
-from core.models.invitation import Invitation
-
-from .forms.match_creation_form import CreateMatchForm
-from .forms.address_creation_form import CustomCreateAddressForm
-
 from django.contrib.gis.geos import Point
+from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.views.generic import DetailView, ListView, View
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
-from django.contrib import messages
-
-from django.views.generic import ListView, DetailView
-
+from core.models.address import Address
+from core.models.invitation import Invitation
+from core.models.location import Location
+from core.models.match import Match
+from core.models.match_request import MatchRequest
+from core.models.player import Player
 from core.models.registration import Registration
-from django.shortcuts import redirect
-
-from django.utils import timezone
-
 from player.forms.invitation_form import InvitationFormset
-
 from tasks_manager.tasks import send_alert_email_for_match_task
 
-import pdb
+from .forms.address_creation_form import CustomCreateAddressForm
+from .forms.match_creation_form import CreateMatchForm
 
 
 class CreateMatchView(LoginRequiredMixin, View):
