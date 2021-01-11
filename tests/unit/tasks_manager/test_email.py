@@ -1,6 +1,5 @@
 from django.core import mail
 from django.test import TestCase
-from unittest import mock
 
 from tasks_manager.email import send_alert_email_for_match
 
