@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from users.models.user import User
 
 
 class RegisterViewTest(TestCase):
@@ -21,7 +22,7 @@ class RegisterViewTest(TestCase):
         self.assertTemplateUsed(response, 'users/register.html')
 
 
-class LoginViewTest(TestCase):
+class CustomLoginViewTest(TestCase):
 
     def test_view_url_exists_at_desired_location(self):
         response = self.client.get('/login/')
@@ -38,3 +39,50 @@ class LoginViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/login.html')
+
+
+class CustomLogoutViewTest(TestCase):
+    fixtures = ["data.json"]
+
+    def setUp(self):
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get('logout/')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get(reverse('logout'))
+
+        self.assertEqual(response.status_code, 302)
+
+
+class UserSettingsViewTest(TestCase):
+
+    fixtures = ["data.json"]
+
+    def setUp(self):
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get('settings/profile/')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get(reverse('settings-profile'))
+
+        self.assertEqual(response.status_code, 200)

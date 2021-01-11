@@ -14,12 +14,14 @@ class CreateMatchForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'text'}),
 
-            'start_fixture': forms.DateTimeInput(format=('%Y-%m-%d %H:%M'), attrs={
+            'start_fixture': forms.DateTimeInput(format=('%Y-%m-%d %H:%M'),
+                                                 attrs={
                 'class': 'form-control',
                 'placeholder': 'Choisissez une date',
                 'type': 'datetime-local'}),
 
-            'end_fixture': forms.DateTimeInput(format=('%Y-%m-%d %H:%M'), attrs={
+            'end_fixture': forms.DateTimeInput(format=('%Y-%m-%d %H:%M'),
+                                               attrs={
                 'class': 'form-control',
                 'placeholder': 'Choisissez une date',
                 'type': 'datetime-local'}),
