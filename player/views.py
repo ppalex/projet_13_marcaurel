@@ -14,18 +14,6 @@ class PlayerInvitationListView(LoginRequiredMixin, ListView):
     template_name = "player/invitations.html"
 
 
-class PlayerSendInvitation(LoginRequiredMixin):
-
-    model = Invitation
-    template_name = "player/invitations.html"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(PlayerInvitationListView,
-                        self).get_context_data(**kwargs)
-
-        return context
-
-
 @login_required
 def cancel_match_request(request, pk):
     if request.method == "POST":
