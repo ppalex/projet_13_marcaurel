@@ -148,6 +148,29 @@
             "over": "True",
             "address": 1,
             "administrator": 1,
+            "location": 1,
+            "players": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "core.match",
+        "pk": 2,
+        "fields": {
+            "classification": "public",
+            "start_fixture": "2020-01-01 01:00:00+00:00",
+            "end_fixture": "2020-01-01 02:00:00+00:00",
+            "num_player": 2,
+            "capacity": 10,
+            "available_place": 8,
+            "full": "False",
+            "started": "True",
+            "cancelled": "False",
+            "over": "True",
+            "address": 1,
+            "administrator": 1,
+            "location": 1,
             "players": [
                 1
             ]
