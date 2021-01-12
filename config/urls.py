@@ -60,5 +60,4 @@ urlpatterns = [
          name='decline-match-invitation')
 ]
 
-
 handler404 = 'core.views.custom_page_not_found_view'

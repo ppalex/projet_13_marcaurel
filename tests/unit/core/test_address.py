@@ -9,7 +9,7 @@ class AddressTestCase(TestCase):
 
         address = Address.objects.get(id=1)
 
-        self.assertEqual(address.city, "Bruxelles")
+        self.assertEqual(address.city, "Anvers")
         self.assertEqual(address.street, "rue des bouchers")
         self.assertEqual(address.number, 1)
         self.assertEqual(address.region, "Bruxelles")

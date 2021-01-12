@@ -3,7 +3,7 @@
         "model": "core.address",
         "pk": 1,
         "fields": {
-            "city": "Bruxelles",
+            "city": "Anvers",
             "street": "rue des bouchers",
             "number": 1,
             "region": "Bruxelles"
