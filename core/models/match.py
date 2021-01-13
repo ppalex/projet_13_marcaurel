@@ -43,6 +43,5 @@ class Match(models.Model):
     def match_has_player(self, player):
         if self.players.filter(id=player.id).exists():
             return True
-
         else:
             return False

@@ -3,7 +3,6 @@ from search_manager.ajax_view import (filter_match_view, autocomplete_city,
                                       autocomplete_player)
 from users.models.user import User
 import json
-import pdb
 
 
 class FilterMatchView(TestCase):
@@ -48,18 +47,26 @@ class FilterMatchView(TestCase):
         request.user = self.user
         response = filter_match_view(request)
         json_response = json.loads(response.content)
-        
+
         self.assertSetEqual(
             set(map(lambda x: x['id'], json_response)), {2})
 
     def test_available_place_filter(self):
-        pass
+        self.client.login(username='user3', password='password')
+        data = {'classification': '',
+                'city': '',
+                'available_place': '8',
+                'start_fixture': '',
+                'location': '',
+                }
 
-    def test_start_fixture_filter(self):
-        pass
+        request = self.factory.post('/search/match/filter', data)
+        request.user = self.user
+        response = filter_match_view(request)
+        json_response = json.loads(response.content)
 
-    def test_location_filter(self):
-        pass
+        self.assertSetEqual(
+            set(map(lambda x: x['id'], json_response)), {1, 2})
 
 
 class AutocompleteCityTest(TestCase):
