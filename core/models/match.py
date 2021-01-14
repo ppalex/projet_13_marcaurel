@@ -45,3 +45,6 @@ class Match(models.Model):
             return True
         else:
             return False
+
+    def cancel(self):
+        self.delete()

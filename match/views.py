@@ -18,6 +18,8 @@ from tasks_manager.tasks import send_alert_email_for_match_task
 
 from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -218,3 +220,14 @@ class MatchSubscriptionListView(LoginRequiredMixin, ListView):
 
         player = self.request.user.player
         return player.match_set.all()
+
+
+@login_required
+def cancel_match(request, pk):
+    if request.method == "POST":
+        match = Match.objects.get_match_by_id(pk).first()
+        match.cancel()
+        messages.info(request, "Le match a été supprimé")
+        return redirect(reverse('match-list'))
+
+    return redirect(f"/match/detail/{pk}")

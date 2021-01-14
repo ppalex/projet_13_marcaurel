@@ -22,7 +22,7 @@ from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView)
 
 from match.views import (CreateMatchView, MatchListView,
-                         MatchDetailView, MatchSubscriptionListView)
+                         MatchDetailView, MatchSubscriptionListView, cancel_match)
 
 from search_manager.views import SearchMapMatchView, SearchTableMatchView
 from search_manager.ajax_view import (filter_match_view, autocomplete_city,
@@ -57,7 +57,10 @@ urlpatterns = [
     path('cancel_match_request/<int:pk>/',
          cancel_match_request, name='cancel-match-request'),
     path('decline_match_invitation/<int:pk>/', decline_match_invitation,
-         name='decline-match-invitation')
+         name='decline-match-invitation'),
+
+    path('cancel_match/<int:pk>/', cancel_match,
+         name='cancel-match')
 ]
 
 handler404 = 'core.views.custom_page_not_found_view'
