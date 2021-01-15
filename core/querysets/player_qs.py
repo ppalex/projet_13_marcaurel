@@ -12,3 +12,9 @@ class PlayerQueryset(models.QuerySet):
     def get_player_dwithin(self, geom_object, distance):
         return self.filter(location__coordinates__dwithin=(geom_object,
                                                            km_to_degrees(distance)))
+
+    def get_all_player_except_current(self, player_name):
+        return self.exclude(user__username=player_name)
+
+    def get_all_player_with_location_except_current(self, player_name):
+        return self.exclude(location__exact=None).exclude(user__username=player_name)

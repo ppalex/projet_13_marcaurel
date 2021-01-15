@@ -1,26 +1,23 @@
+{% extends "core/base.html" %}
 {% load static %}
 
+{% block content %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
 <link href="{% static 'core/css/map.css' %}" rel="stylesheet">
 <link href="{% static 'core/vendor/leaflet/MarkerCluster.Default.css' %}" rel="stylesheet">
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 <script type="text/javascript" src="{% static 'core/js/geolocation.js' %}"></script>
-
-
 <script type="text/javascript" src="{% static 'core/vendor/leaflet/leaflet.markercluster.js' %}"></script>
 
 
 <div id="mapid">
-
     <script>
-
         var map = L.map('mapid').setView([50.50, 4.80], 8);
         var markers_cluster = L.markerClusterGroup();
         geoFindMe(L, map, '{{ csrf_token }}');
@@ -33,53 +30,7 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoiYXBwMTMwOCIsImEiOiJja2liejVhOTAwZjZxMnlwZXhmbnJtc2hzIn0.Lr-IKjKKwlrfzBWVelCu7Q'
         }).addTo(map);
-
-        {% for match in object_list %}
-
-        marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
-        markers_cluster.addLayer(marker);
-        {% endfor %}
-
-        map.addLayer(markers_cluster);
     </script>
 </div>
 
-<script>
-
-    function send_data_to_backend(url, data) {
-
-        return fetch(url, {
-            method: "POST",
-            body: data
-        })
-            .then(response => response.json())
-            .catch(error => console.log(error));
-    }
-
-    let form = document.querySelector("#filter-match")
-    form.addEventListener('submit', function (event) {
-
-        event.preventDefault();
-
-        send_data_to_backend("{% url 'filter-match' %}", new FormData(form))
-            .then(response => {
-                console.log(response);
-
-                var objCount = response.length;
-
-                markers_cluster.clearLayers();
-
-                console.log(markers_cluster);
-
-                for (var x = 0; x < objCount; x++) {
-                    var curitem = response[x];
-
-                    marker = L.marker(curitem.lat_lng).bindPopup(curitem.classification);
-                    markers_cluster.addLayer(marker);
-                }
-
-                map.addLayer(markers_cluster);
-            })
-    })
-
-</script>
+{% endblock content %}

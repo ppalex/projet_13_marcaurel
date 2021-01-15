@@ -24,9 +24,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'core/css/sb-admin-2.css' %}" rel="stylesheet">
-
-
-
 </head>
 
 <body id="page-top">
@@ -128,10 +125,25 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="card-footer bg-transparent px-5 py-4">
-                                    <div class="small text-center"><a class="btn btn-block btn-secondary"
-                                            href="{% url 'search-map-match' %}">Match</a></div>
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="card-footer bg-transparent px-5 py-4">
+                                            <div class="small text-center"><a class="btn btn-block btn-secondary"
+                                                    href="{% url 'search-map-match' %}">Match</a></div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card-footer bg-transparent px-5 py-4">
+                                            <div class="small text-center"><a class="btn btn-block btn-secondary"
+                                                    href="{% url 'search-map-player' %}">Joueurs</a></div>
+                                        </div>
+
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

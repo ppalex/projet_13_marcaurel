@@ -46,9 +46,41 @@
         </div>
 
     </div>
-
-
-
-
-
 </div>
+
+
+<script>
+
+    function send_data_to_backend(url, data) {
+
+        return fetch(url, {
+            method: "POST",
+            body: data
+        })
+            .then(response => response.json())
+            .catch(error => console.log(error));
+    }
+
+    let form = document.querySelector("#filter-match")
+    form.addEventListener('submit', function (event) {
+
+        event.preventDefault();
+
+        send_data_to_backend("{% url 'filter-match' %}", new FormData(form))
+            .then(response => {                
+                var objCount = response.length;
+
+                markers_cluster.clearLayers();               
+
+                for (var x = 0; x < objCount; x++) {
+                    var curitem = response[x];
+
+                    marker = L.marker(curitem.lat_lng).bindPopup(curitem.classification);
+                    markers_cluster.addLayer(marker);
+                }
+
+                map.addLayer(markers_cluster);
+            })
+    })
+
+</script>

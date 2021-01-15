@@ -2,18 +2,20 @@
 
 {% block content %}
 {% include "search_manager/includes/_header.html" %}
-{% include "search_manager/includes/_match_filter_bar.html" %}
+
 
 {{ block.super }}
 
 <script>
-    {% block match %}
+    {% block player %}
     {% for match in object_list %}
-
-    marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
+    
+    marker = L.marker({{ match.location.lat_lng }});
     markers_cluster.addLayer(marker);
+
+
     {% endfor %}
-    {% endblock match %}
+    {% endblock player %}
     map.addLayer(markers_cluster);
 </script>
 

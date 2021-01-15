@@ -15,3 +15,9 @@ class PlayerManager(models.Manager):
     def get_player_dwithin(self, geom_object, distance):
         return self.get_queryset().get_player_dwithin(
             geom_object.location.coordinates, distance)
+
+    def get_all_player_except_current(self, player_name):
+        return self.get_queryset().get_all_player_except_current(player_name)
+
+    def get_all_player_with_location_except_current(self, player_name):
+        return self.get_queryset().get_all_player_with_location_except_current(player_name)
