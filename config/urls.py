@@ -19,7 +19,7 @@ from django.urls import path
 from core.views import Index
 
 from users.views import (RegisterView, CustomLoginView,
-                         CustomLogoutView, UserSettingsView)
+                         CustomLogoutView, UserSettingsView, ProfileView)
 
 from match.views import (CreateMatchView, MatchListView,
                          MatchDetailView, MatchSubscriptionListView,
@@ -40,6 +40,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('profile/<slug:username>', ProfileView.as_view(), name='profile'),
     path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
     path('match/list/', MatchListView.as_view(), name='match-list'),
