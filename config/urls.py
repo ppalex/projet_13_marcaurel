@@ -34,6 +34,8 @@ from search_manager.ajax_view import (filter_match_view, autocomplete_city,
 from player.views import (PlayerInvitationListView, cancel_match_request,
                           decline_match_invitation)
 
+from player.ajax_view import (player_follow)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', Index.as_view(), name='index'),
@@ -50,10 +52,12 @@ urlpatterns = [
     path('search/map/match/', SearchMapMatchView.as_view(), name='search-map-match'),
     path('search/table/match/', SearchTableMatchView.as_view(),
          name='search-table-match'),
-    path('search/map/player/', SearchMapPlayerView.as_view(), name='search-map-player'),
+    path('search/map/player/', SearchMapPlayerView.as_view(),
+         name='search-map-player'),
     path('search/match/filter', filter_match_view, name='filter-match'),
     path('autocomplete', autocomplete_city, name='city-autocomplete'),
     path('player-autocomplete', autocomplete_player, name='player-autocomplete'),
+    path('player/follow', player_follow, name='player-follow'),
     path('current_coordinates', get_user_current_coordinates,
          name='current-coordinates'),
     path('player/invitations/', PlayerInvitationListView.as_view(),
@@ -64,7 +68,8 @@ urlpatterns = [
          name='decline-match-invitation'),
 
     path('cancel_match/<int:pk>/', cancel_match,
-         name='cancel-match')
+         name='cancel-match'),
+
 ]
 
 handler404 = 'core.views.custom_page_not_found_view'

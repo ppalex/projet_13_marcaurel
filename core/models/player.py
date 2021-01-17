@@ -15,7 +15,7 @@ class Player(models.Model):
         Location, on_delete=models.RESTRICT, default=None, null=True,
         blank=True)
 
-    player_subscriptions = models.ManyToManyField("self", through="PlayerFollowing", blank=True,
+    player_subscriptions = models.ManyToManyField("self", through="PlayerSubscription", blank=True,
                                                   symmetrical=False)
 
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -31,5 +31,11 @@ class Player(models.Model):
         self.save()
 
 
-class PlayerFollowing(models.Model):
+class PlayerSubscription(models.Model):
+    follower = models.ForeignKey(
+        Player, related_name="follower", on_delete=models.CASCADE, default=None)
+
+    following = models.ForeignKey(
+        Player, related_name="following", on_delete=models.CASCADE, default=None)
+
     created = models.DateTimeField(auto_now_add=True)

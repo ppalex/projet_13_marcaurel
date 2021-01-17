@@ -12,6 +12,9 @@ class PlayerManager(models.Manager):
     def get_player(self, player_name):
         return self.get_queryset().get_player(player_name)
 
+    def get_player_by_id(self, player_id):
+        return self.get_queryset().get_player_by_id(player_id)
+
     def get_player_dwithin(self, geom_object, distance):
         return self.get_queryset().get_player_dwithin(
             geom_object.location.coordinates, distance)
@@ -21,3 +24,8 @@ class PlayerManager(models.Manager):
 
     def get_all_player_with_location_except_current(self, player_name):
         return self.get_queryset().get_all_player_with_location_except_current(player_name)
+
+
+class PlayerFollowingManager(models.Manager):
+    def get_player_following(self, follower, following):
+        return self.get_queryset().get_player_following(follower, following)

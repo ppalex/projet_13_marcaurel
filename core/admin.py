@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.gis.admin import OSMGeoAdmin
 
-from .models.player import Player
+from .models.player import Player, PlayerSubscription
 from .models.location import Location
 from .models.address import Address
 from .models.match import Match
@@ -11,10 +11,8 @@ from .models.position import Position
 from .models.match_request import MatchRequest
 
 
-@admin.register(Player)
-class PlayerAdmin(OSMGeoAdmin):
-
-    list_display = ('id', 'location', 'user')
+admin.site.register(Player, OSMGeoAdmin)
+admin.site.register(PlayerSubscription)
 
 
 @admin.register(Match)

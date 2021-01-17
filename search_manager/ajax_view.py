@@ -4,10 +4,12 @@ from core.models.address import Address
 from core.models.match import Match
 
 from core.models.player import Player
-
 from .utils import km_to_degrees
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def filter_match_view(request, *args, **kwargs):
 
     context = {
@@ -59,6 +61,7 @@ def filter_match_view(request, *args, **kwargs):
     return JsonResponse(context['object_list'], safe=False)
 
 
+@login_required
 def autocomplete_city(request):
     """This function is used to autocomplete search bar with products
     from database.
@@ -83,6 +86,7 @@ def autocomplete_city(request):
     return None
 
 
+@login_required
 def autocomplete_player(request):
     """This function is used to autocomplete search bar with products
     from database.
@@ -109,6 +113,7 @@ def autocomplete_player(request):
     return None
 
 
+@login_required
 def get_user_current_coordinates(request):
 
     latitude = request.POST.get('latitude')
