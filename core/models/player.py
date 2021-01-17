@@ -15,7 +15,7 @@ class Player(models.Model):
         Location, on_delete=models.RESTRICT, default=None, null=True,
         blank=True)
 
-    player_subscriptions = models.ManyToManyField("self", blank=True,
+    player_subscriptions = models.ManyToManyField("self", through="PlayerFollowing", blank=True,
                                                   symmetrical=False)
 
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
@@ -29,3 +29,7 @@ class Player(models.Model):
 
         self.location = location[0]
         self.save()
+
+
+class PlayerFollowing(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
