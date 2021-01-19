@@ -1,5 +1,5 @@
 from django.db import models
-from core.querysets.player_qs import PlayerQueryset
+from core.querysets.player_qs import PlayerQueryset, PlayerSubscriptionQueryset
 
 
 class PlayerManager(models.Manager):
@@ -26,6 +26,10 @@ class PlayerManager(models.Manager):
         return self.get_queryset().get_all_player_with_location_except_current(player_name)
 
 
-class PlayerFollowingManager(models.Manager):
+class PlayerSubscriptionManager(models.Manager):
+
+    def get_queryset(self):
+        return PlayerSubscriptionQueryset(self.model, using=self._db)
+
     def get_player_following(self, follower, following):
         return self.get_queryset().get_player_following(follower, following)

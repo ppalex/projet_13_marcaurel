@@ -23,6 +23,6 @@ class PlayerQueryset(models.QuerySet):
         return self.exclude(location__exact=None).exclude(user__username=player_name)
 
 
-class PlayerFollowingQueryset(models.QuerySet):
+class PlayerSubscriptionQueryset(models.QuerySet):
     def get_player_following(self, follower, following):
         return self.filter(follower=follower, following=following)

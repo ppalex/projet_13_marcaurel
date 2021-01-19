@@ -6,7 +6,8 @@ from core.models.location import Location
 
 from django.contrib.gis.geos import Point
 
-from core.managers.player_manager import PlayerManager
+from core.managers.player_manager import (
+    PlayerManager, PlayerSubscriptionManager)
 
 
 class Player(models.Model):
@@ -39,3 +40,5 @@ class PlayerSubscription(models.Model):
         Player, related_name="following", on_delete=models.CASCADE, default=None)
 
     created = models.DateTimeField(auto_now_add=True)
+
+    objects = PlayerSubscriptionManager()

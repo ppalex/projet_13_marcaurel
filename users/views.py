@@ -47,19 +47,6 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
     success_message = "Vous êtes déconnectés"
 
 
-# class ProfileView(View, LoginRequiredMixin):
-
-#     template_name = "users/profile.html"
-
-#     def get(self, request, *args, **kwargs):
-
-#         user = request.user
-#         context = {}
-#         context['user'] = user
-
-#         return render(request, self.template_name, context)
-
-
 class ProfileView(DetailView, LoginRequiredMixin):
 
     model = User

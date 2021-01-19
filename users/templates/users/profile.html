@@ -15,14 +15,14 @@
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                 width="150">
               <div class="mt-3">
-                <h4>John Doe</h4>
+                <h4>{{ user.username }}</h4>
                 <p class="text-secondary mb-1">Full Stack Developer</p>
                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-
+                
                 <a href="#" id="follow" data-id="{{ user.player.id }}"
-                  data-action="{% if request.user in user.player.followers.all %}un{% endif %}follow"
+                  data-action="{% if request.user in user.player.player_subscriptions.all  %}un{% endif %}follow"
                   class="btn btn-primary">
-                  {% if request.user not in user.player.player_subscriptions.all %}
+                  {% if user.player not in request.user.player.player_subscriptions.all %}
                   Follow
                   {% else %}
                   Unfollow
@@ -234,7 +234,12 @@
       success: function(data){
         if (data['status'] == 'ok') {
           var previous_action = $('#follow').data('action');
-          console.log("test");
+          // toggle data-action
+          $('#follow').data('action',
+            previous_action == 'follow' ? 'unfollow' : 'follow');
+          // toggle link text
+          $('#follow').text(
+            previous_action == 'follow' ? 'Unfollow' : 'Follow');
         }
 
       }
