@@ -4,14 +4,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.views.generic.edit import FormView
-
+from .models.user import User
 from core.models.address import Address
 
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
+from django.shortcuts import get_object_or_404
 
 
 class RegisterView(FormView):
@@ -46,17 +47,31 @@ class CustomLogoutView(SuccessMessageMixin, LogoutView):
     success_message = "Vous êtes déconnectés"
 
 
-class ProfileView(View, LoginRequiredMixin):
+# class ProfileView(View, LoginRequiredMixin):
 
+#     template_name = "users/profile.html"
+
+#     def get(self, request, *args, **kwargs):
+
+#         user = request.user
+#         context = {}
+#         context['user'] = user
+
+#         return render(request, self.template_name, context)
+
+
+class ProfileView(DetailView, LoginRequiredMixin):
+
+    model = User
     template_name = "users/profile.html"
 
-    def get(self, request, *args, **kwargs):
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
 
-        user = request.user
-        context = {}
-        context['user'] = user
+    def get_context_data(self, **kwargs):
 
-        return render(request, self.template_name, context)
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        return context
 
 
 class UserSettingsView(View, LoginRequiredMixin):

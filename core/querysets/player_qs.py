@@ -10,7 +10,7 @@ class PlayerQueryset(models.QuerySet):
         return self.filter(user__username=player_name)
 
     def get_player_by_id(self, player_id):
-        return self.filter(player__id=player_id)
+        return self.filter(id=player_id)
 
     def get_player_dwithin(self, geom_object, distance):
         return self.filter(location__coordinates__dwithin=(geom_object,

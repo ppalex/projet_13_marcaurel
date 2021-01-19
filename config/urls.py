@@ -66,7 +66,6 @@ urlpatterns = [
          cancel_match_request, name='cancel-match-request'),
     path('decline_match_invitation/<int:pk>/', decline_match_invitation,
          name='decline-match-invitation'),
-
     path('cancel_match/<int:pk>/', cancel_match,
          name='cancel-match'),
 
