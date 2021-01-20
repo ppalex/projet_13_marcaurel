@@ -31,6 +31,12 @@ class Player(models.Model):
         self.location = location[0]
         self.save()
 
+    def get_followers_count(self):
+        return self.following.count()
+
+    def get_followings_count(self):
+        return self.follower.count()
+
 
 class PlayerSubscription(models.Model):
     follower = models.ForeignKey(

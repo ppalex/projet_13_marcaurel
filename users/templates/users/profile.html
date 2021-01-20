@@ -15,20 +15,26 @@
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                 width="150">
               <div class="mt-3">
-                <h4>{{ user.username }}</h4>
+                <h4>{{ player.user.username }}</h4>
                 <p class="text-secondary mb-1">Full Stack Developer</p>
                 <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
                 
-                <a href="#" id="follow" data-id="{{ user.player.id }}"
-                  data-action="{% if request.user in user.player.player_subscriptions.all  %}un{% endif %}follow"
+                <a href="#" id="follow" data-id="{{ player.id }}"
+                  data-action="{% if player in user.player.player_subscriptions.all  %}un{% endif %}follow"
                   class="btn btn-primary">
-                  {% if user.player not in request.user.player.player_subscriptions.all %}
+                  {% if player not in user.player.player_subscriptions.all %}
                   Follow
                   {% else %}
                   Unfollow
                   {% endif %}
                 </a>
-                <button class="btn btn-outline-primary">Message</button>
+                <span class="count">
+                  <span class="total">{{ followers_count }}</span>
+                  Abonné(s)
+                </span>
+                <span class="total">{{ followings_count }}</span>
+                  Abonnement(s)
+                </span>
               </div>
             </div>
           </div>

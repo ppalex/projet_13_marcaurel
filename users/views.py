@@ -8,11 +8,13 @@ from django.views.generic import View, DetailView
 from django.views.generic.edit import FormView
 from .models.user import User
 from core.models.address import Address
+from core.models.player import Player
 
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
 from django.shortcuts import get_object_or_404
+import pdb
 
 
 class RegisterView(FormView):
@@ -53,11 +55,19 @@ class ProfileView(DetailView, LoginRequiredMixin):
     template_name = "users/profile.html"
 
     def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
+
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return user.player
 
     def get_context_data(self, **kwargs):
 
         context = super(ProfileView, self).get_context_data(**kwargs)
+
+        player = self.get_object()
+
+        context['followers_count'] = player.get_followers_count()
+        context['followings_count'] = player.get_followings_count()
+
         return context
 
 
