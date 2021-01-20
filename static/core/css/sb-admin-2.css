@@ -571,6 +571,13 @@ pre code {
    margin-bottom: 10px;
  }
 
+ .count {
+  color:#aaa;
+  border:3px solid #bbb;
+  border-radius:20px;
+  padding:5px 10px;
+  margin:10px 5px 0;
+}
 
 @media (min-width: 576px) {
   .container, .container-sm {

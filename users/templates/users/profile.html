@@ -16,9 +16,6 @@
                 width="150">
               <div class="mt-3">
                 <h4>{{ player.user.username }}</h4>
-                <p class="text-secondary mb-1">Full Stack Developer</p>
-                <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
-                
                 <a href="#" id="follow" data-id="{{ player.id }}"
                   data-action="{% if player in user.player.player_subscriptions.all  %}un{% endif %}follow"
                   class="btn btn-primary">
@@ -28,13 +25,33 @@
                   Unfollow
                   {% endif %}
                 </a>
-                <span class="count">
-                  <span class="total">{{ followers_count }}</span>
-                  Abonné(s)
-                </span>
-                <span class="total">{{ followings_count }}</span>
-                  Abonnement(s)
-                </span>
+                <br>
+                <div class="container">
+                  <div class="row">
+                    {% if followers_count > 1 %}
+                    <span class="count">
+                      <span class="total-followers">{{ followers_count }} </span>abonnés
+                    </span>
+                    {% else %}
+
+                    <span class="count">
+                      <span class="total-followers">{{ followers_count }}</span> abonné
+
+                      {% endif %}
+                  </div>
+
+                  <div class="row">
+                    {% if followings_count > 1 %}
+                    <span class="count">
+                      <span class="total-followings">{{ followings_count }} </span> abonnements
+                    </span>
+                    {% else %}
+                    <span class="count">
+                      <span class="total-followings">{{ followings_count }} </span> abonnement
+                    </span>
+                    {% endif %}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -222,14 +239,14 @@
 <script>
   $('#follow').click(function (e) {
 
-    
+
     e.preventDefault();
     $.ajax({
 
       url: '{% url "player-follow" %}',
 
       method: "POST",
-      
+
       data: {
 
         csrfmiddlewaretoken: '{{ csrf_token }}',
@@ -237,7 +254,7 @@
         'action': $(this).data('action')
 
       },
-      success: function(data){
+      success: function (data) {
         if (data['status'] == 'ok') {
           var previous_action = $('#follow').data('action');
           // toggle data-action
@@ -246,9 +263,14 @@
           // toggle link text
           $('#follow').text(
             previous_action == 'follow' ? 'Unfollow' : 'Follow');
-        }
 
+          var previous_followers = parseInt($('.total-followers').text());
+
+          $('.total-followers').text(previous_action == 'follow' ?
+            previous_followers + 1 : previous_followers - 1);
+        }
       }
+
     }
     );
   });
