@@ -51,12 +51,11 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col">
-                                                    <form action="" method="POST" name="">
+                                                    <form action="{% url 'accept-match-invitation' invitation.id %}" method="POST">
                                                         {% csrf_token %}
                                                         <input type="submit" name="action" value="Accepter"
                                                             class="btn btn-success btn-sm" />
-                                                        <input type="hidden" name="request_id" value="{{ request.id }}">
-                                                        <input type="hidden" name="match_id" value="{{ match.id }}">
+                                                        <input type="hidden" name="match_id" value="{{ invitation.for_match.id }}">
                                                     </form>
                                                 </div>
                                                 <div class="col">

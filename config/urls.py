@@ -32,7 +32,7 @@ from search_manager.ajax_view import (filter_match_view, autocomplete_city,
                                       autocomplete_player)
 
 from player.views import (PlayerInvitationListView, cancel_match_request,
-                          decline_match_invitation)
+                          decline_match_invitation, accept_match_invitation)
 
 from player.ajax_view import (player_follow)
 
@@ -66,6 +66,8 @@ urlpatterns = [
          cancel_match_request, name='cancel-match-request'),
     path('decline_match_invitation/<int:pk>/', decline_match_invitation,
          name='decline-match-invitation'),
+    path('accept_match_invitation/<int:pk>/', accept_match_invitation,
+         name='accept-match-invitation'),
     path('cancel_match/<int:pk>/', cancel_match,
          name='cancel-match'),
 
