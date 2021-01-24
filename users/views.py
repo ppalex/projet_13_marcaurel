@@ -14,8 +14,6 @@ from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
 from django.shortcuts import get_object_or_404
-import pdb
-
 
 class RegisterView(FormView):
     template_name = 'users/register.html'

@@ -36,6 +36,8 @@ from player.views import (PlayerInvitationListView, cancel_match_request,
 
 from player.ajax_view import (player_follow)
 
+from notifications.views import (NotificationListView)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', Index.as_view(), name='index'),
@@ -70,6 +72,11 @@ urlpatterns = [
          name='accept-match-invitation'),
     path('cancel_match/<int:pk>/', cancel_match,
          name='cancel-match'),
+
+    path('notifications/', NotificationListView.as_view(),
+         name='notifications'),
+
+
 
 ]
 

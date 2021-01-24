@@ -5583,7 +5583,7 @@ a.close.disabled {
   pointer-events: none;
 }
 
-.toast {
+ .toast {
   flex-basis: 350px;
   max-width: 350px;
   font-size: 0.875rem;
@@ -5591,7 +5591,7 @@ a.close.disabled {
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-  opacity: 0;
+  /* opacity: 0; */
   border-radius: 0.25rem;
 }
 
@@ -5611,7 +5611,6 @@ a.close.disabled {
 .toast.hide {
   display: none;
 }
-
 .toast-header {
   display: flex;
   align-items: center;
@@ -5626,7 +5625,7 @@ a.close.disabled {
 
 .toast-body {
   padding: 0.75rem;
-}
+} */
 
 .modal-open {
   overflow: hidden;

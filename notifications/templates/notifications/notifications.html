@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+
+{% for notification in notification_list %}
+
+{% if notification.notification_type == 3 %}
+<div class="toast-container">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-primary text-white">
+            <i data-feather="alert-circle"></i>
+            <strong class="mr-auto">Nouvel abonné</strong>
+            <small class="text-white-50 ml-2">{{ notification.date|naturaltime }}</small>
+            <button class="ml-2 mb-1 close text-white" type="button" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            <strong>@{{ notification.from_user.username }}</strong>
+            <br>
+            <p><i class="fas fa-user-plus"></i> vous suit!</p>
+        </div>
+    </div>
+
+</div>
+{% endif %}
+{% endfor %}
+{% endblock content %}

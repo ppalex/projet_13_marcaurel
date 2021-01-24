@@ -9,6 +9,8 @@ from django.contrib.gis.geos import Point
 from core.managers.player_manager import (
     PlayerManager, PlayerSubscriptionManager)
 
+from notifications.models.notification import Notification, NotificationType
+
 
 class Player(models.Model):
 
@@ -47,4 +49,6 @@ class PlayerSubscription(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
 
-    objects = PlayerSubscriptionManager()
+    objects = PlayerSubscriptionManager() 
+
+    
