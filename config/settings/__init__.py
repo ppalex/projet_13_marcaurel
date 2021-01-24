@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'search_manager',
     'django_filters',
     'django_tables2',
+    'notifications.apps.NotificationsConfig',
 ]
 
 MIDDLEWARE = [
