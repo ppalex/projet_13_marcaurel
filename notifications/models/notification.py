@@ -1,7 +1,6 @@
 from django.db import models
 
 from users.models.user import User
-from notifications.models.notification_type import NotificationType
 
 
 class Notification(models.Model):

@@ -36,7 +36,7 @@ from player.views import (PlayerInvitationListView, cancel_match_request,
 
 from player.ajax_view import (player_follow)
 
-from notifications.views import (NotificationListView)
+from notifications.views import (NotificationListView, delete_notification)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -72,12 +72,10 @@ urlpatterns = [
          name='accept-match-invitation'),
     path('cancel_match/<int:pk>/', cancel_match,
          name='cancel-match'),
-
     path('notifications/', NotificationListView.as_view(),
          name='notifications'),
-
-
-
+    path('notifications/delete/<int:pk>',
+         delete_notification, name='delete-notification'),
 ]
 
 handler404 = 'core.views.custom_page_not_found_view'
