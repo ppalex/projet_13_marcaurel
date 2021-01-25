@@ -22,6 +22,7 @@ def user_unfollow(sender, instance, *args, **kwargs):
     player_sub = instance
     follower = player_sub.follower.user
     following = player_sub.following.user
+    
     notify = Notification.objects.get_follow_notifications(
         from_user=follower,
         to_user=following)

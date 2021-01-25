@@ -14,12 +14,13 @@ class NotificationListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         return context
 
 
 @login_required
 def delete_notification(request, pk):
-    notification = Notification.objects.filter(
+    notification = Notification.objects.get_notif_for_user(
         id=pk, to_user=request.user)
 
     notification.delete()
