@@ -1,7 +1,7 @@
 from django.db import models
 
 from users.models.user import User
-
+from notifications.managers.notification_manager import NotificationManager
 
 class Notification(models.Model):
 
@@ -20,3 +20,5 @@ class Notification(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     is_read = models.BooleanField(default=False)
+
+    objects = NotificationManager()
