@@ -10,7 +10,13 @@ class NotificationListView(LoginRequiredMixin, ListView):
     template_name = 'notifications/notifications.html'
 
     def get_queryset(self):
-        return Notification.objects.get_notif_for_user_by_date(self.request.user)
+
+        notifications_qs = Notification.objects.get_notif_for_user_by_date(
+            self.request.user)
+
+        notifications_qs.update(is_read=True)
+
+        return notifications_qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -9,6 +9,9 @@ class NotificationQuerySet(models.QuerySet):
     def get_notif_for_user_by_date(self, to_user):
         return self.filter(to_user=to_user).order_by('-date')
 
+    def get_unread_notif_for_user_by_date(self, to_user):
+        return self.filter(to_user=to_user, is_read=False).order_by('-date')
+
     def get_follow_notifications(self, from_user, to_user):
         return self.filter(from_user=from_user,
                            to_user=to_user,
