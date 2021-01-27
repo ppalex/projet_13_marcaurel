@@ -5,7 +5,6 @@ from core.models.address import Address
 from core.models.player import Player
 
 from core.managers.match_manager import MatchManager
-from core.managers.match_request_manager import MatchRequestManager
 
 
 class Match(models.Model):

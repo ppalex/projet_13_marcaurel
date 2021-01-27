@@ -3,10 +3,11 @@ from django.db import models
 from users.models.user import User
 from notifications.managers.notification_manager import NotificationManager
 
+
 class Notification(models.Model):
 
-    NOTIFICATIONS_TYPE = ((1, 'invitation-accepted'),
-                          (2, 'invitation-refused'),
+    NOTIFICATIONS_TYPE = ((1, 'invitation-send'),
+                          (2, 'invitation-accepted'),
                           (3, 'follow'))
 
     from_user = models.ForeignKey(
