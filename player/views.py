@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from core.models.invitation import Invitation
 from core.models.match_request import MatchRequest
 from core.models.registration import Registration
+from notifications.models.notification import Notification
 from core.models.match import Match
 from django.shortcuts import redirect
 
@@ -51,5 +52,10 @@ def accept_match_invitation(request, pk):
             player=invitation.for_player,
             match=match,
         )
+
+        Notification.objects.create(
+            from_user=invitation.for_player.user,
+            to_user=invitation.by_player.user,
+            notification_type=2)
 
     return redirect("index")

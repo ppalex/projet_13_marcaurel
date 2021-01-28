@@ -45,5 +45,14 @@ class Match(models.Model):
         else:
             return False
 
+    def is_full(self):
+        pass
+
+    def add_player(self):
+        pass
+
+    def remove_player(self):
+        pass
+
     def cancel(self):
         self.delete()
