@@ -39,7 +39,6 @@ class Registration(models.Model):
     def create_registration(cls, match, player, invitation, match_request):
 
         now = timezone.now()
-
         registration = cls(
             status="opened",
             join_date=now,

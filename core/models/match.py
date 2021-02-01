@@ -19,10 +19,10 @@ class Match(models.Model):
     num_player = models.IntegerField()
     available_place = models.IntegerField()
     capacity = models.IntegerField()
-    full = models.BooleanField()
-    started = models.BooleanField()
-    cancelled = models.BooleanField()
-    over = models.BooleanField()
+    full = models.BooleanField(default=False)
+    started = models.BooleanField(default=False)
+    cancelled = models.BooleanField(default=False)
+    over = models.BooleanField(default=False)
 
     location = models.ForeignKey(
         Location, on_delete=models.RESTRICT, default=None, null=True,
@@ -46,13 +46,27 @@ class Match(models.Model):
             return False
 
     def is_full(self):
-        pass
+        return self.full
 
     def add_player(self):
-        pass
+        if not self.is_full():
+            self.num_player += 1
+            self.available_place -= 1
+            self.update_capacity()
+            self.save()
 
     def remove_player(self):
-        pass
+        if self.num_player > 0:
+            self.num_player -= 1
+            self.available_place += 1
+            self.update_capacity()
+            self.save()
+
+    def update_capacity(self):
+        if self.num_player == self.capacity:
+            self.full = True
+        else:
+            self.full = False
 
     def cancel(self):
         self.delete()

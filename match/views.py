@@ -143,7 +143,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
             Registration.create_registration(match=match, player=player,
                                              invitation=None,
                                              match_request=None)
-
+            match.add_player()
             messages.info(request, "Vous vous êtes inscrit dans ce match!")
 
         if request.POST['action'] == "Se désinscrire":
@@ -152,7 +152,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                 match=match, player=player)
 
             registration.delete()
-
+            match.remove_player()
             messages.info(request, "Vous vous êtes désinscrit de ce match!")
 
         if request.POST["action"] == "Demande d'inscription":
