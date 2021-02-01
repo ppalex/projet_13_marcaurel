@@ -39,3 +39,7 @@
    margin: 12px auto;
    font-size: 5px;
   }
+
+  #map-match {
+    height: 360px;
+  }
