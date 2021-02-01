@@ -118,6 +118,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
         context = super(MatchDetailView, self).get_context_data(**kwargs)
 
         match_id = self.kwargs.get("pk")
+        match = Match.objects.get_match_by_id(match_id).first()
         context['players'] = self.object.players.all()
         context['player_in_match'] = self.get_object(
         ).match_has_player(self.request.user.player)
@@ -129,6 +130,9 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
             match_id)
 
         context['player_form'] = InvitationFormset()
+
+        context['match_lat'] = float(match.location.lat_lng[0])
+        context['match_lon'] = float(match.location.lat_lng[1])
 
         return context
 

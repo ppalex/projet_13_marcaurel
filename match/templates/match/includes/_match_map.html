@@ -13,12 +13,16 @@
 <!-- <script type="text/javascript" src="{% static 'core/js/geolocation.js' %}"></script> -->
 <script type="text/javascript" src="{% static 'core/vendor/leaflet/leaflet.markercluster.js' %}"></script>
 
-
 <div id="map-match">
+    <input type="hidden" id="match_lat" name="variable" value="{{ match_lat }}">
+    <input type="hidden" id="match_lon" name="variable" value="{{ match_lon }}">
     <script>
-        var map = L.map('map-match').setView([50.50, 4.80], 8);
+        
+        var match_lat = document.getElementById("match_lat").value.replace(/,/g, ".");
+        var match_lon = document.getElementById("match_lon").value.replace(/,/g, ".");
+        var map = L.map('map-match').setView([match_lat, match_lon], 10);
         var markers_cluster = L.markerClusterGroup();
-
+        
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -27,11 +31,11 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoiYXBwMTMwOCIsImEiOiJja2liejVhOTAwZjZxMnlwZXhmbnJtc2hzIn0.Lr-IKjKKwlrfzBWVelCu7Q'
         }).addTo(map);
-        
+
 
         marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.address.city}}');
         markers_cluster.addLayer(marker);
-        
+
         map.addLayer(markers_cluster);
     </script>
 </div>
