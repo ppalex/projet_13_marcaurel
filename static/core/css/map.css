@@ -43,3 +43,10 @@
   #map-match {
     height: 360px;
   }
+
+  .custom-popup .leaflet-popup-content-wrapper {
+    background: whitesmoke;
+    font-size: 20px;
+    width: 200px;
+    height: 200px;
+  }
