@@ -32,18 +32,19 @@ class CreateMatchForm(forms.ModelForm):
 
     def clean_start_fixture(self):
         start_fixture = self.cleaned_data.get('start_fixture')
-        if start_fixture < timezone.now():
-            raise forms.ValidationError(
-                "Le coup d'envoi ne peut pas être dans le passé!")
-        return start_fixture
+        if start_fixture:
+            if start_fixture < timezone.now():
+                raise forms.ValidationError(
+                    "Le coup d'envoi ne peut pas être dans le passé!")
+            return start_fixture
 
     def clean_end_fixture(self):
         end_fixture = self.cleaned_data.get('end_fixture')
-        if end_fixture < timezone.now():
-            raise forms.ValidationError(
-                "Choisissez une heure dans le futur!")
-
-        return end_fixture
+        if end_fixture:
+            if end_fixture < timezone.now():
+                raise forms.ValidationError(
+                    "La fin du match ne peut pas être dans le passé!")
+            return end_fixture
 
     def clean(self):
         cleaned_data = self.cleaned_data
