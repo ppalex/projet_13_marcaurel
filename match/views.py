@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.gis.geos import Point
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, ListView, View, UpdateView
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
 from core.models.address import Address
@@ -18,8 +18,11 @@ from tasks_manager.tasks import send_alert_email_for_match_task
 
 from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
+from .forms.match_update_form import UpdateMatchForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
+import pdb
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -35,7 +38,6 @@ class CreateMatchView(LoginRequiredMixin, View):
         return kwargs
 
     def get(self, request, *args, **kwargs):
-
         return render(request, self.template_name, self.get_context_data())
 
     def post(self, request, *args, **kwargs):
@@ -235,3 +237,83 @@ def cancel_match(request, pk):
         return redirect(reverse('match-list'))
 
     return redirect(f"/match/detail/{pk}")
+
+
+# class UpdateMatchView(LoginRequiredMixin, View):
+#     template_name = 'match/match_update.html'
+
+#     def get_context_data(self, pk,  **kwargs):
+#         match = Match.objects.get_match_by_id(pk).first()
+#         if 'match_form' not in kwargs:
+#             kwargs['match_form'] = CreateMatchForm(instance=match)
+
+#         if 'address_form' not in kwargs:
+#             kwargs['address_form'] = CustomCreateAddressForm(
+#                 instance=match.address)
+
+#         kwargs['match'] = match
+#         return kwargs
+
+#     def get(self, request, pk, *args, **kwargs):
+#         return render(request, self.template_name, self.get_context_data(pk))
+
+#     def post(self, request, pk, *args, **kwargs):
+#         match = Match.objects.get_match_by_id(pk).first()
+#         match_form = CreateMatchForm(request.POST, instance=match)
+#         address_form = CustomCreateAddressForm(
+#             request.POST, instance=match.address)
+#         if match_form.is_valid() and address_form.is_valid():
+#             match_form.save()
+#             address_form.save()
+#             messages.success(request, "Le match a été mis à jour")
+#             return redirect(f"/match/detail/{match.id}")
+#         else:
+#             context = {
+#                 'match_form': match_form,
+#                 'address_form': address_form,
+#                 'pk': match.id
+#             }
+#             return render(request, self.template_name, context)
+
+class UpdateMatchView(LoginRequiredMixin, UpdateView):
+    model = Match
+
+    template_name = 'match/match_update.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, pk=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        match = self.get_object()
+        if 'match_form' not in kwargs:
+            kwargs['match_form'] = UpdateMatchForm(instance=match)
+
+        if 'address_form' not in kwargs:
+            kwargs['address_form'] = CustomCreateAddressForm(
+                instance=match.address)
+
+        kwargs['match'] = match
+        return kwargs
+
+    def form_invalid(self, request, **kwargs):
+        return render(request, self.template_name, self.get_context_data(**kwargs))
+
+    def post(self, request, *args, **kwargs):
+        match = self.get_object()
+
+        match_form = UpdateMatchForm(request.POST, instance=match)
+
+        address_form = CustomCreateAddressForm(
+            request.POST, instance=match.address)
+
+        if match_form.is_valid() and address_form.is_valid():
+
+            match_form.save()
+            address_form.save()
+            messages.success(request, "Le match a été mis à jour")
+
+            return redirect(f"/match/detail/{match.id}")
+        else:
+
+            return self.form_invalid(request, **{'match_form': match_form,
+                                                 'address_form': address_form})

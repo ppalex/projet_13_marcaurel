@@ -88,7 +88,7 @@
             </div>
             <div class="modal-body">
                 Etes-vous sûr de vouloir annuler le match?
-                <form action="{% url 'cancel-match' match.id %}" method="POST">
+                <form action="{% url 'cancel-match' pk=match.id %}" method="POST">
                     {% csrf_token %}
                     <button class="btn btn-danger btn-sm" type="submit">Oui</button>
                 </form>
@@ -105,9 +105,6 @@
 
     <div class="card-header border-bottom">
         <div class="row">
-            <div class="col">
-                <h1 class="h4 text-gray-900 mb-4"> Détail du match</h5>
-            </div>
             <div class="col">
                 <a data-target="#invitation-modal" id="invitation_modal" data-toggle="modal" href="#invitation-modal"
                     class="btn btn-primary btn-icon-split">
@@ -135,11 +132,22 @@
                     <span class="text">Annuler le match</span>
                 </a>
             </div>
+
+            <div class="col">
+                <a href="{% url 'match-update' match.id %}"
+                    class="btn btn-warning btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-pen-square"></i>
+                    </span>
+                    <span class="text">Modifier</span>
+                </a>
+            </div>
         </div>
     </div>
 
     {% include 'player/includes/_invitation_form.html' %}
     {% include 'match/includes/_email_alert_modal.html' %}
+    {% include 'match/includes/_update_modal.html' %}
 
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">

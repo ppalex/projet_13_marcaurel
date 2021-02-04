@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-header border-bottom">
         <!-- Wizard navigation-->
-        <h3 class="text-primary">Organiser une rencontre</h3>
+        <h3 class="text-primary">Modifier mon match</h3>
     </div>
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
@@ -16,7 +16,7 @@
                     <div class="col-xxl-6 col-xl-8">
 
                         <h5 class="card-title">Entrer les informations du match</h5>
-                        <form method="POST" action="{% url 'match-creation' %}">
+                        <form method="POST" action="{% url 'match-update' match.id %}">
                             {% csrf_token %}
 
                             <div class="form-row">
@@ -25,7 +25,9 @@
                                     {{ match_form.classification }}
                                 </div>
                                 <div class="form-group col-md-6">
+                                 
                                 </div>
+
                             </div>
 
                             <div class="form-row">
@@ -111,7 +113,6 @@
                                     <label class="small mb-1">Région</label>
                                     {{ address_form.region }}
                                 </div>
-
                             </div>
 
                             <div class="form-row">
@@ -122,15 +123,12 @@
                                     </small> {% endfor %}
                                 </div>
                                 <div class="form-group col-md-6">
-
                                 </div>
-
                             </div>
-                            
 
                             <hr class="my-4">
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-primary" type="submit">C'est parti!</button>
+                                <button class="btn btn-primary" type="submit">Modifier</button>
                             </div>
 
                         </form>
