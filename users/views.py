@@ -15,6 +15,7 @@ from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
 from django.shortcuts import get_object_or_404
 
+
 class RegisterView(FormView):
     template_name = 'users/register.html'
     form_class = CustomUserCreationForm

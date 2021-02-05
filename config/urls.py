@@ -27,7 +27,7 @@ from match.views import (CreateMatchView, UpdateMatchView, MatchListView,
 
 from search_manager.views import (SearchMapMatchView, SearchTableMatchView,
                                   SearchMapPlayerView)
-from search_manager.ajax_view import (filter_match_view, autocomplete_city,
+from search_manager.ajax_view import (filter_match_view, filter_player_view, autocomplete_city,
                                       get_user_current_coordinates,
                                       autocomplete_player)
 
@@ -58,6 +58,7 @@ urlpatterns = [
     path('search/map/player/', SearchMapPlayerView.as_view(),
          name='search-map-player'),
     path('search/match/filter', filter_match_view, name='filter-match'),
+    path('search/match/player', filter_player_view, name='filter-player'),
     path('autocomplete', autocomplete_city, name='city-autocomplete'),
     path('player-autocomplete', autocomplete_player, name='player-autocomplete'),
     path('player/follow', player_follow, name='player-follow'),

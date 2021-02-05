@@ -62,6 +62,37 @@ def filter_match_view(request, *args, **kwargs):
 
 
 @login_required
+def filter_player_view(request, *args, **kwargs):
+
+    context = {
+        'object_list': []
+    }
+    if (request.POST.get('location') != ''):
+
+        player_location = request.user.player.location
+        distance_km = request.POST.get('location')
+        distance_degrees = km_to_degrees(int(distance_km))
+
+        key = '{0}__{1}__{2}'.format('location', 'coordinates', 'dwithin')
+        value = (player_location.coordinates, distance_degrees)
+        kwargs[key] = value
+
+    qs = Player.objects.filter(**kwargs)
+
+    for player in qs:
+
+        player_dict = {
+            'id': player.id,
+            'username': player.user.username,
+            'lat_lng': player.location.lat_lng
+        }
+
+        context['object_list'].append(player_dict)
+
+    return JsonResponse(context['object_list'], safe=False)
+
+
+@login_required
 def autocomplete_city(request):
     """This function is used to autocomplete search bar with products
     from database.

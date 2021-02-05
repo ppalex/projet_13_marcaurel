@@ -6,7 +6,7 @@ from core.models.match import Match
 from core.models.player import Player
 
 
-from .forms import MatchFormFilter, AddressFormFilter
+from .forms import MatchFormFilter, AddressFormFilter, PlayerFormFilter
 
 import django_tables2 as tables
 
@@ -42,6 +42,7 @@ class SearchMapPlayerView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
 
         context = {}
+        context['player_filter'] = PlayerFormFilter()
         context['object_list'] = Player.objects.get_all_player_with_location_except_current(
             request.user)
 

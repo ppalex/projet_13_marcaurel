@@ -1,6 +1,7 @@
 from django import forms
 from core.models.match import Match
 from core.models.address import Address
+from core.models.player import Player
 
 
 class MatchFormFilter(forms.ModelForm):
@@ -13,7 +14,8 @@ class MatchFormFilter(forms.ModelForm):
 
     class Meta:
         model = Match
-        fields = ('classification', 'start_fixture', 'available_place', 'location')
+        fields = ('classification', 'start_fixture',
+                  'available_place', 'location')
 
         widgets = {
             'classification': forms.Select(attrs={
@@ -52,4 +54,23 @@ class AddressFormFilter(forms.ModelForm):
                 'id': 'city-search',
                 'type': 'text'}),
 
+        }
+
+
+class PlayerFormFilter(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+
+        super(PlayerFormFilter, self).__init__(*args, **kwargs)
+        self.fields['location'].required = False
+
+    class Meta:
+        model = Player
+        fields = ('location',)
+
+        widgets = {
+            'location': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'type': 'text',
+                'placeholder': "Entrez le nombre de km"})
         }
