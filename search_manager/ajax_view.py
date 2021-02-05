@@ -78,6 +78,7 @@ def filter_player_view(request, *args, **kwargs):
         kwargs[key] = value
 
     qs = Player.objects.filter(**kwargs)
+    qs = qs.exclude(pk=request.user.id)
 
     for player in qs:
 
