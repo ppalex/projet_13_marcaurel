@@ -20,3 +20,8 @@ class MatchManager(models.Manager):
     def get_active_match(self):
         return self.get_queryset().get_active_match()
 
+    def get_planned_match(self, administrator):
+        return self.get_queryset().get_planned_match(administrator)
+
+    def get_over_match(self, administrator):
+        return self.get_queryset().get_over_match(administrator)

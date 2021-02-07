@@ -102,13 +102,22 @@ class CreateMatchView(LoginRequiredMixin, View):
             return render(request, self.template_name, context)
 
 
-class MatchListView(LoginRequiredMixin, ListView):
+class MatchPlannedListView(LoginRequiredMixin, ListView):
     model = Match
     template_name = 'match/match_list.html'
     paginate_by = 4
 
     def get_queryset(self):
-        return Match.objects.filter(administrator=self.request.user.player)
+        return Match.objects.get_planned_match(administrator=self.request.user.player)
+
+
+class MatchOverListView(LoginRequiredMixin, ListView):
+    model = Match
+    template_name = 'match/match_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Match.objects.get_over_match(administrator=self.request.user.player)
 
 
 class MatchDetailView(LoginRequiredMixin, DetailView):

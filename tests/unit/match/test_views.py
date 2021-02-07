@@ -41,7 +41,7 @@ class MatchListViewTest(TestCase):
             user.save()
 
     def test_redirect_if_not_logged_in(self):
-        response = self.client.get(reverse('match-list'))
+        response = self.client.get(reverse('match-planned'))
         self.assertRedirects(response, '/login/?next=/match/list/')
 
     def test_view_url_exists_at_desired_location(self):
@@ -54,7 +54,7 @@ class MatchListViewTest(TestCase):
     def test_view_url_accessible_by_name(self):
         self.client.login(
             username='user1', password='user1')
-        response = self.client.get(reverse('match-list'))
+        response = self.client.get(reverse('match-planned'))
 
         self.assertEqual(response.status_code, 200)
 

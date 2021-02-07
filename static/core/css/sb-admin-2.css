@@ -597,7 +597,10 @@ pre code {
 }
 
 .sec2 {
+  color: white;
   border-top-left-radius: 40%;
+  border-bottom-right-radius: 40%;
+  background-image: linear-gradient(135deg, #8295b3 0%, rgba(174, 161, 185, 0.8) 100%); 
 }
 
 @media (min-width: 576px) {
