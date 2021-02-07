@@ -11,6 +11,11 @@ from core.models.invitation import Invitation
 from core.models.match_request import MatchRequest
 
 
+def landing(request):
+    template_name = 'core/landing.html'
+    return render(request, template_name)
+
+
 class Index(LoginRequiredMixin, TemplateView):
     template_name = 'core/base.html'
 

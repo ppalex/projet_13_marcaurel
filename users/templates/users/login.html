@@ -34,10 +34,10 @@
                                         </div>
 
                                         {% if form.errors %}
-                                        {% for k, v in form.errors.items %}                        
-                                      
-                                            <div class="alert alert-danger"> {{ v }}</div>                                          
-                                      
+                                        {% for k, v in form.errors.items %}
+
+                                        <div class="alert alert-danger"> {{ v }}</div>
+
                                         {% endfor %}
 
                                         {% endif %}
@@ -71,6 +71,9 @@
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="{% url 'register' %}">Créer un compte!</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="/">Page d'acceuil</a>
                                     </div>
                                 </div>
                             </div>

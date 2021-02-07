@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import Index
+from core.views import Index, landing
 
 from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView, ProfileView)
@@ -39,6 +39,7 @@ from player.ajax_view import (player_follow)
 from notifications.views import (NotificationListView, delete_notification)
 
 urlpatterns = [
+    path('', landing, name='landing'),
     path('admin/', admin.site.urls),
     path('index/', Index.as_view(), name='index'),
     path('register/', RegisterView.as_view(), name='register'),
