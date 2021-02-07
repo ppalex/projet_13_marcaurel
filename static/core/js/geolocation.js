@@ -20,7 +20,6 @@ function geoFindMe(L, map, csrf_token) {
             "longitude": longitude,
             csrfmiddlewaretoken: csrf_token
         };
-        console.log(data);
         $.ajax({
             type: "POST",
             url: "/current_coordinates",

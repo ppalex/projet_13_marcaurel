@@ -17,7 +17,7 @@ class MatchTable(tables.Table):
     detail = tables.LinkColumn(
         "match-detail", verbose_name='Action', args=[A('pk')],
         orderable=False, empty_values=(),  attrs={
-            'a': {'class': "btn btn-info btn-icon-split"}
+            'a': {'class': "btn btn-table"},
         })
 
     class Meta:
@@ -27,4 +27,4 @@ class MatchTable(tables.Table):
                   'available_place', 'city')
 
     def render_detail(self):
-        return 'Consulter'
+        return ""

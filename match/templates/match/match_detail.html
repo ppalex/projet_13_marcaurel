@@ -270,7 +270,6 @@
     document.formHasErrors = {% if player_form.errors %} true {% else %} false {% endif %};
     $(document).ready(function () {
         if (document.formHasErrors) {
-            console.log('true');
             $('#invitation-modal').modal('toggle');
         }
     });
