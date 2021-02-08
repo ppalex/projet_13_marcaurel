@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse_lazy
 
 from core.views import Index, landing
 
@@ -38,6 +38,9 @@ from player.ajax_view import (player_follow)
 
 from notifications.views import (NotificationListView, delete_notification)
 
+from django.contrib.auth.views import (
+    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
+
 urlpatterns = [
     path('', landing, name='landing'),
     path('admin/', admin.site.urls),
@@ -45,6 +48,14 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
+    path('password-reset/', PasswordResetView.as_view(
+        template_name='users/reset_password.html'), name='password-reset'),
+    path('password-reset/done/', PasswordResetDoneView.as_view(
+        template_name='users/reset_password_done.html'), name='password_reset_done'),
+    path('password-reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(
+        template_name='users/reset_password_confirm.html'), name='password_reset_confirm'),
+     path('password-reset/complete/', PasswordResetCompleteView.as_view(
+        template_name='users/reset_password_complete.html'), name='password_reset_complete'),
     path('profile/<slug:username>', ProfileView.as_view(), name='profile'),
     path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),

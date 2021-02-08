@@ -8,7 +8,6 @@ from django.views.generic import View, DetailView
 from django.views.generic.edit import FormView
 from .models.user import User
 from core.models.address import Address
-from core.models.player import Player
 
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
