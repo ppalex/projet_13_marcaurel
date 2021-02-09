@@ -16,6 +16,11 @@ def landing(request):
     return render(request, template_name)
 
 
+def legal(request):
+    template_name = 'core/legal.html'
+    return render(request, template_name)
+
+
 class Index(LoginRequiredMixin, TemplateView):
     template_name = 'core/base.html'
 

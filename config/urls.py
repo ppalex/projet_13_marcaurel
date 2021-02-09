@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, reverse_lazy
 
-from core.views import Index, landing
+from core.views import Index, landing, legal
 
 from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView, ProfileView)
@@ -43,6 +43,7 @@ from django.contrib.auth.views import (
 
 urlpatterns = [
     path('', landing, name='landing'),
+    path('legal/', legal, name='legal'),
     path('admin/', admin.site.urls),
     path('index/', Index.as_view(), name='index'),
     path('register/', RegisterView.as_view(), name='register'),
@@ -54,8 +55,8 @@ urlpatterns = [
         template_name='users/reset_password_done.html'), name='password_reset_done'),
     path('password-reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(
         template_name='users/reset_password_confirm.html'), name='password_reset_confirm'),
-     path('password-reset/complete/', PasswordResetCompleteView.as_view(
-        template_name='users/reset_password_complete.html'), name='password_reset_complete'),
+    path('password-reset/complete/', PasswordResetCompleteView.as_view(
+         template_name='users/reset_password_complete.html'), name='password_reset_complete'),
     path('profile/<slug:username>', ProfileView.as_view(), name='profile'),
     path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
