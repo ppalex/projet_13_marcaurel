@@ -10,7 +10,6 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-
                         <a data-target="#pending-modal" data-toggle="modal"
                             class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
                             href="#pending-modal">Voir demande en attente</a>
@@ -95,14 +94,12 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-
             </div>
         </div>
     </div>
 </div>
 
 <div class="card">
-
     <div class="card-header border-bottom">
         <div class="row">
             <div class="col">
@@ -132,7 +129,6 @@
                     <span class="text">Annuler le match</span>
                 </a>
             </div>
-
             <div class="col">
                 <a href="{% url 'match-update' match.id %}"
                     class="btn btn-warning btn-icon-split">
@@ -147,16 +143,28 @@
 
     {% include 'player/includes/_invitation_form.html' %}
     {% include 'match/includes/_email_alert_modal.html' %}
+    {% include 'match/includes/_player_fire_modal.html' %}
 
     <div class="card-body">
         <div class="tab-content" id="cardTabContent">
             <div class="row">
-                <div class="col-xxl-6 col-xl-6">
+                <div class="col-sm-3">
                     <div class="container">
                         <h3>Joueurs inscrits</h3>
                         <ul class="list-group">
                             {% for player in players %}
-                            <li class="list-group-item">{{ player.user.username }}</li>
+                            
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col">{{ player.user.username }}</div>
+                                   
+                                    <div class="col">
+                                        <a data-target="#fire-modal" id="fire_modal" data-toggle="modal" href="#fire-modal"
+                                        class="btn" data-player-name="{{ player.user.username }}" data-player-id="{{ player.id }}"><i class="fas fa-user-minus"></i></a>
+                                </div>                               
+                              
+                            </li>
+                            
                             {% endfor %}
                         </ul>
                     </div>
@@ -171,28 +179,6 @@
 
     <div class="row">
         {% if user == match.administrator.user %}
-
-        <!-- <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Modifier le match" class="btn btn-success"
-                    id="save_substitute_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-
-            </form>
-
-        </div>
-
-        <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Annuler le match" class="btn btn-danger"
-                    id="save_substitute_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-
-            </form>
-
-        </div> -->
 
 
         {% else %}
@@ -231,20 +217,16 @@
                 <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
                     id="subscribe_{{ match.id }}" />
                 <input type="hidden" name="match_id" value="{{ match.id }}">
-
             </form>
-
         </div>
         {% else %}
 
         <div class="col">
-
             <form action="" method="POST" name="">
                 {% csrf_token %}
                 <input type="submit" name="action" value="Demande d'inscription" class="btn btn-success"
                     id="subscribe_{{ match.id }}" />
                 <input type="hidden" name="match_id" value="{{ match.id }}">
-
             </form>
 
         </div>
@@ -273,6 +255,14 @@
             $('#invitation-modal').modal('toggle');
         }
     });
+
+    $('#fire-modal').on('show.bs.modal', function(e) {
+        var playerName = $(e.relatedTarget).data('player-name');
+        var playerID = $(e.relatedTarget).data('player-id');
+        console.log(playerID);
+        document.getElementById('playerName').innerHTML = playerName;
+        document.getElementById('playerID').value = playerID;
+});
 </script>
 
 {% endblock %}

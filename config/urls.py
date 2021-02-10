@@ -23,7 +23,7 @@ from users.views import (RegisterView, CustomLoginView,
 
 from match.views import (CreateMatchView, UpdateMatchView, MatchPlannedListView, MatchOverListView,
                          MatchDetailView, MatchSubscriptionListView,
-                         cancel_match)
+                         cancel_match, kick_player)
 
 from search_manager.views import (SearchMapMatchView, SearchTableMatchView,
                                   SearchMapPlayerView)
@@ -88,6 +88,7 @@ urlpatterns = [
          name='accept-match-invitation'),
     path('cancel_match/<int:pk>/', cancel_match,
          name='cancel-match'),
+    path('remove-player/<int:pk>/', kick_player, name='remove-player'),
     path('notifications/', NotificationListView.as_view(),
          name='notifications'),
     path('notifications/delete/<int:pk>',

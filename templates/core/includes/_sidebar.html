@@ -29,11 +29,12 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-stopwatch"></i>
-            <span>Coach</span>
+            <span>Capitaine</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{% url 'match-planned' %}">Match à venir</a>
+                <a class="collapse-item" href="{% url 'match-planned' %}">Match planifié</a>
+                <a class="collapse-item" href="{% url 'match-planned' %}">Match en cours</a>
                 <a class="collapse-item" href="{% url 'match-over' %}">Match terminé</a>
             </div>
         </div>
@@ -52,22 +53,7 @@
             <span>Convocations</span></a>
     </li>
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Demandes envoyées</span></a>
-    </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'player-invitations' %}">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Invitation reçues</span></a>
-    </li>
-   
-    <!-- Divider -->
+    
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->

@@ -237,53 +237,6 @@ class MatchSubscriptionListView(LoginRequiredMixin, ListView):
         return player.match_set.all()
 
 
-@login_required
-def cancel_match(request, pk):
-    if request.method == "POST":
-        match = Match.objects.get_match_by_id(pk).first()
-        match.cancel()
-        messages.info(request, "Le match a été supprimé")
-        return redirect(reverse('match-list'))
-
-    return redirect(f"/match/detail/{pk}")
-
-
-# class UpdateMatchView(LoginRequiredMixin, View):
-#     template_name = 'match/match_update.html'
-
-#     def get_context_data(self, pk,  **kwargs):
-#         match = Match.objects.get_match_by_id(pk).first()
-#         if 'match_form' not in kwargs:
-#             kwargs['match_form'] = CreateMatchForm(instance=match)
-
-#         if 'address_form' not in kwargs:
-#             kwargs['address_form'] = CustomCreateAddressForm(
-#                 instance=match.address)
-
-#         kwargs['match'] = match
-#         return kwargs
-
-#     def get(self, request, pk, *args, **kwargs):
-#         return render(request, self.template_name, self.get_context_data(pk))
-
-#     def post(self, request, pk, *args, **kwargs):
-#         match = Match.objects.get_match_by_id(pk).first()
-#         match_form = CreateMatchForm(request.POST, instance=match)
-#         address_form = CustomCreateAddressForm(
-#             request.POST, instance=match.address)
-#         if match_form.is_valid() and address_form.is_valid():
-#             match_form.save()
-#             address_form.save()
-#             messages.success(request, "Le match a été mis à jour")
-#             return redirect(f"/match/detail/{match.id}")
-#         else:
-#             context = {
-#                 'match_form': match_form,
-#                 'address_form': address_form,
-#                 'pk': match.id
-#             }
-#             return render(request, self.template_name, context)
-
 class UpdateMatchView(LoginRequiredMixin, UpdateView):
     model = Match
 
@@ -326,3 +279,32 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 
             return self.form_invalid(request, **{'match_form': match_form,
                                                  'address_form': address_form})
+
+
+@login_required
+def cancel_match(request, pk):
+    if request.method == "POST":
+        match = Match.objects.get_match_by_id(pk).first()
+        match.cancel()
+        messages.info(request, "Le match a été supprimé")
+        return redirect(f"/match/detail/{pk}")
+
+    return redirect(f"/match/detail/{pk}")
+
+
+@login_required
+def kick_player(request, pk):
+    if request.method == "POST":
+
+        player_id = request.POST.get('player_id')
+        player = Player.objects.get_player_by_id(player_id).first()
+        match = Match.objects.get_match_by_id(pk).first()
+        registration = Registration.objects.filter(
+            match=match, player=player)
+
+        registration.delete()
+        match.remove_player()
+        messages.info(request, "Le joueur a été renvoyé")
+        return redirect(f"/match/detail/{pk}")
+
+    return redirect(f"/match/detail/{pk}")
