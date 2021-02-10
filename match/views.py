@@ -1,9 +1,10 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.gis.geos import Point
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from django.views.generic import DetailView, ListView, View, UpdateView
+from django.views.generic import DetailView, ListView, UpdateView, View
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
 from core.models.address import Address
@@ -19,10 +20,6 @@ from tasks_manager.tasks import send_alert_email_for_match_task
 from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
 from .forms.match_update_form import UpdateMatchForm
-from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from django.shortcuts import get_object_or_404
-import pdb
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -105,7 +102,7 @@ class CreateMatchView(LoginRequiredMixin, View):
 class MatchPlannedListView(LoginRequiredMixin, ListView):
     model = Match
     template_name = 'match/match_list.html'
-    paginate_by = 4
+    paginate_by = 2
 
     def get_queryset(self):
         return Match.objects.get_planned_match(administrator=self.request.user.player)

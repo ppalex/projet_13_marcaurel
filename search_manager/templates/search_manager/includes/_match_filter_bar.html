@@ -4,7 +4,7 @@
 
     <div class="card-body">
         <div class="tab-content">
-            <form method="POST" action="" id="filter-player">
+            <form method="POST" action="" id="filter-match">
                 {% csrf_token %}
 
                 <div class="form-row">
@@ -60,16 +60,16 @@
             .catch(error => console.log(error));
     }
 
-    let form = document.querySelector("#filter-player")
+    let form = document.querySelector("#filter-match")
     form.addEventListener('submit', function (event) {
 
         event.preventDefault();
 
-        send_data_to_backend("{% url 'filter-player' %}", new FormData(form))
-            .then(response => {                
+        send_data_to_backend("{% url 'filter-match' %}", new FormData(form))
+            .then(response => {
                 var objCount = response.length;
 
-                markers_cluster.clearLayers();               
+                markers_cluster.clearLayers();
 
                 for (var x = 0; x < objCount; x++) {
                     var curitem = response[x];

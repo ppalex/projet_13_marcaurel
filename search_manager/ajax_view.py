@@ -15,48 +15,49 @@ def filter_match_view(request, *args, **kwargs):
     context = {
         'object_list': []
     }
+    if request.POST:
 
-    if (request.POST.get('classification') != ''):
-        key = '{0}__{1}'.format('classification', 'exact')
-        value = request.POST.get('classification')
-        kwargs[key] = value
+        if (request.POST.get('classification') != ''):
+            key = '{0}__{1}'.format('classification', 'exact')
+            value = request.POST.get('classification')
+            kwargs[key] = value
 
-    if (request.POST.get('city')) != '':
-        key = '{0}__{1}__{2}'.format('address', 'city', 'exact')
-        value = request.POST.get('city')
-        kwargs[key] = value
+        if (request.POST.get('city')) != '':
+            key = '{0}__{1}__{2}'.format('address', 'city', 'exact')
+            value = request.POST.get('city')
+            kwargs[key] = value
 
-    if (request.POST.get('available_place') != ''):
-        key = '{0}__{1}'.format('available_place', 'exact')
-        value = request.POST.get('available_place')
-        kwargs[key] = value
+        if (request.POST.get('available_place') != ''):
+            key = '{0}__{1}'.format('available_place', 'exact')
+            value = request.POST.get('available_place')
+            kwargs[key] = value
 
-    if (request.POST.get('start_fixture') != ''):
-        key = '{0}__{1}'.format('start_fixture', 'contains')
-        value = request.POST.get('start_fixture')
-        kwargs[key] = value
+        if (request.POST.get('start_fixture') != ''):
+            key = '{0}__{1}'.format('start_fixture', 'contains')
+            value = request.POST.get('start_fixture')
+            kwargs[key] = value
 
-    if (request.POST.get('location') != ''):
+        if (request.POST.get('location') != ''):
 
-        player_location = request.user.player.location
-        distance_km = request.POST.get('location')
-        distance_degrees = km_to_degrees(int(distance_km))
+            player_location = request.user.player.location
+            distance_km = request.POST.get('location')
+            distance_degrees = km_to_degrees(int(distance_km))
 
-        key = '{0}__{1}__{2}'.format('location', 'coordinates', 'dwithin')
-        value = (player_location.coordinates, distance_degrees)
-        kwargs[key] = value
+            key = '{0}__{1}__{2}'.format('location', 'coordinates', 'dwithin')
+            value = (player_location.coordinates, distance_degrees)
+            kwargs[key] = value
 
-    qs = Match.objects.filter(**kwargs)
+        qs = Match.objects.filter(**kwargs)
 
-    for match in qs:
+        for match in qs:
 
-        match_dict = {
-            'id': match.id,
-            'classification': match.classification,
-            'lat_lng': match.location.lat_lng
-        }
+            match_dict = {
+                'id': match.id,
+                'classification': match.classification,
+                'lat_lng': match.location.lat_lng
+            }
 
-        context['object_list'].append(match_dict)
+            context['object_list'].append(match_dict)
 
     return JsonResponse(context['object_list'], safe=False)
 
