@@ -5,6 +5,7 @@ from django.contrib.gis.geos import Point
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, UpdateView, View
+from django.urls import reverse
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
 from core.models.address import Address
@@ -284,9 +285,9 @@ def cancel_match(request, pk):
         match = Match.objects.get_match_by_id(pk).first()
         match.cancel()
         messages.info(request, "Le match a été supprimé")
-        return redirect(f"/match/detail/{pk}")
+        return redirect(reverse("match-planned"))
 
-    return redirect(f"/match/detail/{pk}")
+    return redirect(reverse("match-planned"))
 
 
 @login_required

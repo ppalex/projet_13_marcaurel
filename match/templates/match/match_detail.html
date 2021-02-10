@@ -3,6 +3,30 @@
 {% load static %}
 {% block content %}
 
+{% if user == match.administrator.user %}
+
+{% include 'match/includes/_pending_request_modal.html' %}
+{% include 'match/includes/_cancel_match_modal.html' %}
+{% include 'player/includes/_invitation_form.html' %}
+{% include 'match/includes/_email_alert_modal.html' %}
+{% include 'match/includes/_player_fire_modal.html' %}
+<div class="dropdown show">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Menu
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" data-target="#invitation-modal" id="invitation_modal" data-toggle="modal"
+            href="#invitation-modal"><i class="fas fa-users"></i> Inviter des joueurs</a>
+        <a class="dropdown-item" data-target="#email-modal" id="email_modal" data-toggle="modal" href="#email-modal"><i
+                class="fas fa-bell"></i> Alerter des joueurs</a>
+        <a class="dropdown-item" data-target="#cancel-modal" id="cancel_modal" data-toggle="modal"
+            href="#cancel-modal"><i class="fas fa-window-close"></i> Annuler le match</a>
+        <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i> Modifier</a>
+    </div>
+</div>
+<br>
 <div class="container-fluid">
 
     <div class="col-xl-3 col-md-6 mb-4">
@@ -22,169 +46,63 @@
             </div>
         </div>
     </div>
+</div>
+{% endif %}
+<div class="row">
+    <div class="col-xxl-4 col-xl-6 mb-4">
 
-    <div class="modal fade" id="pending-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Liste des demandes</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Joueur</th>
-                                            <th scope="col">Date de la demande</th>
-                                            <th scope="col">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for request in requests %}
-                                        <tr>
-                                            <td scope="row">{{request.by_player.user}}</td>
-                                            <td scope="row">{{request.request_date}}</td>
-                                            <td>
-                                                <form action="" method="POST" name="">
-                                                    {% csrf_token %}
-                                                    <input type="submit" name="action" value="Accepter"
-                                                        class="btn btn-success btn-sm" />
-                                                    <input type="hidden" name="request_id" value="{{ request.id }}">
-                                                    <input type="hidden" name="match_id" value="{{ match.id }}">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+        <div class="card h-100">
+            <div class="card-header border-bottom">
+                <h3>Joueurs inscrits</h3>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="cardTabContent">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="container">
+                                <ul class="list-group">
+                                    {% for player in players %}
+
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col"><a href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a></div>
+                                            {% if user == match.administrator.user %}
+                                            <div class="col">
+                                                <a data-target="#fire-modal" id="fire_modal" data-toggle="modal"
+                                                    href="#fire-modal" class="btn"
+                                                    data-player-name="{{ player.user.username }}"
+                                                    data-player-id="{{ player.id }}"><i
+                                                        class="fas fa-user-minus"></i></a>
+                                            </div>
+                                            {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-4 col-xl-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header border-bottom">
+                <h3>Localisation</h3>
+            </div>
+
+            <div class="card-body">
+                {% include "match/includes/_match_map.html" %}
             </div>
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Annulation du match</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Etes-vous sûr de vouloir annuler le match?
-                <form action="{% url 'cancel-match' pk=match.id %}" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn-danger btn-sm" type="submit">Oui</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-header border-bottom">
-        <div class="row">
-            <div class="col">
-                <a data-target="#invitation-modal" id="invitation_modal" data-toggle="modal" href="#invitation-modal"
-                    class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-users"></i>
-                    </span>
-                    <span class="text">Inviter des joueurs</span>
-                </a>
-            </div>
-            <div class="col">
-                <a data-target="#email-modal" id="invitation_modal" data-toggle="modal" href="#email-modal"
-                    class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="far fa-bell"></i>
-                    </span>
-                    <span class="text">Alerter des joueurs</span>
-                </a>
-            </div>
-            <div class="col">
-                <a data-target="#cancel-modal" id="invitation_modal" data-toggle="modal" href="#cancel-modal"
-                    class="btn btn-danger btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-window-close"></i>
-                    </span>
-                    <span class="text">Annuler le match</span>
-                </a>
-            </div>
-            <div class="col">
-                <a href="{% url 'match-update' match.id %}"
-                    class="btn btn-warning btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-pen-square"></i>
-                    </span>
-                    <span class="text">Modifier</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    {% include 'player/includes/_invitation_form.html' %}
-    {% include 'match/includes/_email_alert_modal.html' %}
-    {% include 'match/includes/_player_fire_modal.html' %}
-
-    <div class="card-body">
-        <div class="tab-content" id="cardTabContent">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="container">
-                        <h3>Joueurs inscrits</h3>
-                        <ul class="list-group">
-                            {% for player in players %}
-                            
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col">{{ player.user.username }}</div>
-                                   
-                                    <div class="col">
-                                        <a data-target="#fire-modal" id="fire_modal" data-toggle="modal" href="#fire-modal"
-                                        class="btn" data-player-name="{{ player.user.username }}" data-player-id="{{ player.id }}"><i class="fas fa-user-minus"></i></a>
-                                </div>                               
-                              
-                            </li>
-                            
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <br>
 <div class="container-fluid">
 
     <div class="row">
-        {% if user == match.administrator.user %}
-
-
-        {% else %}
-
-        {% if match.classification == 'public' %}
-
+        {% if match.classification == 'public' and user != match.administrator.user %}
         {% if  player_in_match %}
         <div class="col">
             <form action="" method="POST" name="">
@@ -209,18 +127,10 @@
 
         </div>
         {% endif %}
-        {% else %}
-        {% if  player_in_match %}
-        <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
-                    id="subscribe_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-            </form>
-        </div>
-        {% else %}
 
+        {% elif match.classification == 'private' and user != match.administrator.user %}
+
+        {% if  player_in_match %}
         <div class="col">
             <form action="" method="POST" name="">
                 {% csrf_token %}
@@ -230,15 +140,22 @@
             </form>
 
         </div>
-        {% endif %}
+
+
+        {% else %}
+
+        <div class="col">
+            <form action="" method="POST" name="">
+                {% csrf_token %}
+                <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                    id="subscribe_{{ match.id }}" />
+                <input type="hidden" name="match_id" value="{{ match.id }}">
+            </form>
+        </div>
         {% endif %}
         {% endif %}
 
     </div>
-</div>
-
-<div class="container-fluid">
-    {% include "match/includes/_match_map.html" %}
 </div>
 
 
@@ -256,13 +173,13 @@
         }
     });
 
-    $('#fire-modal').on('show.bs.modal', function(e) {
+    $('#fire-modal').on('show.bs.modal', function (e) {
         var playerName = $(e.relatedTarget).data('player-name');
         var playerID = $(e.relatedTarget).data('player-id');
         console.log(playerID);
         document.getElementById('playerName').innerHTML = playerName;
         document.getElementById('playerID').value = playerID;
-});
+    });
 </script>
 
 {% endblock %}
