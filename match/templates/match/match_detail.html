@@ -10,7 +10,7 @@
 {% include 'player/includes/_invitation_form.html' %}
 {% include 'match/includes/_email_alert_modal.html' %}
 {% include 'match/includes/_player_fire_modal.html' %}
-<div class="dropdown show">
+<div class="dropdown show" style="float: right;">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         Menu
@@ -26,25 +26,63 @@
         <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i> Modifier</a>
     </div>
 </div>
+<a class="btn btn-secondary" data-target="#pending-modal" data-toggle="modal" href="#pending-modal">
+    <span class="badge badge-danger badge-counter">{{ requests_count }}</span> Demandes
+</a>
 <br>
+<hr>
 <div class="container-fluid">
+    <div class="row">
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <a data-target="#pending-modal" data-toggle="modal"
-                            class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
-                            href="#pending-modal">Voir demande en attente</a>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ requests_count }}</div>
+        <!-- <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <a data-target="#pending-modal" data-toggle="modal"
+                                class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
+                                href="#pending-modal">Voir demande en attente</a>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ requests_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Coup d'envoi:</p>
+                            <p> {{ match.start_fixture }}</p>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Fin du match:</p>
+                            <p> {{ match.end_fixture }}</p>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endif %}
@@ -65,8 +103,11 @@
 
                                     <li class="list-group-item">
                                         <div class="row">
-                                            <div class="col"><a href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a></div>
+                                            <div class="col"><a
+                                                    href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a>
+                                            </div>
                                             {% if user == match.administrator.user %}
+                                            {% if user != match.administrator.user %}
                                             <div class="col">
                                                 <a data-target="#fire-modal" id="fire_modal" data-toggle="modal"
                                                     href="#fire-modal" class="btn"
@@ -74,6 +115,7 @@
                                                     data-player-id="{{ player.id }}"><i
                                                         class="fas fa-user-minus"></i></a>
                                             </div>
+                                            {% endif %}
                                             {% endif %}
                                     </li>
                                     {% endfor %}
