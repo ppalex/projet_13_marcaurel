@@ -268,6 +268,18 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 
         if match_form.is_valid() and address_form.is_valid():
 
+            city = address_form.cleaned_data['city']
+            street = address_form.cleaned_data['street']
+            number = address_form.cleaned_data['number']
+            region = address_form.cleaned_data['region']
+
+            latitude, longitude = get_address_coordinates(
+                street, number, city, region)
+
+            match_location = Location.objects.get_or_create(
+                coordinates=Point(longitude, latitude, srid=4326)
+            )
+            match.location = match_location[0]
             match_form.save()
             address_form.save()
             messages.success(request, "Le match a été mis à jour")

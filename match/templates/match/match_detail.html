@@ -10,6 +10,7 @@
 {% include 'player/includes/_invitation_form.html' %}
 {% include 'match/includes/_email_alert_modal.html' %}
 {% include 'match/includes/_player_fire_modal.html' %}
+
 <div class="dropdown show" style="float: right;">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -26,31 +27,72 @@
         <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i> Modifier</a>
     </div>
 </div>
+
 <a class="btn btn-secondary" data-target="#pending-modal" data-toggle="modal" href="#pending-modal">
     <span class="badge badge-danger badge-counter">{{ requests_count }}</span> Demandes
 </a>
 <br>
 <hr>
+
+{% endif %}
+<div class="row">
+    {% if match.classification == 'public' and user != match.administrator.user %}
+    {% if  player_in_match %}
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+
+        </form>
+
+    </div>
+    {% else %}
+
+    <div class="col">
+
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="S'inscrire" class="btn btn-success"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+
+    </div>
+    {% endif %}
+
+    {% elif match.classification == 'private' and user != match.administrator.user %}
+
+    {% if  player_in_match %}
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Demande d'inscription" class="btn btn-success"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+
+    </div>
+
+
+    {% else %}
+
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+    </div>
+    {% endif %}
+    {% endif %}
+
+</div>
+<br>
 <div class="container-fluid">
     <div class="row">
-
-        <!-- <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <a data-target="#pending-modal" data-toggle="modal"
-                                class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="MainNavHelp"
-                                href="#pending-modal">Voir demande en attente</a>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ requests_count }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
@@ -85,7 +127,7 @@
 
     </div>
 </div>
-{% endif %}
+<br>
 <div class="row">
     <div class="col-xxl-4 col-xl-6 mb-4">
 
@@ -143,61 +185,7 @@
 <br>
 <div class="container-fluid">
 
-    <div class="row">
-        {% if match.classification == 'public' and user != match.administrator.user %}
-        {% if  player_in_match %}
-        <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
-                    id="subscribe_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-
-            </form>
-
-        </div>
-        {% else %}
-
-        <div class="col">
-
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="S'inscrire" class="btn btn-success"
-                    id="subscribe_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-            </form>
-
-        </div>
-        {% endif %}
-
-        {% elif match.classification == 'private' and user != match.administrator.user %}
-
-        {% if  player_in_match %}
-        <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Demande d'inscription" class="btn btn-success"
-                    id="subscribe_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-            </form>
-
-        </div>
-
-
-        {% else %}
-
-        <div class="col">
-            <form action="" method="POST" name="">
-                {% csrf_token %}
-                <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
-                    id="subscribe_{{ match.id }}" />
-                <input type="hidden" name="match_id" value="{{ match.id }}">
-            </form>
-        </div>
-        {% endif %}
-        {% endif %}
-
-    </div>
+    
 </div>
 
 
