@@ -6,9 +6,11 @@ from django.conf import settings
 
 
 def send_alert_email_for_match(match, recipient_list):
-
-    email_subject = "Invitation pour un match"
-    email_body = render_to_string('tasks_manager/alert_email.txt')
+    context = {'username': "alex",
+               'match_id': match}
+    email_subject = "Invitation"
+    email_body = render_to_string(
+        'tasks_manager/alert_email.txt', context)
 
     email = EmailMessage(
         email_subject,

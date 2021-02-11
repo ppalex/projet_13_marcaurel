@@ -11,29 +11,34 @@
 {% include 'match/includes/_email_alert_modal.html' %}
 {% include 'match/includes/_player_fire_modal.html' %}
 
-<div class="dropdown show" style="float: right;">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Menu
-    </a>
+<div class="row">
 
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" data-target="#invitation-modal" id="invitation_modal" data-toggle="modal"
-            href="#invitation-modal"><i class="fas fa-users"></i> Inviter des joueurs</a>
-        <a class="dropdown-item" data-target="#email-modal" id="email_modal" data-toggle="modal" href="#email-modal"><i
-                class="fas fa-bell"></i> Alerter des joueurs</a>
-        <a class="dropdown-item" data-target="#cancel-modal" id="cancel_modal" data-toggle="modal"
-            href="#cancel-modal"><i class="fas fa-window-close"></i> Annuler le match</a>
-        <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i> Modifier</a>
+    <div class="col">
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" data-target="#invitation-modal" id="invitation_modal" data-toggle="modal"
+                    href="#invitation-modal"><i class="fas fa-users"></i> Inviter des joueurs</a>
+                <a class="dropdown-item" data-target="#email-modal" id="email_modal" data-toggle="modal"
+                    href="#email-modal"><i class="fas fa-bell"></i> Alerter des joueurs</a>
+                <a class="dropdown-item" data-target="#cancel-modal" id="cancel_modal" data-toggle="modal"
+                    href="#cancel-modal"><i class="fas fa-window-close"></i> Annuler le match</a>
+                <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i>
+                    Modifier</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <a class="btn btn-secondary" data-target="#pending-modal" data-toggle="modal" href="#pending-modal">
+            <span class="badge badge-danger badge-counter">{{ requests_count }}</span> Demandes</a>
     </div>
 </div>
-
-<a class="btn btn-secondary" data-target="#pending-modal" data-toggle="modal" href="#pending-modal">
-    <span class="badge badge-danger badge-counter">{{ requests_count }}</span> Demandes
-</a>
 <br>
 <hr>
-
 {% endif %}
 <div class="row">
     {% if match.classification == 'public' and user != match.administrator.user %}
@@ -124,6 +129,25 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Place disponible:</p>
+                            {% if match.full == True %}
+                            <p>Le match est complet</p>
+                            {% else %}
+                            <p>{{ match.available_place }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -185,7 +209,7 @@
 <br>
 <div class="container-fluid">
 
-    
+
 </div>
 
 

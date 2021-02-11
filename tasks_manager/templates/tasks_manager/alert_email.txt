@@ -1,1 +1,13 @@
-Test de l'envoi de mail
+Bonjour {{username}}, 
+
+On recherche des joueurs pour un match dans ta région!
+
+Intéressé?
+
+Rends toi sur la page du match:
+
+<a href="{{ request.scheme }}://{{ request.get_host }}{% url 'match-detail' 18 %}">Check Now</a>
+
+
+
+L’équipe Footix
