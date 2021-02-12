@@ -21,11 +21,11 @@ def update_match_status():
 
 
 @shared_task
-def send_alert_email_for_match_task(match_id, distance):
+def send_alert_email_for_match_task(match_id, distance, host_values):
 
     match = Match.objects.get_match_by_id(match_id).first()
     player_qs = Player.objects.get_player_dwithin(match, distance)
 
     recipient_list = [player.user.email for player in player_qs]
-
-    return send_alert_email_for_match(match, recipient_list)
+    
+    return send_alert_email_for_match(match, recipient_list, host_values)

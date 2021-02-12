@@ -219,7 +219,11 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
         if request.POST['action'] == "Envoyer l'email":
             distance = request.POST.get('select_distance')
             match_id = request.POST.get('match_id')
-            send_alert_email_for_match_task.delay(match_id, int(distance))
+            host_values = {}
+            host_values['scheme'] = request.scheme
+            host_values['host'] = request.META['HTTP_HOST']
+            # import pdb; pdb.set_trace()
+            send_alert_email_for_match_task.delay(match_id, int(distance), host_values)
 
         return redirect(f"/match/detail/{match_id}")
 
