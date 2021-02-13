@@ -73,23 +73,21 @@
     <div class="col">
         <form action="" method="POST" name="">
             {% csrf_token %}
+            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+    </div>
+
+    {% else %}   
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
             <input type="submit" name="action" value="Demande d'inscription" class="btn btn-success"
                 id="subscribe_{{ match.id }}" />
             <input type="hidden" name="match_id" value="{{ match.id }}">
         </form>
 
-    </div>
-
-
-    {% else %}
-
-    <div class="col">
-        <form action="" method="POST" name="">
-            {% csrf_token %}
-            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
-                id="subscribe_{{ match.id }}" />
-            <input type="hidden" name="match_id" value="{{ match.id }}">
-        </form>
     </div>
     {% endif %}
     {% endif %}
@@ -173,7 +171,7 @@
                                                     href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a>
                                             </div>
                                             {% if user == match.administrator.user %}
-                                            {% if user != match.administrator.user %}
+                                            {% if player.user != match.administrator.user %}
                                             <div class="col">
                                                 <a data-target="#fire-modal" id="fire_modal" data-toggle="modal"
                                                     href="#fire-modal" class="btn"

@@ -27,6 +27,8 @@
 </head>
 
 <body id="page-top">
+    {% include "player/includes/_invitation_modal.html" %}
+    {% include "player/includes/_request_modal.html" %}
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -52,12 +54,6 @@
                 {% include "core/includes/_messages.html" %}
                 <div class="container-fluid">
                     {% block content %}
-
-                    <div class="row">
-                        {% include "player/includes/_invitation_modal.html" %}
-                        {% include "player/includes/_request_modal.html" %}
-                    </div>
-
 
                     <div class="row justify-content-center">
                         <!-- Create Organization-->

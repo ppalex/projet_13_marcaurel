@@ -1,4 +1,4 @@
-<div class="col-xl-3 col-md-6 mb-4">
+<!-- <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-warning shadow h-100 py-2">
         <div class="card-body">
             <div class="row no-gutters align-items-center">
@@ -15,13 +15,13 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade" id="player-pending-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="request-player-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Liste des demandes</h5>
+                <h5 class="modal-title">Mes demandes en cours</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,9 +51,11 @@
                                                         class="btn btn-primary btn-sm">Consulter</a>
                                                 </div>
                                                 <div class="col">
-                                                    <form action="{% url 'cancel-match-request' request.id%}" method="POST">
+                                                    <form action="{% url 'cancel-match-request' request.id%}"
+                                                        method="POST">
                                                         {% csrf_token %}
-                                                        <button class="btn btn-danger btn-sm" type="submit">Annuler</button>
+                                                        <button class="btn btn-danger btn-sm"
+                                                            type="submit">Annuler</button>
                                                     </form>
                                                 </div>
                                             </div>
