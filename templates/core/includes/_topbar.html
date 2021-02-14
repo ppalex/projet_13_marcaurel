@@ -14,8 +14,8 @@
             <a class="nav-link dropdown-toggle" data-target="#invitation-player-modal" data-toggle="modal" role="button">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-envelope"></i> Mes invitations</span>
                 <!-- Counter - Alerts -->
-                {% if invitations_count > 0 %}
-                <span class="badge badge-danger badge-counter">{{invitations_count}}</span>
+                {% if invitations_count_current_player > 0 %}
+                <span class="badge badge-danger badge-counter">{{invitations_count_current_player}}</span>
                 {% endif %}
             </a>            
         </li>  
@@ -23,8 +23,8 @@
             <a class="nav-link dropdown-toggle" data-target="#request-player-modal" data-toggle="modal"  role="button">
                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-handshake"></i> Mes demandes</span>
                 <!-- Counter - Alerts -->
-                {% if requests_count > 0 %}
-                <span class="badge badge-danger badge-counter">{{requests_count}}</span>
+                {% if requests_count_current_player > 0 %}
+                <span class="badge badge-danger badge-counter">{{requests_count_current_player}}</span>
                 {% endif %}
             </a>            
         </li>  
