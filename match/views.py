@@ -231,7 +231,6 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
             host_values = {}
             host_values['scheme'] = request.scheme
             host_values['host'] = request.META['HTTP_HOST']
-            # import pdb; pdb.set_trace()
             send_alert_email_for_match_task.delay(
                 match_id, int(distance), host_values)
 
@@ -293,9 +292,19 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
             match_location = Location.objects.get_or_create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
+            match_adress, created = Address.objects.update_or_create(
+                city=city,
+                street=street,
+                number=number,
+                region=region
+            )
             match.location = match_location[0]
             match_form.save()
-            address_form.save()
+
+            if created:
+                match.adress = match_adress
+            else:
+                address_form.save()
             messages.success(request, "Le match a été mis à jour")
 
             return redirect(f"/match/detail/{match.id}")

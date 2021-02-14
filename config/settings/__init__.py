@@ -126,14 +126,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr'
 
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
 
+USE_L10N = False
+
+TIME_ZONE = 'Europe/Brussels'
+
+USE_I18N = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
@@ -161,7 +160,8 @@ DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TIMEZONE = 'Europe/Brussels'
+CELERY_TASK_ALWAYS_EAGER = False
 
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
