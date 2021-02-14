@@ -7,7 +7,7 @@ from django_tables2.utils import A
 class MatchTable(tables.Table):
 
     classification = tables.Column(verbose_name='Type de match')
-    fixture = tables.Column(verbose_name='Date')
+    start_fixture = tables.Column(verbose_name='Date')
     administrator = tables.Column(
         accessor='administrator.user', verbose_name='Administrateur')
     available_place = tables.Column(verbose_name='Place disponible')

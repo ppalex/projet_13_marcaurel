@@ -1,11 +1,11 @@
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View, DetailView
-from django.views.generic.edit import FormView
+from django.views import View
 from .models.user import User
 from core.models.address import Address
 
@@ -13,22 +13,36 @@ from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
-class RegisterView(FormView):
+class RegisterView(View):
     template_name = 'users/register.html'
-    form_class = CustomUserCreationForm
-    success_url = '/index/'
+    custom_form = CustomUserCreationForm
 
-    def form_valid(self, form):
+    def get(self, request):
+        form = self.custom_form()
+        context = {'form': form}
 
-        form.save()
+        return render(request, self.template_name, context)
 
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password1']
-        authenticate(username=username, password=password)
+    def post(self, request):
+        form = self.custom_form(request.POST)
+        context = {'form': form}
 
-        return super().form_valid(form)
+        if form.is_valid():
+
+            form.save()
+
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            messages.success(request, "Bienvenue, votre compte a été créé!")
+
+            return redirect('index')
+
+        return render(request, self.template_name, context)
 
 
 class CustomLoginView(SuccessMessageMixin, LoginView):

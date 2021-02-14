@@ -16,6 +16,7 @@
                 width="150">
               <div class="mt-3">
                 <h4>{{ player.user.username }}</h4>
+                {% if player.user != user %}
                 <a href="#" id="follow" data-id="{{ player.id }}"
                   data-action="{% if player in user.player.player_subscriptions.all  %}un{% endif %}follow"
                   class="btn btn-primary">
@@ -25,6 +26,7 @@
                   Unfollow
                   {% endif %}
                 </a>
+                {% endif %}
                 <br>
                 <div class="container">
                   <div class="row">
