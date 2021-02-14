@@ -12,11 +12,8 @@ def landing(request):
 
 
 def legal(request):
-    context = {
-        'timezone': timezone.now()
-    }
     template_name = 'core/legal.html'
-    return render(request, template_name, context=context)
+    return render(request, template_name)
 
 
 class Index(LoginRequiredMixin, TemplateView):

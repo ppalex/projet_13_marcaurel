@@ -128,7 +128,7 @@ LANGUAGE_CODE = 'fr'
 
 USE_TZ = True
 
-USE_L10N = False
+USE_L10N = True
 
 TIME_ZONE = 'Europe/Brussels'
 
