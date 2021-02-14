@@ -17,5 +17,9 @@ class MatchQueryset(models.QuerySet):
     def get_planned_match(self, administrator):
         return self.filter(administrator=administrator, over=False)
 
+    def get_in_progress_match(self, administrator):
+        return self.filter(administrator=administrator, started=True, over=False)
+
+
     def get_over_match(self, administrator):
         return self.filter(administrator=administrator, over=True)

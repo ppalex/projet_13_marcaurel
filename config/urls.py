@@ -21,7 +21,7 @@ from core.views import Index, landing, legal
 from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView, ProfileView)
 
-from match.views import (CreateMatchView, UpdateMatchView, MatchPlannedListView, MatchOverListView,
+from match.views import (CreateMatchView, UpdateMatchView, MatchPlannedListView, MatchInProgressListView, MatchOverListView,
                          MatchDetailView, MatchSubscriptionListView,
                          cancel_match, kick_player)
 
@@ -63,6 +63,8 @@ urlpatterns = [
     path('match/update/<int:pk>', UpdateMatchView.as_view(), name='match-update'),
     path('match/list/planned', MatchPlannedListView.as_view(), name='match-planned'),
     path('match/list/over', MatchOverListView.as_view(), name='match-over'),
+    path('match/list/in-progress', MatchInProgressListView.as_view(),
+         name='match-in-progress'),
     path('match/subscription/', MatchSubscriptionListView.as_view(),
          name='match-subscription'),
     path('match/detail/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),

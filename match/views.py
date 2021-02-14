@@ -109,6 +109,15 @@ class MatchPlannedListView(LoginRequiredMixin, ListView):
         return Match.objects.get_planned_match(administrator=self.request.user.player)
 
 
+class MatchInProgressListView(LoginRequiredMixin, ListView):
+    model = Match
+    template_name = 'match/match_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Match.objects.get_in_progress_match(administrator=self.request.user.player)
+
+
 class MatchOverListView(LoginRequiredMixin, ListView):
     model = Match
     template_name = 'match/match_list.html'
@@ -223,7 +232,8 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
             host_values['scheme'] = request.scheme
             host_values['host'] = request.META['HTTP_HOST']
             # import pdb; pdb.set_trace()
-            send_alert_email_for_match_task.delay(match_id, int(distance), host_values)
+            send_alert_email_for_match_task.delay(
+                match_id, int(distance), host_values)
 
         return redirect(f"/match/detail/{match_id}")
 
