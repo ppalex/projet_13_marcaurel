@@ -2,16 +2,13 @@
 
 
 {% load static %}
-
-
-
 {% block content %}
 
 <div class="card">
     <div class="card-header border-bottom">
         <!-- Wizard navigation-->
         <nav class="nav nav-borders">
-            <a class="nav-link active ml-0" href="{% url  'settings-profile' %}">Information utilisateur</a>
+            <a class="nav-link active ml-0" href="{% url  'settings-profile' user.username %}">Information utilisateur</a>
         </nav>
     </div>
     <div class="card-body">
@@ -25,7 +22,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Modifier vos informations personnelles</h1>
                         </div>
-                        <form method="POST" action="{% url 'settings-profile' %}">
+                        <form method="POST" action="{% url 'settings-profile' user.username %}">
                             {% csrf_token %}
 
                             <div class="form-row">
@@ -41,12 +38,10 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-
                                     {% for error in player_form.firstname.errors %}
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}
-
                                 </div>
                                 <div class="form-group col-md-6">
 
@@ -54,9 +49,7 @@
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}
-
                                 </div>
-
                             </div>
 
                             <div class="form-row">
@@ -115,7 +108,6 @@
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}
-
                                 </div>
 
                             </div>
@@ -129,25 +121,21 @@
                                     <label class="small mb-1">Numéro</label>
                                     {{ address_form.number }}
                                 </div>
-
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-
                                     {% for error in address_form.street.errors %}
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}
-
                                 </div>
-                                <div class="form-group col-md-6">
 
+                                <div class="form-group col-md-6">
                                     {% for error in address_form.number.errors %}
                                     <small class="alert alert-danger">
                                         <strong>{{ error }}</strong>
                                     </small> {% endfor %}
-
                                 </div>
 
                             </div>
@@ -162,9 +150,7 @@
                                     <label class="small mb-1">Région</label>
                                     {{ address_form.region }}
                                 </div>
-
                             </div>
-
 
                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                 Mettre à jour mes informations

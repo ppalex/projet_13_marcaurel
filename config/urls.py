@@ -58,7 +58,7 @@ urlpatterns = [
     path('password-reset/complete/', PasswordResetCompleteView.as_view(
          template_name='users/reset_password_complete.html'), name='password_reset_complete'),
     path('profile/<slug:username>', ProfileView.as_view(), name='profile'),
-    path('settings/profile/', UserSettingsView.as_view(), name='settings-profile'),
+    path('settings/profile/<slug:username>', UserSettingsView.as_view(), name='settings-profile'),
     path('match/create/', CreateMatchView.as_view(), name='match-creation'),
     path('match/update/<int:pk>', UpdateMatchView.as_view(), name='match-update'),
     path('match/list/planned', MatchPlannedListView.as_view(), name='match-planned'),

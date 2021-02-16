@@ -3,11 +3,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
-from django.views.generic import View, DetailView
-from django.views import View
+from django.shortcuts import render, redirect, reverse
+from django.views.generic import View, DetailView, UpdateView
 from .models.user import User
 from core.models.address import Address
+from users.models.profile import Profile
 
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
@@ -67,14 +67,11 @@ class ProfileView(DetailView, LoginRequiredMixin):
     template_name = "users/profile.html"
 
     def get_object(self):
-
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return user.player
 
     def get_context_data(self, **kwargs):
-
         context = super(ProfileView, self).get_context_data(**kwargs)
-
         player = self.get_object()
 
         context['followers_count'] = player.get_followers_count()
@@ -83,10 +80,19 @@ class ProfileView(DetailView, LoginRequiredMixin):
         return context
 
 
-class UserSettingsView(View, LoginRequiredMixin):
+class UserSettingsView(UpdateView, LoginRequiredMixin):
     template_name = 'users/settings.html'
+    model = User
+
+    def get_object(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return user.player
+
+    def form_invalid(self, request, **kwargs):
+        return render(request, self.template_name, self.get_context_data(**kwargs))
 
     def get_context_data(self,  **kwargs):
+
         if 'player_form' not in kwargs:
             kwargs['player_form'] = ProfileCreateForm(
                 instance=self.request.user.profile)
@@ -97,14 +103,12 @@ class UserSettingsView(View, LoginRequiredMixin):
 
         return kwargs
 
-    def get(self, request, *args, **kwargs):
-
-        return render(request, self.template_name, self.get_context_data())
-
     def post(self, request, *args, **kwargs):
+        player = self.get_object()
 
-        player_form = ProfileCreateForm(request.POST)
-        address_form = AddressCreateForm(request.POST)
+        player_form = ProfileCreateForm(request.POST, instance=player)
+        address_form = AddressCreateForm(
+            request.POST, instance=player.user.profile.address)
 
         if player_form.is_valid() and address_form.is_valid():
             profile = request.user.profile
@@ -114,28 +118,24 @@ class UserSettingsView(View, LoginRequiredMixin):
             number = address_form.cleaned_data['number']
             region = address_form.cleaned_data['region']
 
-            address = Address.objects.create(
+            address, created = Address.objects.get_or_create(
                 city=city,
                 street=street,
                 number=number,
                 region=region
             )
 
-            address.save()
+            if created:
+                profile.address = address
+                profile.save()
+                player_form.save()
+            else:
+                player_form.save()
+                address_form.save()
 
-            profile.firstname = player_form.cleaned_data['firstname']
-            profile.name = player_form.cleaned_data['name']
-            profile.birthdate = player_form.cleaned_data['birthdate']
-            profile.sex = player_form.cleaned_data['sex']
-            profile.level = player_form.cleaned_data['level']
-            positions = player_form.cleaned_data['positions']
-            profile.address = address
-
-            profile.positions.add(*positions)
-            profile.save()
-
-            return render(request, self.template_name, self.get_context_data())
+            messages.success(request, "Votre profil a été mis à jour!")
+            return redirect(reverse('settings-profile', kwargs={"username": player.user.username}))
 
         else:
-
-            return render(request, self.template_name, self.get_context_data())
+            return self.form_invalid(request, **{'player_form': player_form,
+                                                 'address_form': address_form})

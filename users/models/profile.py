@@ -1,7 +1,6 @@
 from django.db import models
 from .user import User
 
-
 from core.models.location import Location
 from core.models.address import Address
 from core.models.position import Position
