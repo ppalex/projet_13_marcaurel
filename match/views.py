@@ -3,9 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.gis.geos import Point
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, UpdateView, View
-from django.urls import reverse
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
 from core.models.address import Address
@@ -297,7 +297,7 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
                 number=number,
                 region=region
             )
-            
+
             match_form.save()
 
             if created:
