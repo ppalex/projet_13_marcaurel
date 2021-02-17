@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 from core.models.location import Location
 from core.models.address import Address
 from core.models.player import Player
-
+from django.contrib.gis.geos import Point
 from core.managers.match_manager import MatchManager
 
 
@@ -70,3 +70,9 @@ class Match(models.Model):
 
     def cancel(self):
         self.delete()
+
+    def set_location(self, latitude, longitude):
+        match_location = Location.objects.get_or_create(
+            coordinates=Point(longitude, latitude, srid=4326)
+        )
+        self.location = match_location[0]

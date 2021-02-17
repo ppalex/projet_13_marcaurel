@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic import View, DetailView, UpdateView
 from .models.user import User
 from core.models.address import Address
-from users.models.profile import Profile
 
+from api_manager.utils.mapquest_utils import get_address_coordinates
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
@@ -118,6 +118,11 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
             number = address_form.cleaned_data['number']
             region = address_form.cleaned_data['region']
 
+            latitude, longitude = get_address_coordinates(
+                street, number, city, region)
+
+            player.update_location(latitude, longitude)
+
             address, created = Address.objects.get_or_create(
                 city=city,
                 street=street,
@@ -134,7 +139,8 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
                 address_form.save()
 
             messages.success(request, "Votre profil a été mis à jour!")
-            return redirect(reverse('settings-profile', kwargs={"username": player.user.username}))
+            return redirect(reverse('settings-profile',
+                                    kwargs={"username": player.user.username}))
 
         else:
             return self.form_invalid(request, **{'player_form': player_form,

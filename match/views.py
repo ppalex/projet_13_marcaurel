@@ -289,11 +289,8 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
-            match_location = Location.objects.get_or_create(
-                coordinates=Point(longitude, latitude, srid=4326)
-            )
-            match.location = match_location[0]
-            
+            match.set_location(latitude, longitude)
+
             match_address, created = Address.objects.get_or_create(
                 city=city,
                 street=street,
