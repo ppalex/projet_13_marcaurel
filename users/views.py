@@ -85,7 +85,7 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
     model = User
 
     def get_object(self):
-        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        user = get_object_or_404(User, id=self.request.user.id)
         return user.player
 
     def form_invalid(self, request, **kwargs):
@@ -106,7 +106,7 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
         player = self.get_object()
 
-        player_form = ProfileCreateForm(request.POST, instance=player)
+        player_form = ProfileCreateForm(request.POST, instance=player.user.profile)
         address_form = AddressCreateForm(
             request.POST, instance=player.user.profile.address)
 
@@ -139,8 +139,7 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
                 address_form.save()
 
             messages.success(request, "Votre profil a été mis à jour!")
-            return redirect(reverse('settings-profile',
-                                    kwargs={"username": player.user.username}))
+            return redirect(reverse('settings-profile'))
 
         else:
             return self.form_invalid(request, **{'player_form': player_form,

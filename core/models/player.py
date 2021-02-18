@@ -38,7 +38,6 @@ class Player(models.Model):
         return self.follower.count()
 
 
-
 class PlayerSubscription(models.Model):
     follower = models.ForeignKey(
         Player, related_name="follower", on_delete=models.CASCADE, default=None)

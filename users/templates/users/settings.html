@@ -8,7 +8,7 @@
     <div class="card-header border-bottom">
         <!-- Wizard navigation-->
         <nav class="nav nav-borders">
-            <a class="nav-link active ml-0" href="{% url  'settings-profile' user.username %}">Information utilisateur</a>
+            <a class="nav-link active ml-0" href="{% url  'settings-profile' %}">Information utilisateur</a>
         </nav>
     </div>
     <div class="card-body">
@@ -22,7 +22,7 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Modifier vos informations personnelles</h1>
                         </div>
-                        <form method="POST" action="{% url 'settings-profile' user.username %}">
+                        <form method="POST" action="{% url 'settings-profile' %}">
                             {% csrf_token %}
 
                             <div class="form-row">
