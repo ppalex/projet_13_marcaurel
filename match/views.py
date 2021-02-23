@@ -52,7 +52,7 @@ class CreateMatchView(LoginRequiredMixin, View):
             number = address_form.cleaned_data['number']
             region = address_form.cleaned_data['region']
 
-            address = Address.objects.get_or_create(
+            address = Address.objects.create(
                 city=city,
                 street=street,
                 number=number,

@@ -106,7 +106,8 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
         player = self.get_object()
 
-        player_form = ProfileCreateForm(request.POST, instance=player.user.profile)
+        player_form = ProfileCreateForm(
+            request.POST, instance=player.user.profile)
         address_form = AddressCreateForm(
             request.POST, instance=player.user.profile.address)
 
@@ -123,22 +124,24 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
 
             player.update_location(latitude, longitude)
 
-            address, created = Address.objects.get_or_create(
-                city=city,
-                street=street,
-                number=number,
-                region=region
-            )
+            player = player_form.save(commit=False)
 
-            if created:
-                profile.address = address
-                profile.save()
-                player_form.save()
+            if profile.address is None:
+                address = Address.objects.create(
+                    city=city,
+                    street=street,
+                    number=number,
+                    region=region
+                )
+
             else:
-                player_form.save()
-                address_form.save()
+                address = address_form.save()
 
+            player.address = address
+            player.save()
+            player_form.save_m2m()
             messages.success(request, "Votre profil a été mis à jour!")
+
             return redirect(reverse('settings-profile'))
 
         else:
