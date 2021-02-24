@@ -9,6 +9,9 @@ class EmailTest(TestCase):
     fixtures = ["data.json"]
 
     def test_send_alert_email_for_match(self):
+        host_values = {}
+        host_values['scheme'] = request.scheme
+        host_values['host'] = request.META['HTTP_HOST']
 
         send_alert_email_for_match(None, ['to@example.com'])
 

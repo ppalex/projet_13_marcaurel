@@ -139,7 +139,8 @@ def autocomplete_player(request):
         players = list()
 
         for player in query:
-            players.append(player.user.username)
+            if player.user != request.user:
+                players.append(player.user.username)
 
         return JsonResponse(players, safe=False)
 

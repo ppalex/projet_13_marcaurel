@@ -77,10 +77,14 @@ class AutocompleteCityTest(TestCase):
     def setUpTestData(self):
         self.factory = RequestFactory()
 
+        self.user = User.objects.create_user(
+            username='user3', email='user3@gmail.com', password='password')
+
     def test_autocomplete(self):
+        self.client.login(username='user3', password='password')
         data = {'term': 'B'}
         request = self.factory.get('/autocomplete', data)
-
+        request.user = self.user
         json_response = autocomplete_city(request)
 
         self.assertJSONEqual(
@@ -97,10 +101,15 @@ class AutocompletePlayerTest(TestCase):
     def setUpTestData(self):
         self.factory = RequestFactory()
 
-    def test_autocomplete(self):
-        data = {'term': 'u'}
-        request = self.factory.get('/autocomplete', data)
+        self.user = User.objects.create_user(
+            username='user3', email='user3@gmail.com', password='password')
 
+    def test_autocomplete(self):
+        self.client.login(username='user3', password='password')
+        data = {'term': 'u'}
+
+        request = self.factory.get('/autocomplete', data)
+        request.user = self.user
         json_response = autocomplete_player(request)
 
         self.assertJSONEqual(

@@ -137,8 +137,8 @@
         "pk": 1,
         "fields": {
             "classification": "private",
-            "start_fixture": "2020-01-01 01:00:00+00:00",
-            "end_fixture": "2020-01-01 02:00:00+00:00",
+            "start_fixture": "2020-01-01 01:00:00+01:00",
+            "end_fixture": "2020-01-01 02:00:00+01:00",
             "num_player": 2,
             "capacity": 10,
             "available_place": 8,
@@ -159,8 +159,8 @@
         "pk": 2,
         "fields": {
             "classification": "public",
-            "start_fixture": "2020-01-01 01:00:00+00:00",
-            "end_fixture": "2020-01-01 02:00:00+00:00",
+            "start_fixture": "2020-01-01 01:00:00+01:00",
+            "end_fixture": "2020-01-01 02:00:00+01:00",
             "num_player": 2,
             "capacity": 10,
             "available_place": 8,
@@ -181,8 +181,8 @@
         "pk": 1,
         "fields": {
             "status": "pending",
-            "invitation_date": "2020-01-01 01:00:00+00:00",
-            "response_date": "2020-01-01 01:00:00+00:00",
+            "invitation_date": "2020-01-01T01:00:00+01:00",
+            "response_date": "2020-01-01T01:00:00+01:00",
             "by_player": 1,
             "for_player": 2,
             "for_match": 1
@@ -192,7 +192,7 @@
         "model": "core.registration",
         "pk": 1,
         "fields": {
-            "join_date": "2020-01-01 01:00:00+00:00",
+            "join_date": "2020-01-01 01:00:00+01:00",
             "invitation": 1,
             "player": 2,
             "match": 1
@@ -203,8 +203,8 @@
         "pk": 1,
         "fields": {
             "status": "pending",
-            "request_date": "2020-01-01 01:00:00+00:00",
-            "response_date": "2020-02-01 01:00:00+00:00",
+            "request_date": "2020-01-01 01:00:00+01:00",
+            "response_date": "2020-02-01 01:00:00+01:00",
             "by_player": 2,
             "for_match": 1
         }

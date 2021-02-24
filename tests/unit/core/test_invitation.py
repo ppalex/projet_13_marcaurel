@@ -1,5 +1,5 @@
-from django.test import TestCase
 from datetime import datetime
+from django.test import TestCase
 from django.utils.timezone import make_aware
 
 from core.models.invitation import Invitation
