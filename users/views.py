@@ -76,6 +76,7 @@ class ProfileView(DetailView, LoginRequiredMixin):
 
         context['followers_count'] = player.get_followers_count()
         context['followings_count'] = player.get_followings_count()
+        context['age'] = player.user.profile.get_age()
 
         return context
 

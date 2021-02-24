@@ -1,6 +1,6 @@
 from django.db import models
 from .user import User
-
+from datetime import date
 from core.models.location import Location
 from core.models.address import Address
 from core.models.position import Position
@@ -35,6 +35,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} profile'
+
+    def get_age(self):
+        today = date.today()
+        born = self.birthdate
+        if born:
+            return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+        else:
+            return 0
+
+    def get_level(self):
+        return f"{self.get_level_display()}"
 
     # def save(self, *args, **kwargs):
     #     super(Profile, self).save(*args, **kwargs)
