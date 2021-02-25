@@ -331,7 +331,6 @@ def cancel_match(request, pk):
 @login_required
 def kick_player(request, pk):
     if request.method == "POST":
-
         player_id = request.POST.get('player_id')
         player = Player.objects.get_player_by_id(player_id).first()
         match = Match.objects.get_match_by_id(pk).first()
