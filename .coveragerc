@@ -7,4 +7,5 @@ omit=
     config/*
     users/migrations/*
     core/migrations/*
+    notifications/migrations/*
     *__init__*

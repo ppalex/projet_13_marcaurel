@@ -31,7 +31,7 @@ class CreateMatchViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class MatchListViewTest(TestCase):
+class MatchPlannedViewTest(TestCase):
 
     fixtures = ["data.json"]
 
@@ -42,12 +42,12 @@ class MatchListViewTest(TestCase):
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('match-planned'))
-        self.assertRedirects(response, '/login/?next=/match/list/')
+        self.assertRedirects(response, '/login/?next=/match/list/planned')
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(
             username='user1', password='user1')
-        response = self.client.get('match/list/')
+        response = self.client.get('match/list/planned')
 
         self.assertEqual(response.status_code, 200)
 
@@ -55,6 +55,63 @@ class MatchListViewTest(TestCase):
         self.client.login(
             username='user1', password='user1')
         response = self.client.get(reverse('match-planned'))
+
+        self.assertEqual(response.status_code, 200)
+
+
+class MatchOverViewTest(TestCase):
+
+    fixtures = ["data.json"]
+
+    def setUp(self):
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get(reverse('match-over'))
+        self.assertRedirects(response, '/login/?next=/match/list/over')
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get('match/list/over')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get(reverse('match-over'))
+
+        self.assertEqual(response.status_code, 200)
+
+
+class MatchInProgressViewTest(TestCase):
+
+    fixtures = ["data.json"]
+
+    def setUp(self):
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get(reverse('match-in-progress'))
+        self.assertRedirects(
+            response, '/login/?next=/match/list/in-progress')
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get('match/list/in-progress')
+
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(
+            username='user1', password='user1')
+        response = self.client.get(reverse('match-in-progress'))
 
         self.assertEqual(response.status_code, 200)
 
@@ -81,3 +138,9 @@ class MatchDetailViewTest(TestCase):
         response = self.client.get(reverse('match-detail', kwargs={'pk': 1}))
 
         self.assertEqual(response.status_code, 200)
+
+class KickPlayerViewTest(TestCase):
+    pass
+
+class CancelMatchViewTest(TestCase):
+    pass

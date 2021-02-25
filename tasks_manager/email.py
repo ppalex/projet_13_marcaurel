@@ -15,7 +15,7 @@ def send_alert_email_for_match(match, recipient_list, host_values):
 
     email_subject = "Invitation"
     email_body = render_to_string(template, context=context)
-    
+
     email = EmailMessage(
         email_subject,
         email_body,
