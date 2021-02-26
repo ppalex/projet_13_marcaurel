@@ -4,7 +4,7 @@ from api_manager.utils.mapquest_utils import get_address_coordinates
 from unittest import mock
 
 
-class MapquestApiUtilsTestCase(TestCase):
+class MapquestApiUtilsIntegrationTest(TestCase):
 
     @mock.patch('api_manager.models.mapquest_api.requests.get')
     def test_send_request(self, mock_get):

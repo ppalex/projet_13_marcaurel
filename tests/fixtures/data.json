@@ -172,7 +172,7 @@
             "administrator": 1,
             "location": 1,
             "players": [
-                1
+                
             ]
         }
     },
@@ -180,7 +180,7 @@
         "model": "core.invitation",
         "pk": 1,
         "fields": {
-            "status": "pending",
+            "status": "accepted",
             "invitation_date": "2020-01-01T01:00:00+01:00",
             "response_date": "2020-01-01T01:00:00+01:00",
             "by_player": 1,
@@ -190,7 +190,7 @@
     },
     {
         "model": "core.registration",
-        "pk": 1,
+        "pk": 2,
         "fields": {
             "join_date": "2020-01-01 01:00:00+01:00",
             "invitation": 1,
