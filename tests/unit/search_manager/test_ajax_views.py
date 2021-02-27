@@ -12,8 +12,9 @@ class FilterMatchView(TestCase):
     def setUpTestData(self):
         self.factory = RequestFactory()
 
-        self.user = User.objects.create_user(
-            username='user3', email='user3@gmail.com', password='password')
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
 
     def test_classification_filter(self):
         self.client.login(username='user3', password='password')
@@ -26,7 +27,7 @@ class FilterMatchView(TestCase):
 
         request = self.factory.post('/search/match/filter', data)
 
-        request.user = self.user
+        request.user = User.objects.get(id=3)
 
         response = filter_match_view(request)
         json_response = json.loads(response.content)
@@ -44,12 +45,12 @@ class FilterMatchView(TestCase):
                 }
 
         request = self.factory.post('/search/match/filter', data)
-        request.user = self.user
+        request.user = User.objects.get(id=3)
         response = filter_match_view(request)
         json_response = json.loads(response.content)
 
         self.assertSetEqual(
-            set(map(lambda x: x['id'], json_response)), {2})
+            set(map(lambda x: x['id'], json_response)), {2, 3})
 
     def test_available_place_filter(self):
         self.client.login(username='user3', password='password')
@@ -61,12 +62,12 @@ class FilterMatchView(TestCase):
                 }
 
         request = self.factory.post('/search/match/filter', data)
-        request.user = self.user
+        request.user = User.objects.get(id=3)
         response = filter_match_view(request)
         json_response = json.loads(response.content)
 
         self.assertSetEqual(
-            set(map(lambda x: x['id'], json_response)), {1, 2})
+            set(map(lambda x: x['id'], json_response)), {1, 2, 3})
 
 
 class AutocompleteCityTest(TestCase):
@@ -77,14 +78,15 @@ class AutocompleteCityTest(TestCase):
     def setUpTestData(self):
         self.factory = RequestFactory()
 
-        self.user = User.objects.create_user(
-            username='user3', email='user3@gmail.com', password='password')
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
 
     def test_autocomplete(self):
         self.client.login(username='user3', password='password')
         data = {'term': 'B'}
         request = self.factory.get('/autocomplete', data)
-        request.user = self.user
+        request.user = User.objects.get(id=3)
         json_response = autocomplete_city(request)
 
         self.assertJSONEqual(
@@ -101,15 +103,16 @@ class AutocompletePlayerTest(TestCase):
     def setUpTestData(self):
         self.factory = RequestFactory()
 
-        self.user = User.objects.create_user(
-            username='user3', email='user3@gmail.com', password='password')
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
 
     def test_autocomplete(self):
         self.client.login(username='user3', password='password')
         data = {'term': 'u'}
 
         request = self.factory.get('/autocomplete', data)
-        request.user = self.user
+        request.user = User.objects.get(id=3)
         json_response = autocomplete_player(request)
 
         self.assertJSONEqual(

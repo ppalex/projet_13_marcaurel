@@ -20,6 +20,16 @@
         }
     },
     {
+        "model": "core.address",
+        "pk": 3,
+        "fields": {
+            "city": "Mons",
+            "street": "rue du onze Novembre",
+            "number": 1
+            
+        }
+    },
+    {
         "model": "core.position",
         "pk": 1,
         "fields": {
@@ -46,8 +56,7 @@
         "fields": {
             "position_name": "center"
         }
-    },    
-  
+    },
     {
         "model": "users.profile",
         "pk": 1,
@@ -83,6 +92,23 @@
         }
     },
     {
+        "model": "users.profile",
+        "pk": 3,
+        "fields": {
+            "firstname": "user3_firstname",
+            "name": "user3_name",
+            "birthdate": "2020-01-01",
+            "sex": "feminine",
+            "level": "novice",
+            "address": 3,
+            "positions": [
+                1,
+                2
+            ],
+            "user": 3
+        }
+    },
+    {
         "model": "core.player",
         "pk": 1,
         "fields": {
@@ -101,21 +127,39 @@
         }
     },
     {
-        "model": "users.user",
-        "pk":1,
+        "model": "core.player",
+        "pk": 3,
         "fields": {
-            "username": "user1",
-            "password": "user1",
-            "email": "user1@gmail.com"
+            "location": 2,
+            "player_subscriptions": [],
+            "user": 3
         }
     },
     {
         "model": "users.user",
-        "pk":2,
+        "pk": 1,
+        "fields": {
+            "username": "user1",
+            "password": "user1",
+            "email": "user1@test.test"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 2,
         "fields": {
             "username": "user2",
             "password": "user2",
-            "email": "user2@gmail.com"
+            "email": "user2@test.test"
+        }
+    },
+    {
+        "model": "users.user",
+        "pk": 3,
+        "fields": {
+            "username": "user3",
+            "password": "user3",
+            "email": "user3@test.test"
         }
     },
     {
@@ -171,16 +215,34 @@
             "address": 1,
             "administrator": 1,
             "location": 1,
-            "players": [
-                
-            ]
+            "players": []
+        }
+    },
+    {
+        "model": "core.match",
+        "pk": 3,
+        "fields": {
+            "classification": "public",
+            "start_fixture": "2020-01-01 01:00:00+01:00",
+            "end_fixture": "2020-01-01 02:00:00+01:00",
+            "num_player": 2,
+            "capacity": 10,
+            "available_place": 8,
+            "full": "False",
+            "started": "True",
+            "cancelled": "False",
+            "over": "True",
+            "address": 1,
+            "administrator": 2,
+            "location": 1,
+            "players": []
         }
     },
     {
         "model": "core.invitation",
         "pk": 1,
         "fields": {
-            "status": "accepted",
+            "status": "pending",
             "invitation_date": "2020-01-01T01:00:00+01:00",
             "response_date": "2020-01-01T01:00:00+01:00",
             "by_player": 1,

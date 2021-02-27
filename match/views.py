@@ -58,7 +58,6 @@ class CreateMatchView(LoginRequiredMixin, View):
                 number=number,
                 region=region
             )
-
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
@@ -78,7 +77,7 @@ class CreateMatchView(LoginRequiredMixin, View):
                 started=False,
                 cancelled=False,
                 over=False,
-                address=address[0],
+                address=address,
                 administrator=user.player,
                 location=match_location[0]
             )
