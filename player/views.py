@@ -44,7 +44,7 @@ def accept_match_invitation(request, pk):
         invitation.accept()
 
         match_id = request.POST.get('match_id')
-        match = Match.objects.get(id=match_id)        
+        match = Match.objects.get(id=match_id)
 
         Registration.create_registration(
             match_request=None,

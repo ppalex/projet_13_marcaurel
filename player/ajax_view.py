@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from core.models.player import Player, PlayerSubscription
 
+
 @login_required
 def player_follow(request):
 

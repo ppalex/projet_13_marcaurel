@@ -61,7 +61,7 @@ class CreateMatchView(LoginRequiredMixin, View):
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
-            match_location = Location.objects.get_or_create(
+            match_location = Location.objects.get(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
 
@@ -79,7 +79,7 @@ class CreateMatchView(LoginRequiredMixin, View):
                 over=False,
                 address=address,
                 administrator=user.player,
-                location=match_location[0]
+                location=match_location
             )
             match.save()
 

@@ -86,7 +86,7 @@ class SubscribeInMatchIntegrationTest(TestCase):
         self.assertTrue(user.player in match.players.all())
 
 
-class UnsubscribeInMatchIntegrationTest(TestCase):
+class UnsubscribeFromMatchIntegrationTest(TestCase):
 
     fixtures = ["data.json"]
 

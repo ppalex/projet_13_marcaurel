@@ -9,3 +9,9 @@ omit=
     core/migrations/*
     notifications/migrations/*
     *__init__*
+    core/apps.py
+    match/apps.py
+    player/apps.py
+    search_manager/apps.py
+    tasks_manager/apps.py
+    users/apps.py

@@ -135,6 +135,7 @@
             "user": 3
         }
     },
+   
     {
         "model": "users.user",
         "pk": 1,
@@ -251,6 +252,18 @@
         }
     },
     {
+        "model": "core.invitation",
+        "pk": 2,
+        "fields": {
+            "status": "pending",
+            "invitation_date": "2020-01-01T01:00:00+01:00",
+            "response_date": "2020-01-01T01:00:00+01:00",
+            "by_player": 1,
+            "for_player": 3,
+            "for_match": 1
+        }
+    },
+    {
         "model": "core.registration",
         "pk": 2,
         "fields": {
@@ -269,6 +282,15 @@
             "response_date": "2020-02-01 01:00:00+01:00",
             "by_player": 2,
             "for_match": 1
+        }
+    },
+    {
+        "model": "core.playerSubscription",
+        "pk": 1,
+        "fields": {
+            "follower": 2,
+            "following": 1,
+            "created": "2020-01-01 01:00:00+01:00"
         }
     }
 ]
