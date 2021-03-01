@@ -7,11 +7,10 @@ before_script:
   - pip install -r requirements.txt
 
 services:
-  - docker
   - postgresql
 
 env: 
-  - DJANGO_SETTINGS_MODULE=config.settings.testing
+  - DJANGO_SETTINGS_MODULE=config.settings.travis
 
 script:
     - python manage.py collectstatic 
