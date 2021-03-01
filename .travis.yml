@@ -9,6 +9,10 @@ before_script:
 services:
   - postgresql
 
+env: 
+  global:
+  - DJANGO_SETTINGS_MODULE=config.settings.testing
+
 script:
     - python manage.py collectstatic 
     - python manage.py test --verbosity 2
