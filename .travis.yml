@@ -12,7 +12,7 @@ services:
 
 env: 
   global:
-  - DJANGO_SETTINGS_MODULE=config.settings.testing
+  - DJANGO_SETTINGS_MODULE="config.settings.testing"
 
 script:
     - python manage.py collectstatic 
