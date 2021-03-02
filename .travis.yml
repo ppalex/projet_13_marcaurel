@@ -19,5 +19,5 @@ branches:
     - master
 
 before_script:
-  - openssl aes-256-cbc -K $encrypted_cd4886b3c82d_key -iv $encrypted_cd4886b3c82d_iv -in env.testing.enc -out .env.testing -d
+  - openssl aes-256-cbc -K $encrypted_cd4886b3c82d_key -iv $encrypted_cd4886b3c82d_iv -in .env.testing.enc -out .env.testing -d
   - pip install -r requirements.txt
