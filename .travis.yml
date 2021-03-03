@@ -14,7 +14,7 @@ branches:
   only:
     - dev
     - master
-    
+
 install:
   - sudo add-apt-repository -y ppa:ubuntugis/ppa && sudo apt-get update
   - openssl aes-256-cbc -K $encrypted_cd4886b3c82d_key -iv $encrypted_cd4886b3c82d_iv -in .env.testing.enc -out .env.testing -d
@@ -22,5 +22,5 @@ install:
   - sudo apt-get install libgdal-dev
 
 before_script:
-   - pip install -r requirements.txt
+  - pip install -r requirements.txt
   - export DJANGO_SETTINGS_MODULE=config.settings.travis
