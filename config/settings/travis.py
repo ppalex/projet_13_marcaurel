@@ -6,13 +6,10 @@ FIXTURE_DIRS = (os.path.join('tests', 'fixtures'),)
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': '',
+        'NAME': 'gis',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '',
         'PORT': '',
-        'TEST': {
-            'NAME': 'mytestdatabase',
-        }
     },
 }
