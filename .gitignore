@@ -19,4 +19,5 @@ build/
 .env.testing
 
 */migrations/*.py
+!*/migrations/__init__.py
 celerybeat-schedule
