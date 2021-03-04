@@ -9,13 +9,13 @@ addons:
   - postgresql: '10'
 
 sudo: true
-
-before_script:
-  - psql -U postgres -c "create extension postgis"
-  - psql -c 'create database test_db;' -U postgres
+  
 
 script:
-    - python manage.py collectstatic
+    - python3 manage.py collectstatic
+    - yes | python3 manage.py makemigrations
+    - python3 manage.py migrate auth
+    - python3 manage.py migrate --run-syncdb
     - python manage.py test --verbosity 2
 
 branches:
@@ -33,3 +33,5 @@ install:
 before_script:
   - pip install -r requirements.txt
   - export DJANGO_SETTINGS_MODULE=config.settings.travis
+  - psql -U postgres -c "create extension postgis"
+  - psql -c 'create database test_db;' -U postgres
