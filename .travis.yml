@@ -16,7 +16,6 @@ script:
     - yes | python3 manage.py makemigrations
     - python3 manage.py migrate auth
     - python3 manage.py migrate --run-syncdb
-    - celery -A tasks_manager worker -l INFO -B
     - python manage.py test --verbosity 2
 
 branches:
