@@ -3,6 +3,7 @@ python:
   - '3.8'
 
 services:
+  - redis-server
   - postgresql
 
 addons:
@@ -35,4 +36,3 @@ before_script:
   - export DJANGO_SETTINGS_MODULE=config.settings.travis
   - psql -U postgres -c "create extension postgis"
   - psql -c 'create database db;' -U postgres
-  - redis-server /etc/redis/redis.conf --port 6379
