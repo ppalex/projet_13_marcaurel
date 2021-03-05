@@ -1,0 +1,45 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+<link href="{% static 'core/css/map.css' %}" rel="stylesheet">
+<link href="{% static 'core/vendor/leaflet/MarkerCluster.Default.css' %}" rel="stylesheet">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+<!-- <script type="text/javascript" src="{% static 'core/js/geolocation.js' %}"></script> -->
+<script type="text/javascript" src="{% static 'core/vendor/leaflet/leaflet.markercluster.js' %}"></script>
+
+<div id="map-match">
+    <input type="hidden" id="match_lat" name="variable" value="{{ match_lat }}">
+    <input type="hidden" id="match_lon" name="variable" value="{{ match_lon }}">
+    <script>
+
+        var match_lat = document.getElementById("match_lat").value.replace(/,/g, ".");
+        var match_lon = document.getElementById("match_lon").value.replace(/,/g, ".");
+        var map = L.map('map-match').setView([match_lat, match_lon], 10);
+        var markers_cluster = L.markerClusterGroup();
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiYXBwMTMwOCIsImEiOiJja2liejVhOTAwZjZxMnlwZXhmbnJtc2hzIn0.Lr-IKjKKwlrfzBWVelCu7Q'
+        }).addTo(map);
+
+        var popupContent = '{{match.address.city}} {{match.address.street}} {{match.address.number}}'
+        var popupOptions = {
+            'className': 'custom-popup'
+        };
+
+        marker = L.marker({{ match.location.lat_lng }}).bindPopup(popupContent, popupOptions);
+        markers_cluster.addLayer(marker);
+
+        map.addLayer(markers_cluster);
+    </script>
+</div>

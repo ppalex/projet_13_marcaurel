@@ -15,11 +15,32 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/marcaurel
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     ports:
       - 8000:8000
+    stdin_open: true
+    tty: true
     env_file:
       - ./.env.dev
 
     depends_on:
       - db
+      - redis
+
+  celery:
+    build: .
+    command: celery -A tasks_manager worker -l INFO -B
+    volumes: 
+      - .:/marcaurel
+    env_file:
+      - ./.env.dev
+    depends_on:
+        - web
+        - redis
+
+  redis:
+    image: "redis:alpine"
+
+    
 

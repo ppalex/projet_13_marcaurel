@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  db_testing:
+    image: kartoza/postgis:12.1
+    environment:
+      - POSTGRES_DB=gis_testing
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      
+  web_testing:
+    entrypoint: /entrypoint.sh
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/marcaurel
+    env_file:
+      - ./.env.testing
+    ports:
+      - 8000:8000
+    stdin_open: true
+    tty: true
+    environment: 
+      - DJANGO_SETTINGS_MODULE=config.settings.testing
+
+    depends_on:
+      - db_testing
+      - redis
+
+  celery:
+    build: .
+    command: celery -A tasks_manager worker -l INFO -B
+    volumes: 
+      - .:/marcaurel
+    env_file:
+      - ./.env.dev
+    depends_on:
+        - web_testing
+        - redis  
+  redis:
+    image: "redis:alpine"

@@ -1,0 +1,30 @@
+{% load static %}
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Footix.com 2021</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="copyright text-center my-auto">
+                    <a href="{% url 'legal' %}">Mentions légales</a>
+                </div>
+            </div>
+            <div class="col">
+                <a class="link-ic" href="https://www.linkedin.com/in/alexandre-prieto-pantoja-735404b6/">
+                    <img src="{% static 'core/img/linkedin.png' %}" alt="https://www.linkedin.com/in/alexandre-prieto-pantoja-735404b6/" style="width:40px;">
+                </a>
+            </div>
+            <div class="col">
+                <!-- Github -->
+                <a class="github-ic" href="https://github.com/ppalex">
+                    <img src="{% static 'core/img/github.png' %}" alt="https://github.com/ppalex" style="width:40px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End of Footer -->

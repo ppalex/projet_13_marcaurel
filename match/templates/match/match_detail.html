@@ -1,0 +1,258 @@
+{% extends "core/base.html" %}
+
+{% load static %}
+{% block content %}
+
+{% if user == match.administrator.user %}
+
+{% include 'match/includes/_pending_request_modal.html' %}
+{% include 'match/includes/_cancel_match_modal.html' %}
+{% include 'player/includes/_invitation_form.html' %}
+{% include 'match/includes/_email_alert_modal.html' %}
+{% include 'match/includes/_player_fire_modal.html' %}
+
+<div class="row">
+
+    <div class="col">
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" data-target="#invitation-modal" id="invitation_modal" data-toggle="modal"
+                    href="#invitation-modal"><i class="fas fa-users"></i> Inviter des joueurs</a>
+                <a class="dropdown-item" data-target="#email-modal" id="email_modal" data-toggle="modal"
+                    href="#email-modal"><i class="fas fa-bell"></i> Alerter des joueurs</a>
+                <a class="dropdown-item" data-target="#cancel-modal" id="cancel_modal" data-toggle="modal"
+                    href="#cancel-modal"><i class="fas fa-window-close"></i> Annuler le match</a>
+                <a class="dropdown-item" href="{% url 'match-update' match.id %}"><i class="fas fa-pen-square"></i>
+                    Modifier</a>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <a class="btn btn-secondary" data-target="#pending-modal" data-toggle="modal" href="#pending-modal">
+            <span class="badge badge-danger badge-counter">{{ requests_count }}</span> Demandes</a>
+    </div>
+</div>
+<br>
+<hr>
+{% endif %}
+<div class="row">
+    {% if match.classification == 'public' and user != match.administrator.user %}
+    {% if  player_in_match %}
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+
+        </form>
+
+    </div>
+    {% else %}
+
+    <div class="col">
+
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="S'inscrire" class="btn btn-success"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+
+    </div>
+    {% endif %}
+
+    {% elif match.classification == 'private' and user != match.administrator.user %}
+
+    {% if  player_in_match %}
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Se désinscrire" class="btn btn-danger"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+    </div>
+
+    {% else %}   
+    <div class="col">
+        <form action="" method="POST" name="">
+            {% csrf_token %}
+            <input type="submit" name="action" value="Demande d'inscription" class="btn btn-success"
+                id="subscribe_{{ match.id }}" />
+            <input type="hidden" name="match_id" value="{{ match.id }}">
+        </form>
+
+    </div>
+    {% endif %}
+    {% endif %}
+
+</div>
+<br>
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Coup d'envoi:</p>
+                            <p> {{ match.start_fixture }}</p>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Fin du match:</p>
+                            <p> {{ match.end_fixture }}</p>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Place disponible:</p>
+                            {% if match.full == True %}
+                            <p>Le match est complet</p>
+                            {% else %}
+                            <p>{{ match.available_place }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <p> Statut:</p>
+                            {% if match.over == True %}
+                            <p>Le match est terminé</p>
+                            {% elif match.started == True %}
+                            <p>Le match est en cours</p>
+                            {% else %}
+                            <p>Le match n'a pas commencé</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xxl-4 col-xl-6 mb-4">
+
+        <div class="card h-100">
+            <div class="card-header border-bottom">
+                <h3>Joueurs inscrits</h3>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="cardTabContent">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="container">
+                                <ul class="list-group">
+                                    {% for player in players %}
+
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col"><a
+                                                    href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a>
+                                            </div>
+                                            {% if user == match.administrator.user %}
+                                            {% if player.user != match.administrator.user %}
+                                            <div class="col">
+                                                <a data-target="#fire-modal" id="fire_modal" data-toggle="modal"
+                                                    href="#fire-modal" class="btn"
+                                                    data-player-name="{{ player.user.username }}"
+                                                    data-player-id="{{ player.id }}"><i
+                                                        class="fas fa-user-minus"></i></a>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xxl-4 col-xl-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header border-bottom">
+                <h3>Localisation</h3>
+            </div>
+
+            <div class="card-body">
+                {% include "match/includes/_match_map.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container-fluid">
+
+
+</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script>
+
+    document.formHasErrors = {% if player_form.errors %} true {% else %} false {% endif %};
+    $(document).ready(function () {
+        if (document.formHasErrors) {
+            $('#invitation-modal').modal('toggle');
+        }
+    });
+
+    $('#fire-modal').on('show.bs.modal', function (e) {
+        var playerName = $(e.relatedTarget).data('player-name');
+        var playerID = $(e.relatedTarget).data('player-id');
+        console.log(playerID);
+        document.getElementById('playerName').innerHTML = playerName;
+        document.getElementById('playerID').value = playerID;
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Topbar Navbar -->
+    
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown no-arrow mx-1">
+            
+            <a class="nav-link dropdown-toggle" data-target="#invitation-player-modal" data-toggle="modal" role="button">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-envelope"></i> Mes invitations</span>
+                <!-- Counter - Alerts -->
+                {% if invitations_count_current_player > 0 %}
+                <span class="badge badge-danger badge-counter">{{invitations_count_current_player}}</span>
+                {% endif %}
+            </a>            
+        </li>  
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" data-target="#request-player-modal" data-toggle="modal"  role="button">
+                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-handshake"></i> Mes demandes</span>
+                <!-- Counter - Alerts -->
+                {% if requests_count_current_player > 0 %}
+                <span class="badge badge-danger badge-counter">{{requests_count_current_player}}</span>
+                {% endif %}
+            </a>            
+        </li>  
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="{% url 'notifications' %}" role="button">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-bell fa-fw"></i> Notifications</span>
+                <!-- Counter - Alerts -->
+                {% if notification_count > 0 %}
+                <span class="badge badge-danger badge-counter">{{notification_count}}</span>
+                {% endif %}
+            </a>            
+        </li>     
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><i class="fas fa-user"></i> {{ user.username }}</span>
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{% url 'profile' user.username %}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Mon profil
+                </a>
+                <a class="dropdown-item" href="{% url 'settings-profile' %}">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Paramètres
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Déconnexion
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+<!-- End of Topbar -->

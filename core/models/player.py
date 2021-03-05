@@ -1,22 +1,50 @@
+from django.contrib.auth import get_user_model
+
 from django.contrib.gis.db import models
 
 from core.models.location import Location
-from core.models.address import Address
+
+from django.contrib.gis.geos import Point
+
+from core.managers.player_manager import (
+    PlayerManager, PlayerSubscriptionManager)
+
 
 class Player(models.Model):
 
-    SEX_CHOICES = (('Masculin', 'M'),('Féminin', 'F'))
-    LEVEL_CHOICES = (('D', 'Débutant'), ('I', 'Intermédiaire'), ('A', 'Avancé'))
+    location = models.ForeignKey(
+        Location, on_delete=models.RESTRICT, default=None, null=True,
+        blank=True)
 
-    player_id = models.AutoField(primary_key=True)
-    firstname = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    birthdate = models.DateField(auto_now=False, auto_now_add=False)
-    sex = models.CharField(max_length=10, choices=SEX_CHOICES)
-    level = models.CharField(max_length=50, choices=LEVEL_CHOICES)
+    player_subscriptions = models.ManyToManyField("self", through="PlayerSubscription", blank=True,
+                                                  symmetrical=False)
 
-    location = models.ForeignKey(Location, on_delete=models.RESTRICT, default=None)
-    address = models.ForeignKey(Address, on_delete=models.RESTRICT, default=None)
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f"{self.firstname} {self.name}"
+    objects = PlayerManager()
+
+    def update_location(self, latitude, longitude):
+
+        location = Location.objects.get_or_create(coordinates=Point(
+            float(longitude), float(latitude),  srid=4326))
+
+        self.location = location[0]
+        self.save()
+
+    def get_followers_count(self):
+        return self.following.count()
+
+    def get_followings_count(self):
+        return self.follower.count()
+
+
+class PlayerSubscription(models.Model):
+    follower = models.ForeignKey(
+        Player, related_name="follower", on_delete=models.CASCADE, default=None)
+
+    following = models.ForeignKey(
+        Player, related_name="following", on_delete=models.CASCADE, default=None)
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    objects = PlayerSubscriptionManager()

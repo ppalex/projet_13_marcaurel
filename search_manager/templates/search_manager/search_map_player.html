@@ -1,0 +1,21 @@
+{% extends "search_manager/map_base.html" %}
+
+{% block content %}
+{% include "search_manager/includes/_player_filter_bar.html" %}
+
+{{ block.super }}
+
+<script>
+    {% block player %}
+    {% for player in object_list %}
+    
+    marker = L.marker({{ player.location.lat_lng }}).bindPopup("<a href='{% url 'profile' player.user.username %}'>{{player.user}}</a>");
+    markers_cluster.addLayer(marker);
+
+
+    {% endfor %}
+    {% endblock player %}
+    map.addLayer(markers_cluster);
+</script>
+
+{% endblock content %}

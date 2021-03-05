@@ -1,0 +1,20 @@
+{% extends "search_manager/map_base.html" %}
+
+{% block content %}
+{% include "search_manager/includes/_header.html" %}
+{% include "search_manager/includes/_match_filter_bar.html" %}
+
+{{ block.super }}
+
+<script>
+    {% block match %}
+    {% for match in object_list %}
+
+    marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
+    markers_cluster.addLayer(marker);
+    {% endfor %}
+    {% endblock match %}
+    map.addLayer(markers_cluster);
+</script>
+
+{% endblock content %}

@@ -1,0 +1,167 @@
+{% extends "core/base.html" %}
+
+
+{% load static %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <!-- Wizard navigation-->
+        <nav class="nav nav-borders">
+            <a class="nav-link active ml-0" href="{% url  'settings-profile' %}">Information utilisateur</a>
+        </nav>
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="cardTabContent">
+            <!-- Wizard tab pane item 1-->
+            <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel"
+                aria-labelledby="wizard1-tab">
+                <div class="row justify-content-center">
+                    <div class="col-xxl-6 col-xl-8">
+
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Modifier vos informations personnelles</h1>
+                        </div>
+                        <form method="POST" action="{% url 'settings-profile' %}">
+                            {% csrf_token %}
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Prénom</label>
+                                    {{ player_form.firstname }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Nom</label>
+                                    {{ player_form.name }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    {% for error in player_form.firstname.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    {% for error in player_form.name.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Sexe</label>
+                                    {{ player_form.sex }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Niveau</label>
+                                    {{ player_form.level }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+
+                                    {% for error in player_form.sex.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    {% for error in player_form.level.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Positions</label>
+                                    {{ player_form.positions }}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Date de naissance</label>
+                                    {{ player_form.birthdate }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+
+                                    {% for error in player_form.positions.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    {% for error in player_form.birthdate.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Rue</label>
+                                    {{ address_form.street }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Numéro</label>
+                                    {{ address_form.number }}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    {% for error in address_form.street.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    {% for error in address_form.number.errors %}
+                                    <small class="alert alert-danger">
+                                        <strong>{{ error }}</strong>
+                                    </small> {% endfor %}
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Ville</label>
+                                    {{ address_form.city }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1">Région</label>
+                                    {{ address_form.region }}
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Mettre à jour mes informations
+                            </button>
+    
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

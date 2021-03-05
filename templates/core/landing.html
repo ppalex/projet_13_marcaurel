@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Footix</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'core/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"> -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'core/css/sb-admin-2.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="content">
+
+
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="page-header-title" style="color: whitesmoke;">Organise des matchs avec des amis!</h1>
+                    <p class="page-header-text mb-5" style="color: whitesmoke;" >Bienvenue sur l'application FOOTIX, l'application pour les joueurs amateurs de Foot.</p>
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-teal" href="{% url 'login' %}">Connexion <i class="fas fa-arrow-right"></i></a>
+    
+                        </div>
+    
+                        <div class="col">
+                            <a class="btn btn-teal-2" href="{% url 'register' %}">Inscription <i class="fas fa-user-circle"></i></a>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6"><img class="img-fluid" src="{% static 'core/img/soccer_player.svg' %}"></div>
+                
+            </div>
+        </div>      
+        
+    </header>
+    <section class="bg-white py-10">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                   <img class="img-fluid icon-stack" src="{% static 'core/img/organize.svg' %}">
+                    <h3>Crée ton match</h3>
+                    <p class="mb-0">Choisi un jour et une heure et crée un match facilement</p>
+                </div>
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <img class="img-fluid icon-stack" src="{% static 'core/img/team.svg' %}">
+                    <h3>Invite des joueurs</h3>
+                    <p class="mb-0">Invite des joueurs dans ton match</p>
+                </div>
+                <div class="col-lg-4">
+                    <img class="img-fluid icon-stack" src="{% static 'core/img/notification.svg' %}">
+                    <h3>Trouve des joueurs</h3>
+                    <p class="mb-0">Besoin d'un joueur en dernière minute? Notifie les joueurs disponibles qui se trouvent dans la région</p>
+                </div>
+            </div>
+        </div>    
+    </section>
+
+    <section class="bg-light py-10 sec2">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-9 col-lg-6 order-1 order-lg-0 aos-init aos-animate" data-aos="fade-right">
+                    <img class="img-fluid" style="height: 150px;" src="{% static 'core/img/location.svg' %}">
+                </div>
+                <div class="col-lg-6 order-0 order-lg-1 mb-5 mb-lg-0 aos-init aos-animate" data-aos="fade-left">
+                    <div class="mb-5">
+                        <h2>Système de localisation</h2>
+                        <p class="lead">Avec le système de localisation, tu peux facilement retrouver des joueurs mais aussi des matchs dans ta région!</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {% include "core/includes/_footer.html" %}
+</div>
+</body>
+
+</html>

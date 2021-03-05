@@ -1,0 +1,48 @@
+<div class="modal fade" id="email-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Envoi d'email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+
+                    <form action="" method="POST" name="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Alerter des joueurs dans un rayon de:</label>
+                            <div class="row">
+                                <div class="col">
+                                    <select class="form-control" name="select_distance">
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>30</option>
+                                        <option>40</option>
+                                        <option>50</option>
+                                        <option>60</option>
+                                        <option>70</option>
+                                        <option>80</option>
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <label>km</label>
+                                </div>
+                            </div>
+                            <label>* rayon autour du match</label>
+                        </div>
+                        <input type="submit" name="action" value="Envoyer l'email" class="btn btn-success btn-sm"/>
+                        <input type="hidden" name="match_id" value="{{ match.id }}">
+                    </form>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

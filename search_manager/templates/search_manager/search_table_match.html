@@ -1,0 +1,22 @@
+
+{% extends "core/base.html" %}
+{% load django_tables2 %}
+{% load static %}
+
+{% block content %}
+
+{% include "search_manager/includes/_header.html" %}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Table des matchs</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

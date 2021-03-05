@@ -28,8 +28,7 @@ RUN \
     apk update \
     && apk add sqlite \
     && apk add sqlite-libs \
-    && apk add sqlite-dev
-    
+    && apk add sqlite-dev   
 
 
 RUN \
