@@ -17,6 +17,7 @@ build/
 
 .env.dev
 .env.testing
+.env.prod
 .env.prod.db
 
 */migrations/*.py
