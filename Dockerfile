@@ -63,3 +63,5 @@ COPY . .
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+CMD gunicorn config.wsgi:application
