@@ -4,13 +4,22 @@ services:
 
   db:
     image: kartoza/postgis:12.1
+    env_file:
+      - ./.env.prod.db
       
   web:
     entrypoint: /entrypoint.sh
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.prod
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
     volumes:
       - .:/marcaurel
+      - type: volume
+        source: static_volume
+        target: /marcaurel/staticfiles
     env_file:
       - ./.env.prod
     ports:
@@ -18,7 +27,7 @@ services:
     stdin_open: true
     tty: true
     environment: 
-      - DJANGO_SETTINGS_MODULE=config.settings.testing
+      - DJANGO_SETTINGS_MODULE=config.settings.production
 
     depends_on:
       - db
@@ -36,3 +45,17 @@ services:
         - redis  
   redis:
     image: "redis:alpine"
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - type: volume
+        source: static_volume
+        target: /marcaurel/staticfiles
+    ports:
+      - 8008:80
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
