@@ -1,5 +1,5 @@
 steps:
     - name: 'docker/compose:1.28.5'
-      args: ['-f', 'docker-compose-test.prod.yml', 'up', '-d']
+      args: ['-f', 'docker-compose.prod.yml', 'up', '-d']
 
    
