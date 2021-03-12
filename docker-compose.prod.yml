@@ -5,7 +5,7 @@ services:
   db:
     image: kartoza/postgis:12.1
     env_file:
-      - ./.env.prod.db
+      - .env.prod.db
       
   web:
     entrypoint: /entrypoint.sh
