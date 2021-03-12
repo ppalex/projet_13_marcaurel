@@ -1,5 +1,12 @@
 steps:
     - name: 'docker/compose:1.28.5'
-      args: ['-f', 'docker-compose.prod.yml', 'up', '-d']
+      args: 
+        - '-f'
+        - 'docker-compose.prod.yml'
+        - 'up' 
+        - '-d'
+        - | 
+          cp .env.prod /workspace &&
+          cp .env.prod.db /workspace
 
    

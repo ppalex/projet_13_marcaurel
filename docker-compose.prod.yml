@@ -5,7 +5,7 @@ services:
   db:
     image: kartoza/postgis:12.1
     env_file:
-      - .env.prod.db
+      - ./.env.prod.db
       
   web:
     entrypoint: /entrypoint.sh
@@ -21,7 +21,7 @@ services:
         source: static_volume
         target: /marcaurel/staticfiles
     env_file:
-      - .env.prod
+      - ./.env.prod
     ports:
       - 8000:8000
     stdin_open: true
@@ -39,7 +39,7 @@ services:
     volumes: 
       - .:/marcaurel
     env_file:
-      - .env.prod
+      - ./.env.prod
     depends_on:
         - web
         - redis  
