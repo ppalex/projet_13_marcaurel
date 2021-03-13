@@ -61,7 +61,7 @@ class CreateMatchView(LoginRequiredMixin, View):
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
-            match_location = Location.objects.get(
+            match_location = Location.objects.get_or_create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
 
