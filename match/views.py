@@ -64,7 +64,6 @@ class CreateMatchView(LoginRequiredMixin, View):
             match_location = Location.objects.create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
-            import pdb; pdb.set_trace()
             match = Match.objects.create(
 
                 num_player=1,
