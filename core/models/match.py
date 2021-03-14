@@ -72,7 +72,7 @@ class Match(models.Model):
         self.delete()
 
     def set_location(self, latitude, longitude):
-        match_location = Location.objects.get_or_create(
+        match_location = Location.objects.create(
             coordinates=Point(longitude, latitude, srid=4326)
         )
         self.location = match_location[0]

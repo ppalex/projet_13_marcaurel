@@ -25,7 +25,7 @@ class Player(models.Model):
 
     def update_location(self, latitude, longitude):
 
-        location = Location.objects.get_or_create(coordinates=Point(
+        location = Location.objects.create(coordinates=Point(
             float(longitude), float(latitude),  srid=4326))
 
         self.location = location[0]

@@ -61,10 +61,10 @@ class CreateMatchView(LoginRequiredMixin, View):
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
-            match_location = Location.objects.get_or_create(
+            match_location = Location.objects.create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
-
+            import pdb; pdb.set_trace()
             match = Match.objects.create(
 
                 num_player=1,
