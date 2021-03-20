@@ -4,22 +4,22 @@ services:
 
   db:
     image: kartoza/postgis:12.1
+    volumes:
+      - postgis-data:/var/lib/postgresql
     env_file:
       - ./.env.prod.db
       
   web:
-    entrypoint: /entrypoint.sh
+    entrypoint: /entrypoint.prod.sh
     build: 
       context: .
       dockerfile: Dockerfile.prod
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
-    volumes:
-      - .:/marcaurel
       - type: volume
         source: static_volume
-        target: /marcaurel/staticfiles
+        target: /static/staticfiles
     env_file:
       - ./.env.prod
     ports:
@@ -36,8 +36,6 @@ services:
   celery:
     build: .
     command: celery -A tasks_manager worker -l INFO -B
-    volumes: 
-      - .:/marcaurel
     env_file:
       - ./.env.prod
     depends_on:
@@ -51,7 +49,7 @@ services:
     volumes:
       - type: volume
         source: static_volume
-        target: /marcaurel/staticfiles
+        target: /static/staticfiles
     ports:
       - 8008:80
     depends_on:

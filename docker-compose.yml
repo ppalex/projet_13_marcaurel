@@ -4,6 +4,9 @@ services:
 
   db:
     image: kartoza/postgis:12.1
+    volumes:
+      - postgis-data:/var/lib/postgresql
+    
     environment:
       - POSTGRES_DB=gis
       - POSTGRES_USER=postgres
@@ -13,16 +16,12 @@ services:
     entrypoint: /entrypoint.sh
     build: .
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/marcaurel
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
     ports:
       - 8000:8000
     stdin_open: true
     tty: true
     env_file:
-      - ./.env.prod
+      - ./.env.dev
 
     depends_on:
       - db
@@ -31,8 +30,6 @@ services:
   celery:
     build: .
     command: celery -A tasks_manager worker -l INFO -B
-    volumes: 
-      - .:/marcaurel
     env_file:
       - ./.env.dev
     depends_on:
@@ -43,4 +40,6 @@ services:
     image: "redis:alpine"
 
     
-
+volumes:
+  postgis-data:
+  static_volume:
