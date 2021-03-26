@@ -3,6 +3,12 @@
 {% load static %}
 {% block content %}
 
+{% if match_list|length == 0 %}
+
+<div class="alert alert-primary" role="alert">
+    Il n'y a pas de match!
+</div>
+{% else %}
 {% for match in match_list %}
 
 
@@ -74,4 +80,5 @@
     </ul>
     {% endif %}
 </nav>
+{% endif %}
 {% endblock %}
