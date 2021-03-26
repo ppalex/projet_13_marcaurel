@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div class="modal fade" id="follow_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Vos abonnements</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                {% for player in user.player.player_subscriptions.all %}
+
+                <div class="row" id="row_{{ player.id }}">
+                    <div class="col">{{player.user.username}}</div>
+                    <div class="col">
+                        <a id="unfollow" data-id="{{ player.id }}" data-action="unfollow" class="btn btn-success sm">
+                            Unfollow
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <br>
+
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
