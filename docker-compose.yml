@@ -16,6 +16,8 @@ services:
     entrypoint: /entrypoint.sh
     build: .
     command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/marcaurel
     ports:
       - 8000:8000
     stdin_open: true
@@ -30,6 +32,8 @@ services:
   celery:
     build: .
     command: celery -A tasks_manager worker -l INFO -B
+    volumes:
+      - .:/marcaurel
     env_file:
       - ./.env.dev
     depends_on:

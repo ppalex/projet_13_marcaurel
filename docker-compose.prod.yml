@@ -15,6 +15,8 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/marcaurel
     expose:
       - 8000
       - type: volume
@@ -36,6 +38,8 @@ services:
   celery:
     build: .
     command: celery -A tasks_manager worker -l INFO -B
+    volumes:
+      - .:/marcaurel
     env_file:
       - ./.env.prod
     depends_on:
