@@ -27,8 +27,7 @@ class Player(models.Model):
 
         location = Location.objects.create(coordinates=Point(
             float(longitude), float(latitude),  srid=4326))
-
-        self.location = location[0]
+        self.location = location
         self.save()
 
     def get_followers_count(self):
