@@ -12,17 +12,14 @@
                 {% for player in user.player.player_subscriptions.all %}
 
                 <div class="row" id="row_{{ player.id }}">
-                    <div class="col">{{player.user.username}}</div>
+                    <div class="col"><a href="{% url 'profile' player.user.username %}">{{player.user.username}}</a></div>
                     <div class="col">
                         <a id="unfollow" data-id="{{ player.id }}" data-action="unfollow" class="btn btn-success sm">
                             Unfollow
-                        </a>
-                        
-                    </div>
-                    
+                        </a>                        
+                    </div>                    
                 </div>
                 <br>
-
                 {% endfor %}
             </div>
             <div class="modal-footer">
