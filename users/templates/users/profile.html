@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %}
+{% include 'users/includes/_user_profile_modal.html' %}
 
 <div class="container">
   <div class="main-body">
@@ -12,9 +13,8 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex flex-column align-items-center text-center">
-              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
-                width="150">
-              <div class="mt-3">
+              <img src="{% static 'core/img/soccer.png' %}" alt="Admin" class="rounded-circle" width="150">
+              <div class="mt-4">
                 <h4>{{ player.user.username }}</h4>
                 {% if age != 0 %}
                 <h5>{{ age }} ans</h5>
@@ -30,6 +30,8 @@
                   Unfollow
                   {% endif %}
                 </a>
+                {% else %}
+                <a href="#follow_modal" data-id="{{ player.id }}" class="btn btn-primary" data-toggle="modal">Abonnements</a>
                 {% endif %}
                 <br>
                 <div class="container">
@@ -82,7 +84,9 @@
                 <h6 class="mb-0">Niveau</h6>
               </div>
               <div class="col-sm-9 text-secondary">
+                {% if player.user.profile.get_level != 'None' %}
                 {{  player.user.profile.get_level }}
+                {% endif %}
               </div>
             </div>
             <hr>
@@ -120,16 +124,15 @@
 
 {% block javascript %}
 <script>
+  
   $('#follow').click(function (e) {
-
 
     e.preventDefault();
     $.ajax({
 
       url: '{% url "player-follow" %}',
-
       method: "POST",
-
+      cache: false,
       data: {
 
         csrfmiddlewaretoken: '{{ csrf_token }}',
@@ -153,9 +156,40 @@
             previous_followers + 1 : previous_followers - 1);
         }
       }
-
     }
     );
   });
+
+  $(document).on("click", "#unfollow", function (e) {
+
+    e.preventDefault();
+    $.ajax({
+
+      url: '{% url "player-follow" %}',
+      method: "POST",
+      cache: false,
+      data: {
+
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        'player_id': $(this).data('id'),
+        'action': $(this).data('action')
+
+      },
+      success: function (data) {
+        if (data['status'] == 'ok') {
+          console.log('oik');
+          var previous_action = $('#unfollow').data('action');
+          var previous_followings = parseInt($('.total-followings').text());
+
+          $("#row_" + $('#unfollow').data('id')).remove();
+
+          $('.total-followings').text(previous_followings - 1);
+        }
+      }
+    }
+    );
+  });
+
+
 </script>
 {% endblock %}

@@ -64,6 +64,10 @@ class CreateMatchView(LoginRequiredMixin, View):
             match_location = Location.objects.create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
+<<<<<<< HEAD
+=======
+            
+>>>>>>> dev
             match = Match.objects.create(
 
                 num_player=1,
