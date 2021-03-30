@@ -165,7 +165,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                                              invitation=None,
                                              match_request=None)
             match.add_player()
-            messages.info(request, "Vous vous êtes inscrit dans ce match!")
+            messages.info(request, "Vous vous êtes inscrits dans ce match!")
 
         if request.POST['action'] == "Se désinscrire":
 
@@ -174,7 +174,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
             registration.delete()
             match.remove_player()
-            messages.info(request, "Vous vous êtes désinscrit de ce match!")
+            messages.info(request, "Vous vous êtes désinscrits de ce match!")
 
         if request.POST["action"] == "Demande d'inscription":
 
@@ -204,16 +204,21 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
             if player_formset.is_valid():
                 for form in player_formset:
-
-                    if form.cleaned_data.get('player_name'):
+                    player_name = form.cleaned_data.get('player_name')
+                    for_player = Player.objects.get_player(player_name).first()
+                    if ((player_name) and (for_player not in match.players.all())):
                         Invitation.objects.create(
                             status="pending",
                             invitation_date=timezone.now(),
                             by_player=player,
-                            for_player=Player.objects.get_player(
-                                form.cleaned_data.get('player_name')).first(),
+                            for_player=for_player,
                             for_match=match
                         )
+                    else:
+                        messages.warning(
+                            request, "Invitez des joueurs qui ne sont pas dans le match!")
+
+                        return redirect(f"/match/detail/{match_id}")
 
                 return redirect(f"/match/detail/{match_id}")
 
