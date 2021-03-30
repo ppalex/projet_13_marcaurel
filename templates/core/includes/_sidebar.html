@@ -26,12 +26,12 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#captain"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-stopwatch"></i>
             <span>Capitaine</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="captain" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{% url 'match-planned' %}">Match planifié</a>
                 <a class="collapse-item" href="{% url 'match-in-progress' %}">Match en cours</a>
@@ -48,9 +48,17 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'match-subscription' %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#convocation"
+        aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-envelope-open"></i>
             <span>Convocations</span></a>
+            <div id="convocation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{% url 'match-subscription-planned' %}">Match planifié</a>
+                    <a class="collapse-item" href="{% url 'match-subscription-in-progress' %}">Match en cours</a>
+                    <a class="collapse-item" href="{% url 'match-subscription-over' %}">Match terminé</a>
+                </div>
+            </div>
     </li>
     <!-- Divider -->
     

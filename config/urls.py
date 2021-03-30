@@ -21,9 +21,15 @@ from core.views import Index, landing, legal
 from users.views import (RegisterView, CustomLoginView,
                          CustomLogoutView, UserSettingsView, ProfileView)
 
-from match.views import (CreateMatchView, UpdateMatchView, MatchPlannedListView, MatchInProgressListView, MatchOverListView,
-                         MatchDetailView, MatchSubscriptionListView,
-                         cancel_match, kick_player)
+from match.views import (CreateMatchView, UpdateMatchView,
+                         MatchPlannedListView,
+                         MatchInProgressListView,
+                         MatchOverListView,
+                         MatchDetailView,
+                         cancel_match, kick_player,
+                         MatchSubscriptionInProgressListView,
+                         MatchSubscriptionPlannedListView,
+                         MatchSubscriptionOverListView)
 
 from search_manager.views import (SearchMapMatchView, SearchTableMatchView,
                                   SearchMapPlayerView)
@@ -65,8 +71,12 @@ urlpatterns = [
     path('match/list/over', MatchOverListView.as_view(), name='match-over'),
     path('match/list/in-progress', MatchInProgressListView.as_view(),
          name='match-in-progress'),
-    path('match/subscription/', MatchSubscriptionListView.as_view(),
-         name='match-subscription'),
+    path('match/subscription/list/planned',
+         MatchSubscriptionPlannedListView.as_view(), name='match-subscription-planned'),
+    path('match/subscription/list/over',
+         MatchSubscriptionOverListView.as_view(), name='match-subscription-over'),
+    path('match/susbscription/list/in-progress', MatchSubscriptionInProgressListView.as_view(),
+         name='match-subscription-in-progress'),
     path('match/detail/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),
     path('search/map/match/', SearchMapMatchView.as_view(), name='search-map-match'),
     path('search/table/match/', SearchTableMatchView.as_view(),

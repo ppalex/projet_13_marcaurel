@@ -64,7 +64,7 @@ class CreateMatchView(LoginRequiredMixin, View):
             match_location = Location.objects.create(
                 coordinates=Point(longitude, latitude, srid=4326)
             )
-            
+
             match = Match.objects.create(
 
                 num_player=1,
@@ -236,15 +236,31 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
         return redirect(f"/match/detail/{match_id}")
 
 
-class MatchSubscriptionListView(LoginRequiredMixin, ListView):
+class MatchSubscriptionPlannedListView(LoginRequiredMixin, ListView):
     model = Match
     template_name = 'match/match_subscription_list.html'
     paginate_by = 4
 
     def get_queryset(self):
+        return Match.objects.get_planned_match_subscription(administrator=self.request.user.player)
 
-        player = self.request.user.player
-        return player.match_set.all()
+
+class MatchSubscriptionInProgressListView(LoginRequiredMixin, ListView):
+    model = Match
+    template_name = 'match/match_subscription_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Match.objects.get_in_progress_match_subscription(administrator=self.request.user.player)
+
+
+class MatchSubscriptionOverListView(LoginRequiredMixin, ListView):
+    model = Match
+    template_name = 'match/match_subscription_list.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Match.objects.get_over_match_subscription(administrator=self.request.user.player)
 
 
 class UpdateMatchView(LoginRequiredMixin, UpdateView):

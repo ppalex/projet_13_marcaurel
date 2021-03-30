@@ -22,3 +22,12 @@ class MatchQueryset(models.QuerySet):
 
     def get_over_match(self, administrator):
         return self.filter(administrator=administrator, over=True)
+
+    def get_planned_match_subscription(self, administrator):
+        return self.filter(started=False, over=False).exclude(administrator=administrator)
+
+    def get_in_progress_match_subscription(self, administrator):
+        return self.filter(started=True, over=False).exclude(administrator=administrator)
+
+    def get_over_match_subscription(self, administrator):
+        return self.filter(over=True).exclude(administrator=administrator)

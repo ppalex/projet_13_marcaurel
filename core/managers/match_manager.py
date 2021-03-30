@@ -28,3 +28,12 @@ class MatchManager(models.Manager):
 
     def get_over_match(self, administrator):
         return self.get_queryset().get_over_match(administrator)
+
+    def get_planned_match_subscription(self, administrator):
+        return self.get_queryset().get_planned_match_subscription(administrator)
+
+    def get_in_progress_match_subscription(self, administrator):
+        return self.get_queryset().get_in_progress_match_subscription(administrator)
+
+    def get_over_match_subscription(self, administrator):
+        return self.get_queryset().get_over_match_subscription(administrator)
