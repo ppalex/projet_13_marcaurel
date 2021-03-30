@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.contrib import messages
 
+
 class PlayerInvitationListView(LoginRequiredMixin, ListView):
 
     model = Invitation
@@ -60,6 +61,8 @@ def accept_match_invitation(request, pk):
                 from_user=invitation.for_player.user,
                 to_user=invitation.by_player.user,
                 notification_type=2)
+            match.add_player()
+
         except IntegrityError:
             messages.warning(request, "Vous êtes déjà inscrits dans ce match!")
             return redirect("index")
