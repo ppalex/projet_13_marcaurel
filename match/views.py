@@ -161,11 +161,15 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
         if request.POST['action'] == "S'inscrire":
 
-            Registration.create_registration(match=match, player=player,
-                                             invitation=None,
-                                             match_request=None)
-            match.add_player()
-            messages.info(request, "Vous vous êtes inscrits dans ce match!")
+            if not match.is_full():
+
+                Registration.create_registration(match=match, player=player,
+                                                invitation=None,
+                                                match_request=None)
+                match.add_player()
+                messages.info(request, "Vous vous êtes inscrits dans ce match!")
+            else:
+                messages.warning(request, "Les inscriptions sont terminées pour ce match!")
 
         if request.POST['action'] == "Se désinscrire":
 
