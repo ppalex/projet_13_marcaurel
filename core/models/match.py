@@ -48,6 +48,12 @@ class Match(models.Model):
     def is_full(self):
         return self.full
 
+    def is_over(self):
+        return self.over
+
+    def is_started(self):
+        return self.started
+
     def add_player(self):
         if not self.is_full():
             self.num_player += 1

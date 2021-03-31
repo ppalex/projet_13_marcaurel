@@ -50,21 +50,26 @@ def accept_match_invitation(request, pk):
         match = Match.objects.get(id=match_id)
 
         try:
-            if not match.is_full():
-                Registration.create_registration(
-                    match_request=None,
-                    invitation=invitation,
-                    player=invitation.for_player,
-                    match=match,
-                )
+            if not match.is_over():
+                if not match.is_full():
+                    Registration.create_registration(
+                        match_request=None,
+                        invitation=invitation,
+                        player=invitation.for_player,
+                        match=match,
+                    )
 
-                Notification.objects.create(
-                    from_user=invitation.for_player.user,
-                    to_user=invitation.by_player.user,
-                    notification_type=2)
-                match.add_player()
+                    Notification.objects.create(
+                        from_user=invitation.for_player.user,
+                        to_user=invitation.by_player.user,
+                        notification_type=2)
+                    match.add_player()
+                else:
+                    messages.warning(
+                        request, "Les inscriptions sont terminées pour ce match!")
+                    return redirect("index")
             else:
-                messages.warning(request, "Les inscriptions sont terminées pour ce match!")
+                messages.warning(request, "Le match est terminé!")
                 return redirect("index")
 
         except IntegrityError:

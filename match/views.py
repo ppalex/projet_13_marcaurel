@@ -21,6 +21,7 @@ from tasks_manager.tasks import send_alert_email_for_match_task
 from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
 from .forms.match_update_form import UpdateMatchForm
+from django.http import HttpResponseRedirect
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -161,86 +162,109 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
         if request.POST['action'] == "S'inscrire":
 
-            if not match.is_full():
+            if not match.is_over() or match.is_started():
 
-                Registration.create_registration(match=match, player=player,
-                                                invitation=None,
-                                                match_request=None)
-                match.add_player()
-                messages.info(request, "Vous vous êtes inscrits dans ce match!")
+                if not match.is_full():
+
+                    Registration.create_registration(match=match, player=player,
+                                                     invitation=None,
+                                                     match_request=None)
+                    match.add_player()
+                    messages.info(
+                        request, "Vous vous êtes inscrits dans ce match!")
+                else:
+                    messages.warning(
+                        request, "Les inscriptions sont terminées pour ce match!")
             else:
-                messages.warning(request, "Les inscriptions sont terminées pour ce match!")
+                messages.warning(request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Se désinscrire":
+            if not match.is_over() or match.is_started():
+                registration = Registration.objects.filter(
+                    match=match, player=player)
 
-            registration = Registration.objects.filter(
-                match=match, player=player)
-
-            registration.delete()
-            match.remove_player()
-            messages.info(request, "Vous vous êtes désinscrits de ce match!")
+                registration.delete()
+                match.remove_player()
+                messages.info(
+                    request, "Vous vous êtes désinscrits de ce match!")
+            else:
+                messages.warning(request, "Le match a commencé ou est terminé!")
 
         if request.POST["action"] == "Demande d'inscription":
-
-            MatchRequest.objects.create(
-                status="pending",
-                request_date=timezone.now(),
-                by_player=player,
-                for_match=match
-            )
-            messages.info(request, "Votre demande a été envoyée")
+            if not match.is_over() or match.is_started():
+                MatchRequest.objects.create(
+                    status="pending",
+                    request_date=timezone.now(),
+                    by_player=player,
+                    for_match=match
+                )
+                messages.info(request, "Votre demande a été envoyée")
+            else:
+                messages.warning(request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Accepter":
-            request_id = request.POST.get('request_id')
-            match_request = MatchRequest.objects.get_request(
-                request_id)
-            match_request.update(status="accepted")
+            if not match.is_over() or match.is_started():
+                request_id = request.POST.get('request_id')
+                match_request = MatchRequest.objects.get_request(
+                    request_id)
+                match_request.update(status="accepted")
 
-            Registration.create_registration(
-                match_request=match_request.first(),
-                invitation=None,
-                player=match_request.first().by_player,
-                match=match,
-            )
+                Registration.create_registration(
+                    match_request=match_request.first(),
+                    invitation=None,
+                    player=match_request.first().by_player,
+                    match=match,
+                )
+            else:
+                messages.warning(request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Inviter":
             player_formset = InvitationFormset(request.POST)
 
-            if player_formset.is_valid():
-                for form in player_formset:
-                    player_name = form.cleaned_data.get('player_name')
-                    for_player = Player.objects.get_player(player_name).first()
-                    if ((player_name) and (for_player not in match.players.all())):
-                        Invitation.objects.create(
-                            status="pending",
-                            invitation_date=timezone.now(),
-                            by_player=player,
-                            for_player=for_player,
-                            for_match=match
-                        )
-                    else:
-                        messages.warning(
-                            request, "Invitez des joueurs qui ne sont pas dans le match!")
+            if not match.is_over() or match.is_started():
+                if player_formset.is_valid():
+                    for form in player_formset:
+                        player_name = form.cleaned_data.get('player_name')
+                        for_player = Player.objects.get_player(
+                            player_name).first()
+                        if ((player_name) and (for_player not in match.players.all())):
+                            Invitation.objects.create(
+                                status="pending",
+                                invitation_date=timezone.now(),
+                                by_player=player,
+                                for_player=for_player,
+                                for_match=match
+                            )
+                        else:
+                            messages.warning(
+                                request, "Invitez des joueurs qui ne sont pas dans le match!")
 
-                        return redirect(f"/match/detail/{match_id}")
+                            return redirect(f"/match/detail/{match_id}")
+                    messages.warning(
+                        request, "Les invitations ont été envoyées!")
+                    return redirect(f"/match/detail/{match_id}")
 
+                else:
+                    self.object = self.get_object()
+                    context = self.get_context_data()
+                    context['player_form'] = player_formset
+
+                    return render(request, self.template_name, context)
+            else:
+                messages.warning(request, "Le match a commencé ou est terminé!")
                 return redirect(f"/match/detail/{match_id}")
 
-            else:
-                self.object = self.get_object()
-                context = self.get_context_data()
-                context['player_form'] = player_formset
-
-                return render(request, self.template_name, context)
-
         if request.POST['action'] == "Envoyer l'email":
-            distance = request.POST.get('select_distance')
-            match_id = request.POST.get('match_id')
-            host_values = {}
-            host_values['scheme'] = request.scheme
-            host_values['host'] = request.META['HTTP_HOST']
-            send_alert_email_for_match_task.delay(
-                match_id, int(distance), host_values)
+            if not match.is_over() or match.is_started():
+                distance = request.POST.get('select_distance')
+                match_id = request.POST.get('match_id')
+                host_values = {}
+                host_values['scheme'] = request.scheme
+                host_values['host'] = request.META['HTTP_HOST']
+                send_alert_email_for_match_task.delay(
+                    match_id, int(distance), host_values)
+            else:
+                messages.warning(request, "Le match a commencé ou est terminé!")
 
         return redirect(f"/match/detail/{match_id}")
 
@@ -345,11 +369,13 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 def cancel_match(request, pk):
     if request.method == "POST":
         match = Match.objects.get_match_by_id(pk).first()
-        match.cancel()
-        messages.info(request, "Le match a été supprimé")
-        return redirect(reverse("match-planned"))
-
-    return redirect(reverse("match-planned"))
+        if not match.is_over() or match.is_started():
+            match.cancel()
+            messages.info(request, "Le match a été supprimé")
+            return redirect(reverse("match-planned"))
+        else:
+            messages.warning(request, "Le match a commencé ou est terminé!")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
