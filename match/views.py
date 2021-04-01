@@ -162,7 +162,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
         if request.POST['action'] == "S'inscrire":
 
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
 
                 if not match.is_full():
 
@@ -180,7 +180,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                     request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Se désinscrire":
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
                 registration = Registration.objects.filter(
                     match=match, player=player)
 
@@ -193,7 +193,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                     request, "Le match a commencé ou est terminé!")
 
         if request.POST["action"] == "Demande d'inscription":
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
                 MatchRequest.objects.create(
                     status="pending",
                     request_date=timezone.now(),
@@ -206,7 +206,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                     request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Accepter":
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
                 request_id = request.POST.get('request_id')
                 match_request = MatchRequest.objects.get_request(
                     request_id)
@@ -225,7 +225,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
         if request.POST['action'] == "Inviter":
             player_formset = InvitationFormset(request.POST)
 
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
                 if player_formset.is_valid():
                     for form in player_formset:
                         player_name = form.cleaned_data.get('player_name')
@@ -260,7 +260,7 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                 return redirect(f"/match/detail/{match_id}")
 
         if request.POST['action'] == "Envoyer l'email":
-            if not match.is_over() or not match.is_started():
+            if not match.is_started():
                 distance = request.POST.get('select_distance')
                 match_id = request.POST.get('match_id')
                 host_values = {}
@@ -333,7 +333,7 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
         address_form = CustomCreateAddressForm(
             request.POST, instance=match.address)
 
-        if not match.is_over() or not match.is_started():
+        if not match.is_started():
 
             if match_form.is_valid() and address_form.is_valid():
 
@@ -380,7 +380,7 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 def cancel_match(request, pk):
     if request.method == "POST":
         match = Match.objects.get_match_by_id(pk).first()
-        if not match.is_over() or not match.is_started():
+        if not match.is_started():
             match.cancel()
             messages.info(request, "Le match a été supprimé")
             return redirect(reverse("match-planned"))

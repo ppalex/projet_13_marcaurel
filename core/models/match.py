@@ -81,4 +81,4 @@ class Match(models.Model):
         match_location = Location.objects.create(
             coordinates=Point(longitude, latitude, srid=4326)
         )
-        self.location = match_location[0]
+        self.location = match_location
