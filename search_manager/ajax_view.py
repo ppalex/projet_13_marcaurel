@@ -23,7 +23,7 @@ def filter_match_view(request, *args, **kwargs):
             kwargs[key] = value
 
         if (request.POST.get('city')) != '':
-            key = '{0}__{1}__{2}'.format('address', 'city', 'exact')
+            key = '{0}__{1}__{2}'.format('address', 'city', 'iexact')
             value = request.POST.get('city')
             kwargs[key] = value
 
@@ -112,8 +112,9 @@ def autocomplete_city(request):
         addresses = list()
 
         for address in query:
-            addresses.append(address.city)
+            addresses.append(address.city.capitalize())
 
+        addresses = list(set(addresses))
         return JsonResponse(addresses, safe=False)
 
     return None

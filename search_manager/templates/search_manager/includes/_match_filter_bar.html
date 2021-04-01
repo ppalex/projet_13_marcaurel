@@ -72,8 +72,10 @@
 
                 for (var x = 0; x < objCount; x++) {
                     var curitem = response[x];
-
-                    marker = L.marker(curitem.lat_lng).bindPopup(curitem.classification);
+                    var match_id = curitem.id.toString();
+                    var link = "<a href=/match/detail/" + match_id + ">Détails</a>"
+                    console.log(link);
+                    marker = L.marker(curitem.lat_lng).bindPopup(link);
                     markers_cluster.addLayer(marker);
                 }
 
