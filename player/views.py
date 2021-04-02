@@ -29,6 +29,16 @@ def cancel_match_request(request, pk):
 
 
 @login_required
+def decline_match_request(request, pk):
+    if request.method == "POST":
+        match_id = request.POST.get('match_id')
+        match_request = MatchRequest.objects.get_match_request_by_id(pk)
+        match_request.cancel()
+    messages.success(request, "Demande refusée!")
+    return redirect(f"/match/detail/{match_id}")
+
+
+@login_required
 def decline_match_invitation(request, pk):
     if request.method == "POST":
         invitation_qs = Invitation.objects.get_invitation_by_id(pk)
