@@ -28,3 +28,20 @@ class UpdateMatchForm(CreateMatchForm):
                 'type': 'text'}),
 
         }
+
+    def save(self, commit=True, **kwargs):
+
+        available_place = kwargs.get('available_place')
+        instance = super(UpdateMatchForm, self).save(commit=False)
+
+        instance.update_full_status()
+
+        if instance.num_player < instance.capacity:
+            instance.available_place = instance.capacity - instance.num_player
+        elif instance.num_player > instance.capacity:
+            instance.available_place = instance.num_player - instance.capacity
+        else:
+            pass
+
+        if commit:
+            instance.save()

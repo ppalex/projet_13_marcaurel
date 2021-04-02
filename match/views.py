@@ -22,6 +22,7 @@ from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
 from .forms.match_update_form import UpdateMatchForm
 from django.http import HttpResponseRedirect
+from django.db import IntegrityError
 
 
 class CreateMatchView(LoginRequiredMixin, View):
@@ -212,26 +213,32 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
                     request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Accepter":
-            if not match.is_started():
-                if not match.is_full():
-                    request_id = request.POST.get('request_id')
-                    match_request = MatchRequest.objects.get_request(
-                        request_id)
-                    match_request.update(status="accepted")
+            try:
+                if not match.is_started():
+                    if not match.is_full():
+                        request_id = request.POST.get('request_id')
+                        match_request = MatchRequest.objects.get_request(
+                            request_id)
+                        match_request.update(status="accepted")
 
-                    Registration.create_registration(
-                        match_request=match_request.first(),
-                        invitation=None,
-                        player=match_request.first().by_player,
-                        match=match,
-                    )
+                        Registration.create_registration(
+                            match_request=match_request.first(),
+                            invitation=None,
+                            player=match_request.first().by_player,
+                            match=match,
+                        )
+                        match.add_player()
+                    else:
+                        messages.warning(
+                            request, "Les inscriptions sont terminées pour ce match!")
+
                 else:
                     messages.warning(
-                        request, "Les inscriptions sont terminées pour ce match!")
-
-            else:
+                        request, "Le match a commencé ou est terminé!")
+            except IntegrityError:
                 messages.warning(
-                    request, "Le match a commencé ou est terminé!")
+                    request, "Vous êtes déjà inscrits dans ce match!")
+                return redirect("index")
 
         if request.POST['action'] == "Inviter":
             player_formset = InvitationFormset(request.POST)
@@ -268,7 +275,6 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
             else:
                 messages.warning(
                     request, "Le match a commencé ou est terminé!")
-                return redirect(f"/match/detail/{match_id}")
 
         if request.POST['action'] == "Envoyer l'email":
             if not match.is_started():
@@ -358,22 +364,23 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 
                 match.set_location(latitude, longitude)
 
-                match_address, created = Address.objects.get_or_create(
+                match_address = Address.objects.create(
                     city=city,
                     street=street,
                     number=number,
                     region=region
                 )
 
-                match_form.save()
+                match_form.save(**{'available_place': match.available_place})
+                address_form.save()
 
-                if created:
-                    match.address = match_address
-                    match.save()
-                    match_form.save()
-                else:
-                    match_form.save()
-                    address_form.save()
+                # if created:
+                #     match.address = match_address
+                #     match.save()
+                #     match_form.save()
+                # else:
+                #     match_form.save()
+                #     address_form.save()
 
                 messages.success(request, "Le match a été mis à jour")
 

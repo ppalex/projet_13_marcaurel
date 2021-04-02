@@ -58,17 +58,17 @@ class Match(models.Model):
         if not self.is_full():
             self.num_player += 1
             self.available_place -= 1
-            self.update_capacity()
+            self.update_full_status()
             self.save()
 
     def remove_player(self):
         if self.num_player > 0:
             self.num_player -= 1
             self.available_place += 1
-            self.update_capacity()
+            self.update_full_status()
             self.save()
 
-    def update_capacity(self):
+    def update_full_status(self):
         if self.num_player == self.capacity:
             self.full = True
         else:
