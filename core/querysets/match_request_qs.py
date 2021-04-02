@@ -25,3 +25,6 @@ class MatchRequestQueryset(models.QuerySet):
 
     def get_player_pending_requests(self, player):
         return self.filter(status='pending', by_player=player)
+
+    def get_existing_request_by_player_match_status(self, status, by_player, for_match):
+        return self.filter(status='pending', by_player=by_player, for_match=for_match).exists()

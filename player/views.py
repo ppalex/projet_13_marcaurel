@@ -24,7 +24,7 @@ def cancel_match_request(request, pk):
     if request.method == "POST":
         match_request = MatchRequest.objects.get_match_request_by_id(pk)
         match_request.cancel()
-    messages.success(request, "Invitation annulée!")
+    messages.success(request, "Demande annulée!")
     return redirect("index")
 
 
@@ -50,7 +50,7 @@ def accept_match_invitation(request, pk):
         match = Match.objects.get(id=match_id)
 
         try:
-            if not match.is_over():
+            if not match.is_started():
                 if not match.is_full():
                     Registration.create_registration(
                         match_request=None,

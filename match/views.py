@@ -194,30 +194,41 @@ class MatchDetailView(LoginRequiredMixin, DetailView):
 
         if request.POST["action"] == "Demande d'inscription":
             if not match.is_started():
-                MatchRequest.objects.create(
-                    status="pending",
-                    request_date=timezone.now(),
-                    by_player=player,
-                    for_match=match
-                )
-                messages.info(request, "Votre demande a été envoyée")
+                if not MatchRequest.objects.check_exist_request(status='pending', by_player=player, for_match=match):
+
+                    MatchRequest.objects.create(
+                        status="pending",
+                        request_date=timezone.now(),
+                        by_player=player,
+                        for_match=match
+                    )
+                    messages.info(request, "Votre demande a été envoyée")
+
+                else:
+                    messages.warning(request, "Une demande est déjà en cours")
+
             else:
                 messages.warning(
                     request, "Le match a commencé ou est terminé!")
 
         if request.POST['action'] == "Accepter":
             if not match.is_started():
-                request_id = request.POST.get('request_id')
-                match_request = MatchRequest.objects.get_request(
-                    request_id)
-                match_request.update(status="accepted")
+                if not match.is_full():
+                    request_id = request.POST.get('request_id')
+                    match_request = MatchRequest.objects.get_request(
+                        request_id)
+                    match_request.update(status="accepted")
 
-                Registration.create_registration(
-                    match_request=match_request.first(),
-                    invitation=None,
-                    player=match_request.first().by_player,
-                    match=match,
-                )
+                    Registration.create_registration(
+                        match_request=match_request.first(),
+                        invitation=None,
+                        player=match_request.first().by_player,
+                        match=match,
+                    )
+                else:
+                    messages.warning(
+                        request, "Les inscriptions sont terminées pour ce match!")
+
             else:
                 messages.warning(
                     request, "Le match a commencé ou est terminé!")
