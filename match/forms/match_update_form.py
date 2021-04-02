@@ -29,9 +29,17 @@ class UpdateMatchForm(CreateMatchForm):
 
         }
 
-    def save(self, commit=True, **kwargs):
+    def clean_capacity(self):
 
-        available_place = kwargs.get('available_place')
+        capacity = self.cleaned_data['capacity']
+        match = self.instance
+
+        if capacity < match.num_player:
+            raise forms.ValidationError(
+                "Impossible de réduire le nombre de joueur. Il y a déjà trop de joueur inscrit!")
+        return capacity
+
+    def save(self, commit=True):
         instance = super(UpdateMatchForm, self).save(commit=False)
 
         instance.update_full_status()

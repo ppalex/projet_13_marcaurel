@@ -67,6 +67,10 @@
                                     <label class="small mb-1">Nombre de joueur</label>
                                     {{ match_form.capacity }}
                                 </div>
+                                {% for error in match_form.capacity.errors %}
+                                <small class="alert alert-danger">
+                                    <strong>{{ error }}</strong>
+                                </small> {% endfor %}
 
                             </div>
 
