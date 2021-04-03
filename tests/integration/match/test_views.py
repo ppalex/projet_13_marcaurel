@@ -50,12 +50,12 @@ class CancelMatchViewIntegrationTest(TestCase):
         self.client.login(
             username='user1', password='user1')
 
-        match = Match.objects.get(id=1)
+        match = Match.objects.get_match_by_id(1).first()
 
         self.client.post(
             reverse('cancel-match', kwargs={"pk": match.id}))
 
-        self.assertFalse(Match.objects.filter(pk=1).exists())
+        self.assertFalse(Match.objects.get_match_by_id(1).exists())
 
 
 class SubscribeInMatchIntegrationTest(TestCase):

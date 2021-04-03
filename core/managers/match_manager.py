@@ -15,7 +15,7 @@ class MatchManager(models.Manager):
         return self.get_queryset().get_match_by_id(match_id)
 
     def count_pending_requests(self, match_id):
-        return self.get_queryset().count_match_requests(match_id)
+        return self.get_queryset().count_pending_requests(match_id)
 
     def get_active_match(self):
         return self.get_queryset().get_active_match()
