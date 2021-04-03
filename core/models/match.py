@@ -48,21 +48,27 @@ class Match(models.Model):
     def is_full(self):
         return self.full
 
+    def is_over(self):
+        return self.over
+
+    def is_started(self):
+        return self.started
+
     def add_player(self):
         if not self.is_full():
             self.num_player += 1
             self.available_place -= 1
-            self.update_capacity()
+            self.update_full_status()
             self.save()
 
     def remove_player(self):
         if self.num_player > 0:
             self.num_player -= 1
             self.available_place += 1
-            self.update_capacity()
+            self.update_full_status()
             self.save()
 
-    def update_capacity(self):
+    def update_full_status(self):
         if self.num_player == self.capacity:
             self.full = True
         else:
@@ -75,4 +81,4 @@ class Match(models.Model):
         match_location = Location.objects.create(
             coordinates=Point(longitude, latitude, srid=4326)
         )
-        self.location = match_location[0]
+        self.location = match_location

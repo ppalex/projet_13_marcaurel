@@ -49,15 +49,16 @@
         event.preventDefault();
 
         send_data_to_backend("{% url 'filter-player' %}", new FormData(form))
-            .then(response => {                
+            .then(response => {
                 var objCount = response.length;
 
-                markers_cluster.clearLayers();               
+                markers_cluster.clearLayers();
 
                 for (var x = 0; x < objCount; x++) {
                     var curitem = response[x];
-
-                    marker = L.marker(curitem.lat_lng).bindPopup(curitem.username);
+                    var username = curitem.username.toString();
+                    var link = "<a href=/profile/" + username + ">"+username+"</a>"
+                    marker = L.marker(curitem.lat_lng).bindPopup(link);
                     markers_cluster.addLayer(marker);
                 }
 

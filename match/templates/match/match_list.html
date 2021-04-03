@@ -32,7 +32,11 @@
                 <div class="col-md-9">    
                     <h5 class="card-title">Ce match aura lieu le: {{ match.start_fixture|date:'d-m-Y' }} à {{ match.start_fixture|time:'H:i' }}  </h5>
                     <p class="card-text">Créé par: {{ match.administrator.user }}</p>
-                    <p class="card-text">Type: {{ match.classification }}</p>
+                    {% if match.classification == 'private' %}
+                    <p class="card-text">Type: Privé</p>
+                    {% else %}
+                    <p class="card-text">Type: Public</p>
+                    {% endif %}
                     <a href="{% url 'match-detail' match.id %}" class="btn btn-primary">Consulter le match</a>
                 </div>
                 <div class="col-md-3">
@@ -49,12 +53,12 @@
 </div>
 {% endfor %}
 
-{% if page_obj.has_other_pages %}
+
 <nav aria-label="...">
     <ul class="pagination justify-content-center flex-wrap">
         {% if page_obj.has_previous %}
         <li class="page-item"><a class="page-link"
-                href="{% url 'match-planned' %}?page={{page_obj.previous_page_number}}">Précédent</a>
+                href="?page={{page_obj.previous_page_number}}">Précédent</a>
         </li>
         {% else %}
         <li class="disabled"><span class="page-link">Précédent</span></li>
@@ -65,14 +69,14 @@
         <li class="page-item active"><span class="page-link">{{ i }} <span
                     class="sr-only">(current)</span></span></li>
         {% else %}
-        <li class="page-item"><a class="page-link" href="{% url 'match-planned' %}?page={{i}}">{{ i }}</a>
+        <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a>
         </li>
         {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
         <li class="page-item"><a class="page-link"
-                href="{% url 'match-planned' %}?page={{page_obj.next_page_number}}">Suivant</a>
+                href="?page={{page_obj.next_page_number}}">Suivant</a>
         </li>
         {% else %}
         <li class="disabled"><span class="page-link">Suivant</span></li>
@@ -80,5 +84,5 @@
     </ul>
     {% endif %}
 </nav>
-{% endif %}
+
 {% endblock %}

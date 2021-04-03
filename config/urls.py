@@ -14,32 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import (PasswordResetCompleteView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetDoneView,
+                                       PasswordResetView)
 from django.urls import path, reverse_lazy
 
 from core.views import Index, landing, legal
-
-from users.views import (RegisterView, CustomLoginView,
-                         CustomLogoutView, UserSettingsView, ProfileView)
-
-from match.views import (CreateMatchView, UpdateMatchView, MatchPlannedListView, MatchInProgressListView, MatchOverListView,
-                         MatchDetailView, MatchSubscriptionListView,
+from match.views import (CreateMatchView, MatchDetailView,
+                         MatchInProgressListView, MatchOverListView,
+                         MatchPlannedListView,
+                         MatchSubscriptionInProgressListView,
+                         MatchSubscriptionOverListView,
+                         MatchSubscriptionPlannedListView, UpdateMatchView,
                          cancel_match, kick_player)
-
-from search_manager.views import (SearchMapMatchView, SearchTableMatchView,
-                                  SearchMapPlayerView)
-from search_manager.ajax_view import (filter_match_view, filter_player_view, autocomplete_city,
-                                      get_user_current_coordinates,
-                                      autocomplete_player)
-
-from player.views import (PlayerInvitationListView, cancel_match_request,
-                          decline_match_invitation, accept_match_invitation)
-
-from player.ajax_view import (player_follow)
-
-from notifications.views import (NotificationListView, delete_notification)
-
-from django.contrib.auth.views import (
-    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView)
+from notifications.views import NotificationListView, delete_notification
+from player.ajax_view import player_follow
+from player.views import (PlayerInvitationListView, accept_match_invitation,
+                          cancel_match_request, decline_match_invitation,
+                          decline_match_request)
+from search_manager.ajax_view import (autocomplete_city, autocomplete_player,
+                                      filter_match_view, filter_player_view,
+                                      get_user_current_coordinates)
+from search_manager.views import (SearchMapMatchView, SearchMapPlayerView,
+                                  SearchTableMatchView)
+from users.views import (CustomLoginView, CustomLogoutView, ProfileView,
+                         RegisterView, UserSettingsView)
 
 urlpatterns = [
     path('', landing, name='landing'),
@@ -65,8 +65,12 @@ urlpatterns = [
     path('match/list/over', MatchOverListView.as_view(), name='match-over'),
     path('match/list/in-progress', MatchInProgressListView.as_view(),
          name='match-in-progress'),
-    path('match/subscription/', MatchSubscriptionListView.as_view(),
-         name='match-subscription'),
+    path('match/subscription/list/planned',
+         MatchSubscriptionPlannedListView.as_view(), name='match-subscription-planned'),
+    path('match/subscription/list/over',
+         MatchSubscriptionOverListView.as_view(), name='match-subscription-over'),
+    path('match/susbscription/list/in-progress', MatchSubscriptionInProgressListView.as_view(),
+         name='match-subscription-in-progress'),
     path('match/detail/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),
     path('search/map/match/', SearchMapMatchView.as_view(), name='search-map-match'),
     path('search/table/match/', SearchTableMatchView.as_view(),
@@ -84,6 +88,8 @@ urlpatterns = [
          name='player-invitations'),
     path('cancel_match_request/<int:pk>/',
          cancel_match_request, name='cancel-match-request'),
+    path('decline_match_request/<int:pk>/',
+         decline_match_request, name='decline-match-request'),
     path('decline_match_invitation/<int:pk>/', decline_match_invitation,
          name='decline-match-invitation'),
     path('accept_match_invitation/<int:pk>/', accept_match_invitation,

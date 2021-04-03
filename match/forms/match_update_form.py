@@ -28,3 +28,28 @@ class UpdateMatchForm(CreateMatchForm):
                 'type': 'text'}),
 
         }
+
+    def clean_capacity(self):
+
+        capacity = self.cleaned_data['capacity']
+        match = self.instance
+
+        if capacity < match.num_player:
+            raise forms.ValidationError(
+                "Impossible de réduire le nombre de joueur. Il y a déjà trop de joueur inscrit!")
+        return capacity
+
+    def save(self, commit=True):
+        instance = super(UpdateMatchForm, self).save(commit=False)
+
+        instance.update_full_status()
+
+        if instance.num_player < instance.capacity:
+            instance.available_place = instance.capacity - instance.num_player
+        elif instance.num_player > instance.capacity:
+            instance.available_place = instance.num_player - instance.capacity
+        else:
+            pass
+
+        if commit:
+            instance.save()

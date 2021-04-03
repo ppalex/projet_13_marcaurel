@@ -10,7 +10,7 @@
     {% block match %}
     {% for match in object_list %}
 
-    marker = L.marker({{ match.location.lat_lng }}).bindPopup('{{match.classification}}');
+    marker = L.marker({{ match.location.lat_lng }}).bindPopup("<a href='{% url 'match-detail' match.id %}'>Détails</a>");
     markers_cluster.addLayer(marker);
     {% endfor %}
     {% endblock match %}

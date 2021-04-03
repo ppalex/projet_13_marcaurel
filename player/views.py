@@ -9,6 +9,8 @@ from core.models.match import Match
 from django.shortcuts import redirect
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
+from django.contrib import messages
 
 
 class PlayerInvitationListView(LoginRequiredMixin, ListView):
@@ -22,8 +24,18 @@ def cancel_match_request(request, pk):
     if request.method == "POST":
         match_request = MatchRequest.objects.get_match_request_by_id(pk)
         match_request.cancel()
-
+    messages.success(request, "Demande annulée!")
     return redirect("index")
+
+
+@login_required
+def decline_match_request(request, pk):
+    if request.method == "POST":
+        match_id = request.POST.get('match_id')
+        match_request = MatchRequest.objects.get_match_request_by_id(pk)
+        match_request.cancel()
+    messages.success(request, "Demande refusée!")
+    return redirect(f"/match/detail/{match_id}")
 
 
 @login_required
@@ -33,6 +45,7 @@ def decline_match_invitation(request, pk):
         invitation = invitation_qs.first()
         invitation.decline()
 
+    messages.success(request, "Invitation déclinée!")
     return redirect("index")
 
 
@@ -46,16 +59,32 @@ def accept_match_invitation(request, pk):
         match_id = request.POST.get('match_id')
         match = Match.objects.get(id=match_id)
 
-        Registration.create_registration(
-            match_request=None,
-            invitation=invitation,
-            player=invitation.for_player,
-            match=match,
-        )
+        try:
+            if not match.is_started():
+                if not match.is_full():
+                    Registration.create_registration(
+                        match_request=None,
+                        invitation=invitation,
+                        player=invitation.for_player,
+                        match=match,
+                    )
 
-        Notification.objects.create(
-            from_user=invitation.for_player.user,
-            to_user=invitation.by_player.user,
-            notification_type=2)
+                    Notification.objects.create(
+                        from_user=invitation.for_player.user,
+                        to_user=invitation.by_player.user,
+                        notification_type=2)
+                    match.add_player()
+                else:
+                    messages.warning(
+                        request, "Les inscriptions sont terminées pour ce match!")
+                    return redirect("index")
+            else:
+                messages.warning(request, "Le match est terminé!")
+                return redirect("index")
 
+        except IntegrityError:
+            messages.warning(request, "Vous êtes déjà inscrits dans ce match!")
+            return redirect("index")
+
+    messages.success(request, "Vous êtes inscrit dans le match!")
     return redirect("index")

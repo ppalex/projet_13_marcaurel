@@ -13,7 +13,6 @@ class InvitationManager(models.Manager):
         return self.get_queryset().get_player_invitations(player_id)
 
     def get_player_pending_invitations(self, player):
-
         return self.get_queryset().get_player_pending_invitations(player)
 
     def count_player_pending_invitations(self, player):

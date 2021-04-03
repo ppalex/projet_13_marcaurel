@@ -28,3 +28,13 @@ class MatchRequestManager(models.Manager):
 
     def get_player_pending_requests(self, player):
         return self.get_queryset().get_player_pending_requests(player)
+
+    def check_exist_request(self, status, by_player, for_match):
+
+        match_request = self.get_queryset(
+        ).get_existing_request_by_player_match_status(status, by_player, for_match)
+
+        if match_request:
+            return True
+        else:
+            return False

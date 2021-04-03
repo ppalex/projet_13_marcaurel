@@ -15,7 +15,7 @@ class MatchManager(models.Manager):
         return self.get_queryset().get_match_by_id(match_id)
 
     def count_pending_requests(self, match_id):
-        return self.get_queryset().count_match_requests(match_id)
+        return self.get_queryset().count_pending_requests(match_id)
 
     def get_active_match(self):
         return self.get_queryset().get_active_match()
@@ -28,3 +28,12 @@ class MatchManager(models.Manager):
 
     def get_over_match(self, administrator):
         return self.get_queryset().get_over_match(administrator)
+
+    def get_planned_match_subscription(self, administrator):
+        return self.get_queryset().get_planned_match_subscription(administrator)
+
+    def get_in_progress_match_subscription(self, administrator):
+        return self.get_queryset().get_in_progress_match_subscription(administrator)
+
+    def get_over_match_subscription(self, administrator):
+        return self.get_queryset().get_over_match_subscription(administrator)

@@ -79,7 +79,7 @@
         </form>
     </div>
 
-    {% else %}   
+    {% else %}
     <div class="col">
         <form action="" method="POST" name="">
             {% csrf_token %}
@@ -191,6 +191,7 @@
                                             <div class="col"><a
                                                     href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a>
                                             </div>
+                                            {% if match.over == False and match.started == False %}
                                             {% if user == match.administrator.user %}
                                             {% if player.user != match.administrator.user %}
                                             <div class="col">
@@ -200,6 +201,7 @@
                                                     data-player-id="{{ player.id }}"><i
                                                         class="fas fa-user-minus"></i></a>
                                             </div>
+                                            {% endif %}
                                             {% endif %}
                                             {% endif %}
                                     </li>

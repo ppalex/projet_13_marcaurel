@@ -152,7 +152,7 @@ class MatchSubscriptionListViewTest(TestCase):
     def test_view_url_exists_at_desired_location(self):
         self.client.login(
             username='user1', password='user1')
-        response = self.client.get('match/subscription/')
+        response = self.client.get('match/subscription/list/planned')
 
         self.assertEqual(response.status_code, 200)
 
@@ -160,7 +160,7 @@ class MatchSubscriptionListViewTest(TestCase):
         self.client.login(
             username='user1', password='user1')
         response = self.client.get(
-            reverse('match-subscription'))
+            reverse('match-subscription-planned'))
 
         self.assertEqual(response.status_code, 200)
 

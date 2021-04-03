@@ -19,7 +19,11 @@
                     <h5 class="card-title">Ce match aura lieu le: {{ match.start_fixture|date:'d-m-Y' }} à
                         {{ match.start_fixture|date:'H:m' }} </h5>
                     <p class="card-text">Créé par: {{ match.administrator.user }}</p>
-                    <p class="card-text">Type: {{ match.classification }}</p>
+                    {% if match.classification == 'private' %}
+                    <p class="card-text">Type: Privé</p>
+                    {% else %}
+                    <p class="card-text">Type: Public</p>
+                    {% endif %}
                     <a href="{% url 'match-detail' match.id %}" class="btn btn-primary">Consulter le match</a>
                 </div>
                 <div class="col-md-3">
