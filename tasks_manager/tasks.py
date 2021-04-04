@@ -15,7 +15,6 @@ def update_match_status():
 
     start_condition_update = When(start_fixture__lte=timezone.now(), then=True)
     over_condition_update = When(end_fixture__lte=timezone.now(), then=True)
-
     active_match_qs.update(started=Case(start_condition_update, default=False))
     active_match_qs.update(over=Case(over_condition_update, default=False))
 

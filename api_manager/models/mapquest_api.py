@@ -6,7 +6,7 @@ import logging
 class MapquestApi:
 
     def __init__(self):
-        self.url = "http://mapquestapi.com/geocoding/v1/address?"
+        self.url = "http://mapquestapi.com/geocoding/v1/addresses?"
         self.key = os.environ.get("MAPQUEST_API_KEY")
         self._data = []
 
@@ -17,19 +17,20 @@ class MapquestApi:
 
         try:
             response = requests.get(url=endpoint)
-        except requests.exceptions.Timeout:
+            if response.status_code == 200:
+                self._data = response.json()
+                return response.json()
+            else:
+                return None
+        except requests.exceptions.Timeout as e:
             logging.error("Timeout error", exc_info=True)
-        except requests.exceptions.TooManyRedirects:
+            raise SystemExit(e)
+        except requests.exceptions.TooManyRedirects as e:
             logging.error("Bad url", exc_info=True)
+            raise SystemExit(e)
         except requests.exceptions.RequestException as e:
             logging.error("Bad request", exc_info=True)
             raise SystemExit(e)
-
-        if response.status_code == 200:
-            self._data = response.json()
-            return response.json()
-        else:
-            return None
 
     def get_data(self):
         """This method get the data gathered from the api request.

@@ -50,7 +50,7 @@ class FilterMatchView(TestCase):
         json_response = json.loads(response.content)
 
         self.assertSetEqual(
-            set(map(lambda x: x['id'], json_response)), {2, 3})
+            set(map(lambda x: x['id'], json_response)), {2, 3, 4})
 
     def test_available_place_filter(self):
         self.client.login(username='user3', password='password')
@@ -67,7 +67,7 @@ class FilterMatchView(TestCase):
         json_response = json.loads(response.content)
 
         self.assertSetEqual(
-            set(map(lambda x: x['id'], json_response)), {1, 2, 3})
+            set(map(lambda x: x['id'], json_response)), {1, 2, 3, 4})
 
 
 class AutocompleteCityTest(TestCase):

@@ -1,9 +1,16 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from tasks_manager.tasks import update_match_status
+from core.models.match import Match
 
 
 class TasksTestCase(TestCase):
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
+    fixtures = ["data.json"]
+
     def test_update_match_status(self):
-        self.assertTrue(update_match_status.delay())
+        match_before_task = Match.objects.get_match_by_id(4).first()
+        update_match_status()
+        match_after_task = Match.objects.get_match_by_id(4).first()
+
+        self.assertFalse(match_before_task.over)
+        self.assertTrue(match_after_task.over)
