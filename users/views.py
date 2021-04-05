@@ -111,15 +111,15 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
             request.POST, instance=player.user.profile)
         address_form = AddressCreateForm(
             request.POST, instance=player.user.profile.address)
-
+        
         if player_form.is_valid() and address_form.is_valid():
             profile = request.user.profile
-
+            
             city = address_form.cleaned_data['city']
             street = address_form.cleaned_data['street']
             number = address_form.cleaned_data['number']
             region = address_form.cleaned_data['region']
-            
+
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 
