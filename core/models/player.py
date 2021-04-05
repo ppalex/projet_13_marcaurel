@@ -8,6 +8,7 @@ from django.contrib.gis.geos import Point
 
 from core.managers.player_manager import (
     PlayerManager, PlayerSubscriptionManager)
+import logging
 
 
 class Player(models.Model):
@@ -25,10 +26,14 @@ class Player(models.Model):
 
     def update_location(self, latitude, longitude):
 
-        location = Location.objects.create(coordinates=Point(
-            float(longitude), float(latitude),  srid=4326))
-        self.location = location
-        self.save()
+        try:
+
+            location = Location.objects.create(coordinates=Point(
+                float(longitude), float(latitude),  srid=4326))
+            self.location = location
+            self.save()
+        except TypeError:
+            logging.error("Can't update location", exc_info=True)
 
     def get_followers_count(self):
         return self.following.count()
