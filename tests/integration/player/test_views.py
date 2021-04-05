@@ -32,6 +32,25 @@ class CancelMatchRequestIntegrationTest(TestCase):
         self.assertFalse(MatchRequest.objects.filter(pk=1).exists())
 
 
+class DeclineMatchRequestIntegrationTest(TestCase):
+    fixtures = ["data.json"]
+
+    def setUp(self):
+
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_match_request_is_declined(self):
+        self.client.login(
+            username='user1', password='user1')
+
+        self.client.post(
+            reverse('decline-match-request', kwargs={'pk': 1}))
+
+        self.assertFalse(MatchRequest.objects.filter(pk=1).exists())
+
+
 class DeclineMatchInvitationIntegrationTest(TestCase):
     fixtures = ["data.json"]
 
