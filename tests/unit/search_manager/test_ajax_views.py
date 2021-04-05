@@ -1,5 +1,5 @@
 from django.test import RequestFactory, TestCase
-from search_manager.ajax_view import (filter_match_view, autocomplete_city,
+from search_manager.ajax_view import (filter_match_view, filter_player_view, autocomplete_city,
                                       autocomplete_player)
 from users.models.user import User
 import json
@@ -68,6 +68,51 @@ class FilterMatchView(TestCase):
 
         self.assertSetEqual(
             set(map(lambda x: x['id'], json_response)), {1, 2, 3, 4})
+
+    def test_location_filter(self):
+        self.client.login(username='user3', password='password')
+        data = {'classification': '',
+                'city': '',
+                'available_place': '',
+                'start_fixture': '',
+                'location': '100',
+                }
+
+        request = self.factory.post('search/match/filter', data)
+        request.user = User.objects.get(id=1)
+
+        response = filter_match_view(request)
+        json_response = json.loads(response.content)
+
+        self.assertSetEqual(
+            set(map(lambda x: x['id'], json_response)), {1, 2, 3, 4})
+
+
+class FilterPlayerView(TestCase):
+    fixtures = ["data.json"]
+
+    @classmethod
+    def setUpTestData(self):
+        self.factory = RequestFactory()
+
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_location_filter(self):
+        self.client.login(username='user3', password='password')
+        data = {
+            'location': '1'
+        }
+
+        request = self.factory.post('search/player/filter', data)
+        request.user = User.objects.get(id=3)
+
+        response = filter_player_view(request)
+        json_response = json.loads(response.content)
+
+        self.assertSetEqual(
+            set(map(lambda x: x['id'], json_response)), {2})
 
 
 class AutocompleteCityTest(TestCase):

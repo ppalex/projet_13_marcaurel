@@ -78,7 +78,7 @@ urlpatterns = [
     path('search/map/player/', SearchMapPlayerView.as_view(),
          name='search-map-player'),
     path('search/match/filter', filter_match_view, name='filter-match'),
-    path('search/match/player', filter_player_view, name='filter-player'),
+    path('search/player/filter', filter_player_view, name='filter-player'),
     path('autocomplete', autocomplete_city, name='city-autocomplete'),
     path('player-autocomplete', autocomplete_player, name='player-autocomplete'),
     path('player/follow', player_follow, name='player-follow'),
