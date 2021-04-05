@@ -5,7 +5,6 @@ from match.forms.match_update_form import UpdateMatchForm
 
 from core.models.match import Match
 from django.utils import timezone
-from django.core.exceptions import ValidationError
 
 
 class CustomCreateAddressFormTest(TestCase):
