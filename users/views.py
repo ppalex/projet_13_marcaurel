@@ -119,7 +119,7 @@ class UserSettingsView(UpdateView, LoginRequiredMixin):
             street = address_form.cleaned_data['street']
             number = address_form.cleaned_data['number']
             region = address_form.cleaned_data['region']
-
+            
             latitude, longitude = get_address_coordinates(
                 street, number, city, region)
 

@@ -6,7 +6,7 @@ import logging
 class MapquestApi:
 
     def __init__(self):
-        self.url = "http://mapquestapi.com/geocoding/v1/addresses?"
+        self.url = "http://mapquestapi.com/geocoding/v1/address?"
         self.key = os.environ.get("MAPQUEST_API_KEY")
         self._data = []
 
@@ -47,12 +47,15 @@ class MapquestApi:
             [Int]: Represents the latitude.
         """
         latitude = None
+
         try:
+
             if self.get_data():
                 latitude = self.get_data(
                 )['results'][0]['locations'][0]['latLng']['lat']
         except KeyError:
             logging.error("Can't get latitude", exc_info=True)
+            raise
 
         return latitude
 
@@ -69,5 +72,6 @@ class MapquestApi:
                 )['results'][0]['locations'][0]['latLng']['lng']
         except KeyError:
             logging.error("Can't get longitude", exc_info=True)
+            raise
 
         return longitude
