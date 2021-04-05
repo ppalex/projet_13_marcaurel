@@ -240,6 +240,26 @@
         }
     },
     {
+        "model": "core.match",
+        "pk": 4,
+        "fields": {
+            "classification": "public",
+            "start_fixture": "2000-01-01 01:00:00+01:00",
+            "end_fixture": "2000-01-01 02:00:00+01:00",
+            "num_player": 2,
+            "capacity": 10,
+            "available_place": 8,
+            "full": "False",
+            "started": "False",
+            "cancelled": "False",
+            "over": "False",
+            "address": 1,
+            "administrator": 2,
+            "location": 1,
+            "players": []
+        }
+    },
+    {
         "model": "core.invitation",
         "pk": 1,
         "fields": {

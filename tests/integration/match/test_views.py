@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from users.models.user import User
 from core.models.match import Match
+from core.models.invitation import Invitation
 
 
 class KickPlayerViewIntegrationTest(TestCase):
@@ -112,3 +113,40 @@ class UnsubscribeFromMatchIntegrationTest(TestCase):
             reverse('match-detail', kwargs={"pk": match.id}), data)
 
         self.assertTrue(user.player not in match.players.all())
+
+
+class InvitePlayerInMatchIntegrationTest(TestCase):
+
+    fixtures = ["data.json"]
+
+    def setUp(self):
+
+        User.objects.create_user(
+            username='user_invited', password='1X<ISRUkw+tuK')
+
+        for user in User.objects.all():
+            user.set_password(user.password)
+            user.save()
+
+    def test_player_is_unsubscribed(self):
+        user_invited = User.objects.get(username='user_invited')
+
+        self.client.login(
+            username='user1', password='user1')
+
+        match = Match.objects.get(id=1)
+
+        data = {
+            'form-INITIAL_FORMS': '0',
+            'form-TOTAL_FORMS': '1',
+            'form-MAX_NUM_FORMS': '',
+            'match_id': match.id,
+            'form-0-player_name': "user_invited",
+            'action': "Inviter"
+        }
+
+        self.client.post(
+            reverse('match-detail', kwargs={"pk": match.id}), data)
+
+        self.assertTrue(
+            Invitation.objects.count_player_pending_invitations(user_invited.id), 1)

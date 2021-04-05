@@ -364,23 +364,8 @@ class UpdateMatchView(LoginRequiredMixin, UpdateView):
 
                 match.set_location(latitude, longitude)
 
-                # match_address = Address.objects.create(
-                #     city=city,
-                #     street=street,
-                #     number=number,
-                #     region=region
-                # )
-
                 match_form.save()
                 address_form.save()
-
-                # if created:
-                #     match.address = match_address
-                #     match.save()
-                #     match_form.save()
-                # else:
-                #     match_form.save()
-                #     address_form.save()
 
                 messages.success(request, "Le match a été mis à jour")
 

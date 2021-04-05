@@ -17,19 +17,20 @@ class MapquestApi:
 
         try:
             response = requests.get(url=endpoint)
-        except requests.exceptions.Timeout:
+            if response.status_code == 200:
+                self._data = response.json()
+                return response.json()
+            else:
+                return None
+        except requests.exceptions.Timeout as e:
             logging.error("Timeout error", exc_info=True)
-        except requests.exceptions.TooManyRedirects:
+            raise SystemExit(e)
+        except requests.exceptions.TooManyRedirects as e:
             logging.error("Bad url", exc_info=True)
+            raise SystemExit(e)
         except requests.exceptions.RequestException as e:
             logging.error("Bad request", exc_info=True)
             raise SystemExit(e)
-
-        if response.status_code == 200:
-            self._data = response.json()
-            return response.json()
-        else:
-            return None
 
     def get_data(self):
         """This method get the data gathered from the api request.
@@ -46,12 +47,15 @@ class MapquestApi:
             [Int]: Represents the latitude.
         """
         latitude = None
+
         try:
+
             if self.get_data():
                 latitude = self.get_data(
                 )['results'][0]['locations'][0]['latLng']['lat']
         except KeyError:
             logging.error("Can't get latitude", exc_info=True)
+            raise
 
         return latitude
 
@@ -68,5 +72,6 @@ class MapquestApi:
                 )['results'][0]['locations'][0]['latLng']['lng']
         except KeyError:
             logging.error("Can't get longitude", exc_info=True)
+            raise
 
         return longitude
