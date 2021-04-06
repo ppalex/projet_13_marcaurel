@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-from users.forms.login_form import CustomUserLoginForm
 from users.forms.registration_form import CustomUserCreationForm
 
 
