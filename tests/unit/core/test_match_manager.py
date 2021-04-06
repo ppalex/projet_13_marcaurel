@@ -3,7 +3,7 @@ from django.test import TestCase
 from core.models.match import Match
 
 
-class MatchIntegrationTest(TestCase):
+class MatchManagerTest(TestCase):
     fixtures = ["data.json"]
 
     def test_match_manager(self):

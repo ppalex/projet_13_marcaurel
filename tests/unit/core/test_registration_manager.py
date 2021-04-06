@@ -3,7 +3,7 @@ from django.test import TestCase
 from core.models.registration import Registration
 
 
-class RegistrationIntegrationTest(TestCase):
+class RegistrationManagerTest(TestCase):
     fixtures = ["data.json"]
 
     def test_registration_manager(self):
