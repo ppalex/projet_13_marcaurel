@@ -48,3 +48,7 @@ class Registration(models.Model):
             match=match)
 
         registration.save()
+
+    def close_registration(self):
+        self.status = 'closed'
+        self.save()
