@@ -11,3 +11,6 @@ class RegistrationQuerySet(models.QuerySet):
         registration.save()
 
         return registration
+
+    def get_opened_registration_for_player(self, player):
+        return self.filter(status='opened', player=player)

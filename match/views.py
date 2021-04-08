@@ -298,7 +298,10 @@ class MatchSubscriptionPlannedListView(LoginRequiredMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return Match.objects.get_planned_match_subscription(administrator=self.request.user.player)
+        registrations_qs = Registration.objects.get_opened_registration_for_player(
+            player=self.request.user.player)
+
+        return Match.objects.filter(started=False, over=False, id__in=registrations_qs.values('match_id')).exclude(administrator=self.request.user.player)
 
 
 class MatchSubscriptionInProgressListView(LoginRequiredMixin, ListView):
@@ -307,7 +310,9 @@ class MatchSubscriptionInProgressListView(LoginRequiredMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return Match.objects.get_in_progress_match_subscription(administrator=self.request.user.player)
+        registrations_qs = Registration.objects.get_opened_registration_for_player(
+            player=self.request.user.player)
+        return Match.objects.filter(started=True, over=False, id__in=registrations_qs.values('match_id')).exclude(administrator=self.request.user.player)
 
 
 class MatchSubscriptionOverListView(LoginRequiredMixin, ListView):
@@ -316,7 +321,9 @@ class MatchSubscriptionOverListView(LoginRequiredMixin, ListView):
     paginate_by = 4
 
     def get_queryset(self):
-        return Match.objects.get_over_match_subscription(administrator=self.request.user.player)
+        registrations_qs = Registration.objects.get_opened_registration_for_player(
+            player=self.request.user.player)
+        return Match.objects.filter(started=True, over=True, id__in=registrations_qs.values('match_id')).exclude(administrator=self.request.user.player)
 
 
 class UpdateMatchView(LoginRequiredMixin, UpdateView):
