@@ -78,3 +78,12 @@ docker-compose build
 ```
 docker-compose up
 ```
+
+
+## Attribution
+
+https://unsplash.com/photos/eUZ6hnYYTZI. Photo by Yash Prajapati on Unsplash
+
+https://unsplash.com/photos/HgwY_YQ1m0w Photo by Sandro Schuh on Unsplash
+
+https://freeicons.io/profile/3
