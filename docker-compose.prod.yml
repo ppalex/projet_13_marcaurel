@@ -15,19 +15,25 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - .:/marcaurel
+
     expose:
       - 8000
+      
+    volumes:
+      - .:/marcaurel    
       - type: volume
         source: static_volume
         target: /static/staticfiles
+
     env_file:
       - ./.env.prod
+
     ports:
       - 8000:8000
+
     stdin_open: true
     tty: true
+
     environment: 
       - DJANGO_SETTINGS_MODULE=config.settings.production
 
@@ -61,3 +67,4 @@ services:
 
 volumes:
   static_volume:
+  postgis-data:
