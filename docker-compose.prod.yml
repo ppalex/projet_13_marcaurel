@@ -56,7 +56,7 @@ services:
 
   nginx:
     build: ./nginx
-    volumes:
+    volumes:  
       - type: volume
         source: static_volume
         target: /static/staticfiles
@@ -66,5 +66,5 @@ services:
       - web
 
 volumes:
-  static_volume:
   postgis-data:
+  static_volume:
