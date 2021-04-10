@@ -23,7 +23,7 @@ services:
       - .:/marcaurel    
       - type: volume
         source: static_volume
-        target: /static/staticfiles
+        target: /marcaurel/staticfiles
 
     env_file:
       - ./.env.prod
@@ -68,3 +68,4 @@ services:
 volumes:
   postgis-data:
   static_volume:
+    
