@@ -1,7 +1,6 @@
 from django import forms
 
 from core.models.address import Address
-
 from users.models.profile import Profile
 
 

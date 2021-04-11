@@ -1,14 +1,12 @@
+import logging
+
 from django.contrib.auth import get_user_model
-
 from django.contrib.gis.db import models
-
-from core.models.location import Location
-
 from django.contrib.gis.geos import Point
 
-from core.managers.player_manager import (
-    PlayerManager, PlayerSubscriptionManager)
-import logging
+from core.managers.player_manager import (PlayerManager,
+                                          PlayerSubscriptionManager)
+from core.models.location import Location
 
 
 class Player(models.Model):

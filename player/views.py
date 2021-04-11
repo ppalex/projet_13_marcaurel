@@ -1,16 +1,16 @@
 
-from django.views.generic import ListView
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
+from django.shortcuts import redirect
+from django.views.generic import ListView
+
 from core.models.invitation import Invitation
+from core.models.match import Match
 from core.models.match_request import MatchRequest
 from core.models.registration import Registration
 from notifications.models.notification import Notification
-from core.models.match import Match
-from django.shortcuts import redirect
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import IntegrityError
-from django.contrib import messages
 
 
 class PlayerInvitationListView(LoginRequiredMixin, ListView):

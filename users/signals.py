@@ -1,9 +1,10 @@
 from django.db.models.signals import post_save
-from .models.user import User
 from django.dispatch import receiver
-from .models.profile import Profile
 
 from core.models.player import Player
+
+from .models.profile import Profile
+from .models.user import User
 
 
 @receiver(post_save, sender=User)

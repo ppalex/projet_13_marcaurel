@@ -74,7 +74,7 @@
                     var curitem = response[x];
                     var match_id = curitem.id.toString();
                     var link = "<a href=/match/detail/" + match_id + ">Détails</a>"
-                    console.log(link);
+   
                     marker = L.marker(curitem.lat_lng).bindPopup(link);
                     markers_cluster.addLayer(marker);
                 }

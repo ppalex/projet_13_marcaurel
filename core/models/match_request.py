@@ -1,9 +1,8 @@
 from django.db import models
 
-from core.models.player import Player
-from core.models.match import Match
-
 from core.managers.match_request_manager import MatchRequestManager
+from core.models.match import Match
+from core.models.player import Player
 
 
 class MatchRequest(models.Model):

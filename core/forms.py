@@ -1,8 +1,8 @@
 
 
-from .models.address import Address
-
 from django import forms
+
+from .models.address import Address
 
 
 class AddressCreateForm(forms.ModelForm):

@@ -1,5 +1,6 @@
-from .match_creation_form import CreateMatchForm
 from django import forms
+
+from .match_creation_form import CreateMatchForm
 
 
 class UpdateMatchForm(CreateMatchForm):

@@ -1,7 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
-from users.models.user import User
-
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
+from users.models.user import User
 
 
 class CustomUserCreationForm(UserCreationForm):

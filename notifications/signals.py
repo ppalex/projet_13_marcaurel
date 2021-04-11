@@ -1,8 +1,10 @@
-from django.db.models.signals import post_save, post_delete
-from core.models.player import PlayerSubscription
-from .models.notification import Notification
-from core.models.invitation import Invitation
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
+
+from core.models.invitation import Invitation
+from core.models.player import PlayerSubscription
+
+from .models.notification import Notification
 
 
 @receiver(post_save, sender=PlayerSubscription)
@@ -55,5 +57,3 @@ def user_invite(sender, instance, created, **kwargs):
 #         from_user=from_user,
 #         to_user=to_user,
 #         notification_type=2)
-
-

@@ -1,18 +1,13 @@
+import django_tables2 as tables
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-
 from django.views.generic import View
 
 from core.models.match import Match
 from core.models.player import Player
 
-
-from .forms import MatchFormFilter, AddressFormFilter, PlayerFormFilter
-
-import django_tables2 as tables
-
+from .forms import AddressFormFilter, MatchFormFilter, PlayerFormFilter
 from .tables import MatchTable
-
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class SearchMapMatchView(LoginRequiredMixin, View):
