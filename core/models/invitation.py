@@ -25,9 +25,13 @@ class Invitation(models.Model):
     objects = InvitationManager()
 
     def accept(self):
+        """This method change the status of invitation to 'accepted'.
+        """
         self.status = 'accepted'
         self.save()
 
     def decline(self):
+        """This method change the status of invitation to 'refused'.
+        """
         self.status = 'refused'
         self.save()

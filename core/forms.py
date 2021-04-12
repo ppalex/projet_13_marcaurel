@@ -6,6 +6,8 @@ from .models.address import Address
 
 
 class AddressCreateForm(forms.ModelForm):
+    """This class form is used to create addresses.
+    """
     class Meta:
         model = Address
         fields = ('city', 'street', 'number', 'region')

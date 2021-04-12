@@ -6,6 +6,12 @@ from core.querysets.match_request_qs import MatchRequestQueryset
 class MatchRequestManager(models.Manager):
 
     def get_queryset(self):
+        """This method return the queryset of the MatchRequest model.
+
+        Returns:
+            Queryset: contains all the querysets method for MatchRequest
+                        object.
+        """
         return MatchRequestQueryset(self.model, using=self._db)
 
     def get_match_request_by_id(self, request_id):
