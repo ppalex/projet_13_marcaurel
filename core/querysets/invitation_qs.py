@@ -4,7 +4,7 @@ from django.db import models
 class InvitationQueryset(models.QuerySet):
 
     def get_invitation_by_id(self, invitation_id):
-        """This method get an invitation by ID.
+        """This method gets an invitation by ID.
 
         Args:
             invitation_id (int): Id of the invitation.
@@ -15,7 +15,7 @@ class InvitationQueryset(models.QuerySet):
         return self.filter(id=invitation_id)
 
     def get_player_invitations(self, player_id):
-        """This method get all invitations for a player.
+        """This method gets all invitations for a player.
 
         Args:
             player_id (int): Id of the player.
