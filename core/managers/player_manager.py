@@ -1,4 +1,5 @@
 from django.db import models
+
 from core.querysets.player_qs import PlayerQueryset, PlayerSubscriptionQueryset
 
 

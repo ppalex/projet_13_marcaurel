@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.gis.geos import Point
+from django.db import IntegrityError
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -21,8 +23,6 @@ from tasks_manager.tasks import send_alert_email_for_match_task
 from .forms.address_creation_form import CustomCreateAddressForm
 from .forms.match_creation_form import CreateMatchForm
 from .forms.match_update_form import UpdateMatchForm
-from django.http import HttpResponseRedirect
-from django.db import IntegrityError
 
 
 class CreateMatchView(LoginRequiredMixin, View):

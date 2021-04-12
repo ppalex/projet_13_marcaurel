@@ -1,10 +1,10 @@
 from django.contrib.gis.db import models
-
-from core.models.location import Location
-from core.models.address import Address
-from core.models.player import Player
 from django.contrib.gis.geos import Point
+
 from core.managers.match_manager import MatchManager
+from core.models.address import Address
+from core.models.location import Location
+from core.models.player import Player
 
 
 class Match(models.Model):

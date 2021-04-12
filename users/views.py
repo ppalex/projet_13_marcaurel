@@ -1,19 +1,19 @@
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect, reverse
-from django.views.generic import View, DetailView, UpdateView
-from .models.user import User
-from core.models.address import Address
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.views.generic import DetailView, UpdateView, View
 
 from api_manager.utils.mapquest_utils import get_address_coordinates
+from core.models.address import Address
+
 from .forms.login_form import CustomUserLoginForm
 from .forms.profile_form import AddressCreateForm, ProfileCreateForm
 from .forms.registration_form import CustomUserCreationForm
-from django.shortcuts import get_object_or_404
-from django.contrib import messages
+from .models.user import User
 
 
 class RegisterView(View):

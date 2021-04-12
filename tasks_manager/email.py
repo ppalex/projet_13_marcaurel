@@ -1,7 +1,6 @@
-from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
-
 from django.conf import settings
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 
 def send_alert_email_for_match(match, recipient_list, host_values):

@@ -16,15 +16,14 @@ function cloneMore(selector, prefix) {
     newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function () {
         var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
         var id = 'id_' + name + "-player-search";
-        console.log(name);
-        console.log(id);
+    
         final_id = id;
         $(this).attr({ 'name': name, 'id': id }).val('').removeAttr('checked');
     });
 
     newElement.find('label').each(function () {
         var forValue = $(this).attr('for');
-        console.log(forValue);
+        
         if (forValue) {
             forValue = forValue.replace('-' + (total - 1) + '-', '-' + total + '-');
             $(this).attr({ 'for': forValue });

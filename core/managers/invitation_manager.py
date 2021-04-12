@@ -1,4 +1,5 @@
 from django.db import models
+
 from core.querysets.invitation_qs import InvitationQueryset
 
 

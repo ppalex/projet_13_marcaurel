@@ -1,4 +1,5 @@
 from django.db import models
+
 from search_manager.utils import km_to_degrees
 
 
@@ -21,8 +22,6 @@ class PlayerQueryset(models.QuerySet):
 
     def get_all_player_with_location_except_current(self, player_name):
         return self.exclude(location__exact=None).exclude(user__username=player_name)
-
-
 
 
 class PlayerSubscriptionQueryset(models.QuerySet):

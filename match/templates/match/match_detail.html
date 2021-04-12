@@ -251,7 +251,7 @@
     $('#fire-modal').on('show.bs.modal', function (e) {
         var playerName = $(e.relatedTarget).data('player-name');
         var playerID = $(e.relatedTarget).data('player-id');
-        console.log(playerID);
+
         document.getElementById('playerName').innerHTML = playerName;
         document.getElementById('playerID').value = playerID;
     });
