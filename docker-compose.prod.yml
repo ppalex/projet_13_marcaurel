@@ -61,7 +61,7 @@ services:
         source: static_volume
         target: /static/staticfiles
     ports:
-      - 8008:80
+      - 80:80
     depends_on:
       - web
 
