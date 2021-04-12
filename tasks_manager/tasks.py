@@ -1,11 +1,11 @@
-from celery import shared_task
-
-from core.models.match import Match
-from core.models.player import Player
-from .email import send_alert_email_for_match
-
 from django.db.models import Case, When
 from django.utils import timezone
+
+from celery import shared_task
+from core.models.match import Match
+from core.models.player import Player
+
+from .email import send_alert_email_for_match
 
 
 @shared_task

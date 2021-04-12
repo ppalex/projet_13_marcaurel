@@ -1,9 +1,8 @@
 from django.db import models
 
-from core.models.player import Player
-from core.models.match import Match
-
 from core.managers.invitation_manager import InvitationManager
+from core.models.match import Match
+from core.models.player import Player
 
 
 class Invitation(models.Model):

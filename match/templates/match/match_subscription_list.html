@@ -2,6 +2,7 @@
 
 {% load static %}
 {% block content %}
+
 {% if match_list|length == 0 %}
 
 <div class="alert alert-primary" role="alert">
@@ -15,9 +16,23 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="row">
+                {% if match.over == True %}
+                <div class="col-md-9">
+                    <h5 class="card-title">Ce match a eu lieu le: {{ match.start_fixture|date:'d-m-Y' }} à
+                        {{ match.start_fixture|time:'H:i' }} </h5>
+                    <p class="card-text">Créé par: {{ match.administrator.user }}</p>
+                    <p class="card-text">Type: {{ match.classification }}</p>
+                    <a href="{% url 'match-detail' match.id %}" class="btn btn-primary">Consulter le match</a>
+                </div>
+                <div class="col-md-3">
+                    <p class="card-text">{{ match.available_place }} places disponibles</p>
+                    <p class="card-text">{{ match.num_player}}/{{ match.capacity }}</p>
+                    <p class="card-text">Où: {{ match.address.city }}</p>
+                </div>
+                {% else %}
                 <div class="col-md-9">
                     <h5 class="card-title">Ce match aura lieu le: {{ match.start_fixture|date:'d-m-Y' }} à
-                        {{ match.start_fixture|date:'H:m' }} </h5>
+                        {{ match.start_fixture|time:'H:i' }} </h5>
                     <p class="card-text">Créé par: {{ match.administrator.user }}</p>
                     {% if match.classification == 'private' %}
                     <p class="card-text">Type: Privé</p>
@@ -30,14 +45,43 @@
                     <p class="card-text">{{ match.available_place }} places disponibles</p>
                     <p class="card-text">{{ match.num_player}}/{{ match.capacity }}</p>
                     <p class="card-text">Où: {{ match.address.city }}</p>
-
                 </div>
+
+                {% endif %}
             </div>
         </div>
     </div>
 
 </div>
-
 {% endfor %}
-{% endif %}
+
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center flex-wrap">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Précédent</a>
+        </li>
+        {% else %}
+        <li class="disabled"><span class="page-link">Précédent</span></li>
+        {% endif %}
+        {% for i in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == i %}
+        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{i}}">{{ i }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Suivant</a>
+        </li>
+        {% else %}
+        <li class="disabled"><span class="page-link">Suivant</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</nav>
+
 {% endblock %}

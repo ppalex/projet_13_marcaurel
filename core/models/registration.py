@@ -1,13 +1,11 @@
 from django.db import models
-
-from core.models.invitation import Invitation
-from core.models.player import Player
-from core.models.match import Match
-from core.models.match_request import MatchRequest
+from django.utils import timezone
 
 from core.managers.registration_manager import RegistrationManager
-
-from django.utils import timezone
+from core.models.invitation import Invitation
+from core.models.match import Match
+from core.models.match_request import MatchRequest
+from core.models.player import Player
 
 
 class Registration(models.Model):
@@ -48,3 +46,7 @@ class Registration(models.Model):
             match=match)
 
         registration.save()
+
+    def close_registration(self):
+        self.status = 'closed'
+        self.save()

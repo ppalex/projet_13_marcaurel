@@ -1,12 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 from core.models.address import Address
 from core.models.match import Match
-
 from core.models.player import Player
-from .utils import km_to_degrees
 
-from django.contrib.auth.decorators import login_required
+from .utils import km_to_degrees
 
 
 @login_required

@@ -28,8 +28,6 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(' ')
 
-# ALLOWED_HOSTS = ['*']
-
 # INTERNAL_IPS = os.environ.get("INTERNAL_IPS").split()
 # Application definition
 

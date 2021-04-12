@@ -1,7 +1,7 @@
 import django_tables2 as tables
+from django_tables2.utils import A
 
 from core.models.match import Match
-from django_tables2.utils import A
 
 
 class MatchTable(tables.Table):
