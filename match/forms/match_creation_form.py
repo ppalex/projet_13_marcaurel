@@ -3,7 +3,6 @@ from django.utils import timezone
 
 from core.models.match import Match
 
-
 class CreateMatchForm(forms.ModelForm):
     class Meta:
         model = Match
@@ -16,13 +15,16 @@ class CreateMatchForm(forms.ModelForm):
 
             'start_fixture': forms.DateTimeInput(
                 attrs={
+                    'value': timezone.localtime(timezone.now()).strftime("%d/%m/%Y %H:%M"),
                     'class': 'form-control',
-                    'type': 'datetime-local'}),
+                    'type': 'text'}
+            ),
 
             'end_fixture': forms.DateTimeInput(
-                attrs={
+                   attrs={
+                    'value': timezone.localtime(timezone.now()).strftime("%d/%m/%Y %H:%M"),
                     'class': 'form-control',
-                    'type': 'datetime-local'}),
+                    'type': 'text'}),
 
             'capacity': forms.Select(choices=[(x, x) for x in range(8, 21)],
                                      attrs={
